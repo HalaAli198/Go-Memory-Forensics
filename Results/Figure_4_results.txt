@@ -1,0 +1,1333 @@
+Volatility 3 Framework 2.27.1
+
+Result
+[+] Found ELF at 0x400000
+
+[*] Scanning for pclntab in RODATA: 0x5f2000-0x81e438
+[+] Found pclntab at 0x6c6820
+
+[*] Scanning for moduledata in RW segment: 0x81f000-0x877850
+
+[DEBUG] ========== SLICE POINTER ANALYSIS ==========
+[DEBUG] Go Version: go1.24.10
+[DEBUG] Is Go 1.18+: True
+
+[DEBUG] Base addresses:
+  moduledata: 0x821bc0
+-------------------
+  text: 0x401000
+  text: 0x5f1c90
+-------------------
+  bss: 0x847e20
+  ebss: 0x869bd0
+-------------------
+  types: 0x5f2000
+  etypes: 0x6c4861
+-------------------
+Types and RODATA overlapping is NORMAL:In Go binaries, the types section is embedded within the RODATA segment. This is by design.
+  rodata: 0x5f2000
+  erodata: 0x81e438
+-------------------
+  data: 0x83f460
+  edata: 0x847e12
+-------------------
+  gofunc: 0x673c78
+  funcnametab: ptr=0x6c6880, len=239560, cap=239560
+  cutab: ptr=0x701060, len=10648, cap=10648
+  filetab: ptr=0x703a00, len=57088, cap=57088
+  pctab: ptr=0x711900, len=640712, cap=640712
+  pclntable: ptr=0x7adfe0, len=459864, cap=459864
+  ftab: ptr=0x7adfe0, len=5010, cap=5010
+[+] Found moduledata at 0x821bc0
+    text: 0x401000-0x5f1c90
+    types: 0x5f2000-0x6c4861
+    data: 0x83f460-0x847e12
+    rodata: 0x5f2000-0x81e438
+    typelinks: 1505 entries @ 0x6c4880
+    itablink: 256 entries @ 0x6c6020
+
+================================================================================
+FUNCNAMETAB RAW DATA INSPECTION
+================================================================================
+funcnametab ptr: 0x6c6880
+funcnametab len: 239560
+================================================================================
+
+[DEBUG] typelinks: ptr=0x6c4880, len=1505
+[DEBUG] types section: 0x5f2000-0x6c4861
+
+==========================================================================================================================================================================
+GO RUNTIME INFORMATION
+==========================================================================================================================================================================
+PID: 36796
+COMM: screenshotter2
+[*] Go version detected: go1.24.10
+Functions: 5009
+==========================================================================================================================================================================
+[*] Scanning types section: 0x5f2000-0x6c4861
+[*] Types section size: 862305 bytes
+length of types_dict: 2653
+
+================================================================================
+TYPES_DICT DEBUG
+================================================================================
+
+Types by kind:
+  22 (pointer): 939
+  25 (struct): 808
+  19 (func): 197
+  17 (array): 190
+  23 (slice): 175
+  20 (interface): 98
+  21 (map): 39
+  18 (chan): 34
+  8 (uint8): 29
+  2 (int): 27
+  1 (bool): 20
+  24 (string): 18
+  10 (uint32): 18
+  5 (int32): 9
+  12 (uintptr): 9
+  3 (int8): 7
+  4 (int16): 7
+  6 (int64): 6
+  7 (uint): 6
+  9 (uint16): 6
+  11 (uint64): 3
+  16 (complex128): 3
+  26 (unsafe.Pointer): 2
+  14 (float64): 1
+  15 (complex64): 1
+  13 (float32): 1
+
+[*] Extracting 256 itabs from itablink @ 0x6c6020
+[+] Successfully parsed 256 itabs
+length of itabs_dict: 256
+
+================================================================================
+HEAP ANALYSIS
+
+[*] Searching for allspans slice in 2 regions...
+[*] Scanning data: 0x83f460-0x847e12
+[DEBUG] Scanning range: 0x83f460 - 0x847e12
+[DEBUG] Total candidates found: 2
+[*] Scanning bss: 0x847e20-0x869bd0
+[DEBUG] Scanning range: 0x847e20 - 0x869bd0
+[+] CONFIRMED valid allspans at 0x8631c8
+[*] mheap_ address: 0x8631c8
+
+[*] Enumerating 339 spans...
+    Progress: 100/339 (74 in-use)
+    Progress: 200/339 (124 in-use)
+    Progress: 300/339 (134 in-use)
+
+[*] Span Statistics:
+    Total spans:     339
+    Null pointers:   0
+    In-use (state=1): 149
+    Dead (state=0):   177
+    Manual (state=2): 13
+    Parse errors:     0
+    Invalid:          0
+
+================================================================================
+HEAP ANALYSIS
+================================================================================
+
+Total spans: 149
+Total heap memory: 8.54 MB
+
+
+================================================================================
+HEAP OBJECT SUMMARY
+================================================================================
+
+Total heap_objects: 4763
+Total memory: 7807.16 KB (7.62 MB)
+
+[*] Found 1012 types that can contain strings
+[*] Found 37 map types
+[*] Mapped 50 unique sizes to string-containing types
+
+[*] Starting recursive string extraction...
+[*] Processing 4763 heap objects
+
+[*] Scanning standalone 16-byte string headers...
+
+[*] Scanning for direct slice headers (24-byte objects)...
+
+[*] Scanning for map pointers...
+    Found 628 potential hmap addresses
+
+[+] Phase 5: Found 23 maps with 11 strings
+
+================================================================================
+RECURSIVE STRING EXTRACTION SUMMARY
+================================================================================
+Objects processed: 4574
+Objects with strings: 217
+Maps found: 23
+Strings from maps: 11
+Total strings found: 618
+================================================================================
+
+
+====================================================================================================
+STRING STRUCTURES (HEAP) ---> DATA BYTES IN (DATA/RODATA/TEXT/TYPES)
+====================================================================================================
+Struct Addr          Data Addr            Length     Value                                                        Struct Location       Data Location      
+----------------------------------------------------------------------------------------------------
+0xc0000640f8         0x6635e9             10         "/dev/stdin"                                                heap                 rodata              
+0xc0000641b8         0x6639d1             11         "/dev/stderr"                                               heap                 rodata              
+0xc000064158         0x6639c6             11         "/dev/stdout"                                               heap                 rodata              
+0xc0000641e0         0x662a8c             6          "sha256"                                                    heap                 rodata              
+0xc0000641f0         0x662756             4          "AVX2"                                                      heap                 rodata              
+0xc000064278         0xc00001a0cb         29         "/run/user/1000/gdm/Xauthority"                             heap                 heap                
+0xc000064220         0x662a92             6          "SHA-NI"                                                    heap                 rodata              
+0xc000100680         0x6628a9             5          "P-256"                                                     heap                 rodata              
+0xc0001006c0         0xc0000184c8         23         "hostkeys-00@openssh.com"                                   heap                 heap                
+0xc000114100         0x662fc0             8          "SHA3-384"                                                  heap                 rodata              
+0xc000114010         0x6625a6             3          "MD5"                                                       heap                 rodata              
+0xc00002e200         0x666dba             22         "aes128-gcm@openssh.com"                                    heap                 rodata              
+0xc00002e210         0x666dd0             22         "aes256-gcm@openssh.com"                                    heap                 rodata              
+0xc00002e220         0x666908             21         "mlkem768x25519-sha256"                                     heap                 rodata              
+0xc00002e230         0x6654b2             17         "curve25519-sha256"                                         heap                 rodata              
+0xc000118008         0x66259a             3          "ftp"                                                       heap                 rodata              
+0xc00000e560         0xc000010620         14         "/tmp/.ICE-unix"                                            heap                 heap                
+0xc00002e320         0x6695da             29         "hmac-sha2-256-etm@openssh.com"                             heap                 rodata              
+0xc00002e330         0x6695f7             29         "hmac-sha2-512-etm@openssh.com"                             heap                 rodata              
+0xc000118348         0x6634ef             10         "aes128-ctr"                                                heap                 rodata              
+0xc00002e348         0xc00001a330         4          "=*\\"                                                      heap                 heap                
+0xc00011e490         0x668f46             28         "ssh-rsa-cert-v01@openssh.com"                              heap                 rodata              
+0xc00002e3a0         0xc0000103ec         4          "none"                                                      heap                 heap                
+0xc0001181a8         0x66252e             3          "FPE"                                                       heap                 rodata              
+0xc00002e3b0         0xc000010420         16         "zlib@openssh.com"                                          heap                 heap                
+0xc00002ea40         0x6625ca             4          "/tmp"                                                      heap                 rodata              
+0xc00002ea30         0xc0002d77a0         36         "Thursday, 08-Jan-26 00:04:18 EST.png"                      heap                 heap                
+0xc00002ea50         0xc0002d7770         36         "Thursday, 08-Jan-26 03:24:18 EST.png"                      heap                 heap                
+0xc00002eab0         0x662606             4          "unix"                                                      heap                 rodata              
+0xc00002ea90         0xc0002d7740         37         "Wednesday, 07-Jan-26 23:52:18 EST.png"                     heap                 heap                
+0xc00002eac0         0xc0000182a0         17         "/tmp/.X11-unix/X0"                                         heap                 heap                
+0xc00002eaf0         0xc0002d7710         37         "Wednesday, 07-Jan-26 23:34:18 EST.png"                     heap                 heap                
+0xc00002eb20         0xc000018330         17         "/tmp/.X11-unix/X0"                                         heap                 heap                
+0xc000136010         0xc000018030         15         "XDG_MENU_PREFIX"                                           heap                 heap                
+0xc000142380         0xc000018318         17         "ecdh-sha2-nistp52"                                         heap                 heap                
+0x841e60             0x6646a4             14         "asynctimerchan"                                            heap                 rodata              
+0xc0000a60d0         0x66251c             3          "tcp"                                                       heap                 rodata              
+0xc0000a6120         0x6695bd             29         "chacha20-poly1305@openssh.com"                             heap                 rodata              
+0xc0000a6140         0x6634f9             10         "aes192-ctr"                                                heap                 rodata              
+0xc0000a6150         0x663503             10         "aes256-ctr"                                                heap                 rodata              
+0xc000012000         0x7ffd117c13c4       16         "./screenshotter2"                                          heap                 heap                
+0xc000168008         0xc00001a600         41         "/tmp/Thursday, 08-Jan-26 03:22:18 EST.png"                 heap                 heap                
+0xc0002b2f00         0xc0002d78f0         37         "Wednesday, 07-Jan-26 23:40:18 EST.png"                     heap                 heap                
+0xc000168068         0xc00001a6c0         41         "/tmp/Thursday, 08-Jan-26 01:34:18 EST.png"                 heap                 heap                
+0xc0001680f8         0xc00001a780         41         "/tmp/Thursday, 08-Jan-26 00:32:18 EST.png"                 heap                 heap                
+0xc0002b2e88         0xc0002d7830         36         "Thursday, 08-Jan-26 00:24:18 EST.png"                      heap                 heap                
+0xc000168158         0xc00001a840         41         "/tmp/Thursday, 08-Jan-26 02:30:18 EST.png"                 heap                 heap                
+0xc0001681e8         0xc00001a960         41         "/tmp/Thursday, 08-Jan-26 03:24:18 EST.png"                 heap                 heap                
+0xc000168248         0xc00001aa20         42         "/tmp/Wednesday, 07-Jan-26 23:34:18 EST.png"                heap                 heap                
+0xc0001682d8         0xc00001aae0         41         "/tmp/Thursday, 08-Jan-26 03:18:18 EST.png"                 heap                 heap                
+0xc0002b2d98         0xc0002d7680         36         "Thursday, 08-Jan-26 01:18:18 EST.png"                      heap                 heap                
+0xc000168338         0xc00001aba0         41         "/tmp/Thursday, 08-Jan-26 00:18:18 EST.png"                 heap                 heap                
+0xc0001683c8         0xc00001ac60         41         "/tmp/Thursday, 08-Jan-26 01:12:18 EST.png"                 heap                 heap                
+0xc0002b2d20         0xc0002d75c0         36         "Thursday, 08-Jan-26 01:02:18 EST.png"                      heap                 heap                
+0xc000168428         0xc00001ad20         42         "/tmp/Wednesday, 07-Jan-26 23:46:18 EST.png"                heap                 heap                
+0xc0001684b8         0xc00001ae40         41         "/tmp/Thursday, 08-Jan-26 03:12:18 EST.png"                 heap                 heap                
+0xc0002b2ca8         0xc0002d74d0         36         "Thursday, 08-Jan-26 03:26:18 EST.png"                      heap                 heap                
+0xc000168518         0xc00001af00         41         "/tmp/Thursday, 08-Jan-26 02:54:18 EST.png"                 heap                 heap                
+0xc0001685a8         0xc00001b020         41         "/tmp/Thursday, 08-Jan-26 01:40:18 EST.png"                 heap                 heap                
+0xc0002b2c30         0xc0002b00b0         9          ".XIM-unix"                                                 heap                 heap                
+0xc000168608         0xc00001b080         41         "/tmp/Thursday, 08-Jan-26 01:20:18 EST.png"                 heap                 heap                
+0xc000168698         0xc00001b1a0         41         "/tmp/Thursday, 08-Jan-26 00:02:18 EST.png"                 heap                 heap                
+0xc0002b2bb8         0xc0002d7320         37         "Wednesday, 07-Jan-26 23:22:18 EST.png"                     heap                 heap                
+0xc0001686f8         0xc00001b260         41         "/tmp/Thursday, 08-Jan-26 01:50:18 EST.png"                 heap                 heap                
+0xc000168788         0xc00001b380         42         "/tmp/Wednesday, 07-Jan-26 23:56:18 EST.png"                heap                 heap                
+0xc0002b2b40         0xc0002b00a0         11         ".X1025-lock"                                               heap                 heap                
+0xc0001687e8         0xc00001b3e0         41         "/tmp/Thursday, 08-Jan-26 01:46:18 EST.png"                 heap                 heap                
+0xc000168878         0xc00001b500         41         "/tmp/Thursday, 08-Jan-26 00:08:18 EST.png"                 heap                 heap                
+0xc0002b2ac8         0xc0002d7170         36         "Thursday, 08-Jan-26 01:58:18 EST.png"                      heap                 heap                
+0xc0001688d8         0xc00001b5c0         41         "/tmp/Thursday, 08-Jan-26 02:14:18 EST.png"                 heap                 heap                
+0xc000168968         0xc000018540         22         "/tmp/config-err-QZdsCZ"                                    heap                 heap                
+0xc0002b2a50         0xc0002d70b0         36         "Thursday, 08-Jan-26 02:20:18 EST.png"                      heap                 heap                
+0xc0001689c8         0xc0000167e0         87         "/tmp/systemd-private-d24d9b08c85240ed8b086e53229ab809-switcheroo-control.service-s4VDtj"heap                 heap                
+0xc000168a58         0xc00001b7a0         41         "/tmp/Thursday, 08-Jan-26 02:26:18 EST.png"                 heap                 heap                
+0xc0002b29d8         0xc0002d7020         36         "Thursday, 08-Jan-26 02:16:18 EST.png"                      heap                 heap                
+0xc000168ab8         0xc00001b860         41         "/tmp/Thursday, 08-Jan-26 03:00:18 EST.png"                 heap                 heap                
+0xc000168b48         0xc00001b920         41         "/tmp/Thursday, 08-Jan-26 03:06:18 EST.png"                 heap                 heap                
+0xc0002b2948         0xc0002d6f60         36         "Thursday, 08-Jan-26 02:52:18 EST.png"                      heap                 heap                
+0xc000168ba8         0xc00001b9e0         41         "/tmp/Thursday, 08-Jan-26 01:24:18 EST.png"                 heap                 heap                
+0xc000168c38         0xc00001bb00         41         "/tmp/Thursday, 08-Jan-26 03:20:18 EST.png"                 heap                 heap                
+0xc0002b28d0         0xc0002d6e70         37         "Wednesday, 07-Jan-26 23:26:18 EST.png"                     heap                 heap                
+0xc000168c98         0xc00001bbc0         41         "/tmp/Thursday, 08-Jan-26 00:46:18 EST.png"                 heap                 heap                
+0xc000168d28         0xc000112280         75         "/tmp/systemd-private-d24d9b08c85240ed8b086e53229ab809-upower.service-uKUgxh"heap                 heap                
+0xc0002b2858         0xc0002d6de0         36         "Thursday, 08-Jan-26 02:34:18 EST.png"                      heap                 heap                
+0xc000168d88         0xc00001bce0         41         "/tmp/Thursday, 08-Jan-26 01:08:18 EST.png"                 heap                 heap                
+0xc000168e18         0xc00001be00         41         "/tmp/Thursday, 08-Jan-26 02:04:18 EST.png"                 heap                 heap                
+0xc0002b27e0         0xc0002d6cf0         36         "Thursday, 08-Jan-26 00:12:18 EST.png"                      heap                 heap                
+0xc000168e78         0xc0000185a0         21         "/tmp/snap-private-tmp"                                     heap                 heap                
+0xc000168f08         0xc000016960         83         "/tmp/systemd-private-d24d9b08c85240ed8b086e53229ab809-systemd-logind.service-GMLUSe"heap                 heap                
+0xc0002b2768         0xc0002d6c60         36         "Thursday, 08-Jan-26 02:58:18 EST.png"                      heap                 heap                
+0xc000168f68         0xc00016a000         41         "/tmp/Thursday, 08-Jan-26 03:02:18 EST.png"                 heap                 heap                
+0xc0002b2ed0         0xc00001c240         26         "tracker-extract-files.1000"                                heap                 heap                
+0xc00016c0c8         0xc00001a720         41         "/tmp/Thursday, 08-Jan-26 02:12:18 EST.png"                 heap                 heap                
+0xc0002b2e58         0xc0002d77d0         36         "Thursday, 08-Jan-26 01:30:18 EST.png"                      heap                 heap                
+0xc00016c1b8         0xc00001a900         41         "/tmp/Thursday, 08-Jan-26 00:04:18 EST.png"                 heap                 heap                
+0xc0002b2de0         0xc0002b00c0         10         ".Test-unix"                                                heap                 heap                
+0xc00016c2a8         0xc00001aa80         41         "/tmp/Thursday, 08-Jan-26 00:20:18 EST.png"                 heap                 heap                
+0xc0002b2d68         0xc0002f2d80         81         "systemd-private-d24d9b08c85240ed8b086e53229ab809-systemd-timesyncd.service-IAqFLg"heap                 heap                
+0xc00016c398         0xc00001ac00         41         "/tmp/Thursday, 08-Jan-26 03:34:18 EST.png"                 heap                 heap                
+0xc0002b2cf0         0xc0002d7560         36         "Thursday, 08-Jan-26 03:44:18 EST.png"                      heap                 heap                
+0xc00016c488         0xc00001ade0         42         "/tmp/Wednesday, 07-Jan-26 23:20:18 EST.png"                heap                 heap                
+0xc0002b2c78         0xc0002d7470         36         "Thursday, 08-Jan-26 03:16:18 EST.png"                      heap                 heap                
+0xc00016c578         0xc00001afc0         41         "/tmp/Thursday, 08-Jan-26 01:04:18 EST.png"                 heap                 heap                
+0xc0002b2c00         0xc0002d73b0         36         "Thursday, 08-Jan-26 02:50:18 EST.png"                      heap                 heap                
+0xc00016c668         0xc00001b140         41         "/tmp/Thursday, 08-Jan-26 01:06:18 EST.png"                 heap                 heap                
+0xc0002b2b88         0xc0002d72c0         36         "Thursday, 08-Jan-26 01:14:18 EST.png"                      heap                 heap                
+0xc00016c758         0xc00001b320         41         "/tmp/Thursday, 08-Jan-26 02:36:18 EST.png"                 heap                 heap                
+0xc0002b2b10         0xc0002d7200         36         "Thursday, 08-Jan-26 03:04:18 EST.png"                      heap                 heap                
+0xc00016c848         0xc00001b4a0         41         "/tmp/Thursday, 08-Jan-26 00:58:18 EST.png"                 heap                 heap                
+0xc0002b2a98         0xc0002d7110         36         "Thursday, 08-Jan-26 01:52:18 EST.png"                      heap                 heap                
+0xc00016c938         0xc00001b680         42         "/tmp/Wednesday, 07-Jan-26 23:38:18 EST.png"                heap                 heap                
+0xc0002b2a20         0xc0002d7080         36         "Thursday, 08-Jan-26 02:24:18 EST.png"                      heap                 heap                
+0xc00016ca28         0xc0000168a0         81         "/tmp/systemd-private-d24d9b08c85240ed8b086e53229ab809-ModemManager.service-Wc3Whg"heap                 heap                
+0xc0002b29a8         0xc0002d6fc0         37         "Wednesday, 07-Jan-26 23:28:18 EST.png"                     heap                 heap                
+0xc00016cb18         0xc0001121e0         75         "/tmp/systemd-private-d24d9b08c85240ed8b086e53229ab809-colord.service-wOoJ0f"heap                 heap                
+0xc0002b2918         0xc0002d6f00         36         "Thursday, 08-Jan-26 01:54:18 EST.png"                      heap                 heap                
+0xc00016cc08         0xc00001baa0         41         "/tmp/Thursday, 08-Jan-26 01:00:18 EST.png"                 heap                 heap                
+0xc0002b28a0         0xc0002d6e10         36         "Thursday, 08-Jan-26 00:16:18 EST.png"                      heap                 heap                
+0xc00016ccf8         0xc000018570         21         "/tmp/ssh-duQM69niz1Ek"                                     heap                 heap                
+0xc0002b2828         0xc0002d6d80         36         "Thursday, 08-Jan-26 00:36:18 EST.png"                      heap                 heap                
+0xc00016cde8         0xc00001bda0         41         "/tmp/Thursday, 08-Jan-26 00:42:18 EST.png"                 heap                 heap                
+0xc0002b27b0         0xc0002d6cc0         36         "Thursday, 08-Jan-26 02:32:18 EST.png"                      heap                 heap                
+0xc00016ced8         0xc00001bf20         41         "/tmp/Thursday, 08-Jan-26 02:02:18 EST.png"                 heap                 heap                
+0xc0002b2738         0xc0002d6c00         36         "Thursday, 08-Jan-26 02:46:18 EST.png"                      heap                 heap                
+0xc00016cfc8         0xc00016a0c0         41         "/tmp/Thursday, 08-Jan-26 02:44:18 EST.png"                 heap                 heap                
+0xc00016d058         0xc00016a180         41         "/tmp/Thursday, 08-Jan-26 00:48:18 EST.png"                 heap                 heap                
+0xc0002b26c0         0xc0002d6b40         36         "Thursday, 08-Jan-26 00:22:18 EST.png"                      heap                 heap                
+0xc00016d0b8         0xc00016a240         41         "/tmp/Thursday, 08-Jan-26 02:42:18 EST.png"                 heap                 heap                
+0xc00016d148         0xc00016a360         41         "/tmp/Thursday, 08-Jan-26 03:14:18 EST.png"                 heap                 heap                
+0xc0002b2648         0xc0002d6a50         36         "Thursday, 08-Jan-26 02:56:18 EST.png"                      heap                 heap                
+0xc00016d1a8         0xc00016a420         41         "/tmp/Thursday, 08-Jan-26 00:34:18 EST.png"                 heap                 heap                
+0xc00016d238         0xc00016a4e0         41         "/tmp/Thursday, 08-Jan-26 03:36:18 EST.png"                 heap                 heap                
+0xc0002b25d0         0xc0002d6990         36         "Thursday, 08-Jan-26 02:28:18 EST.png"                      heap                 heap                
+0xc00016d298         0xc00016a5a0         41         "/tmp/Thursday, 08-Jan-26 02:00:18 EST.png"                 heap                 heap                
+0xc00016d328         0xc00016a660         41         "/tmp/Thursday, 08-Jan-26 00:44:18 EST.png"                 heap                 heap                
+0xc0002b2558         0xc0002e0140         69         "systemd-private-d24d9b08c85240ed8b086e53229ab809-fwupd.service-2EeQXf"heap                 heap                
+0xc00016d388         0xc00016a6c0         42         "/tmp/Wednesday, 07-Jan-26 23:24:18 EST.png"                heap                 heap                
+0xc00016d418         0xc00016a7e0         41         "/tmp/Thursday, 08-Jan-26 00:28:18 EST.png"                 heap                 heap                
+0xc0002b24e0         0xc0002d6810         37         "Wednesday, 07-Jan-26 23:58:18 EST.png"                     heap                 heap                
+0xc00016d478         0xc00016a8a0         41         "/tmp/Thursday, 08-Jan-26 01:44:18 EST.png"                 heap                 heap                
+0xc00016d508         0xc00016a9c0         42         "/tmp/Wednesday, 07-Jan-26 23:54:18 EST.png"                heap                 heap                
+0xc0002b2468         0xc0002d6720         36         "Thursday, 08-Jan-26 00:26:18 EST.png"                      heap                 heap                
+0xc00016d568         0xc00016aa80         41         "/tmp/Thursday, 08-Jan-26 01:36:18 EST.png"                 heap                 heap                
+0xc00016d5f8         0xc0000186c0         17         "/tmp/.X11-unix/X0"                                         heap                 heap                
+0xc00000e5b8         0xc000010690         5          "X1025"                                                     heap                 heap                
+0xc00016d658         0xc00016ac00         41         "/tmp/Thursday, 08-Jan-26 01:32:18 EST.png"                 heap                 heap                
+0x83ffa0             0x6654a1             17         "permission denied"                                         heap                 rodata              
+0xc00016d6e8         0xc00016acc0         41         "/tmp/Thursday, 08-Jan-26 01:56:18 EST.png"                 heap                 heap                
+0xc0002b2378         0xc0002d65a0         36         "Thursday, 08-Jan-26 01:26:18 EST.png"                      heap                 heap                
+0xc00016d748         0xc00016ad80         41         "/tmp/Thursday, 08-Jan-26 00:50:18 EST.png"                 heap                 heap                
+0xc00016d7d8         0xc00016aea0         42         "/tmp/Wednesday, 07-Jan-26 23:42:18 EST.png"                heap                 heap                
+0xc0002b2300         0xc0002d64b0         36         "Thursday, 08-Jan-26 02:18:18 EST.png"                      heap                 heap                
+0xc00016d838         0xc00016af60         41         "/tmp/Thursday, 08-Jan-26 00:40:18 EST.png"                 heap                 heap                
+0xc00016d8c8         0xc00016b080         42         "/tmp/Wednesday, 07-Jan-26 23:32:18 EST.png"                heap                 heap                
+0xc0002b2288         0xc0002d63c0         37         "Wednesday, 07-Jan-26 23:44:18 EST.png"                     heap                 heap                
+0xc00016d928         0xc0002021e0         19         "/tmp/.ICE-unix/2501"                                       heap                 heap                
+0xc00016d9b8         0xc000010640         15         "/tmp/.font-unix"                                           heap                 heap                
+0xc0002b2210         0xc0002d6330         36         "Thursday, 08-Jan-26 00:00:18 EST.png"                      heap                 heap                
+0xc00016da18         0xc00016b260         41         "/tmp/Thursday, 08-Jan-26 00:10:18 EST.png"                 heap                 heap                
+0xc00016daa8         0xc00016b380         41         "/tmp/Thursday, 08-Jan-26 01:48:18 EST.png"                 heap                 heap                
+0xc0002b2198         0xc0002d6240         36         "Thursday, 08-Jan-26 00:54:18 EST.png"                      heap                 heap                
+0xc00016db08         0xc00016b440         42         "/tmp/Wednesday, 07-Jan-26 23:48:18 EST.png"                heap                 heap                
+0xc00016db98         0xc00016b560         41         "/tmp/Thursday, 08-Jan-26 00:14:18 EST.png"                 heap                 heap                
+0xc0002b2120         0xc00001c220         26         "vmware-root_737-4257003961"                                heap                 heap                
+0xc00016dbf8         0xc00016b5c0         41         "/tmp/Thursday, 08-Jan-26 02:38:18 EST.png"                 heap                 heap                
+0xc00016dc88         0xc00016b6e0         41         "/tmp/Thursday, 08-Jan-26 00:52:18 EST.png"                 heap                 heap                
+0xc0002b20a8         0xc0002d6090         36         "Thursday, 08-Jan-26 01:38:18 EST.png"                      heap                 heap                
+0xc00016dce8         0xc00016b7a0         41         "/tmp/Thursday, 08-Jan-26 03:08:18 EST.png"                 heap                 heap                
+0xc000184000         0xc000186010         12         "ssh-userauth"                                              heap                 heap                
+0xc000184050         0x5fbdc0             2          "50"                                                        heap                 rodata              
+0xc000188010         0x664706             14         "ssh-connection"                                            heap                 rodata              
+0xc000188020         0x6625e6             4          "none"                                                      heap                 rodata              
+0xc000188070         0x662da8             8          "password"                                                  heap                 rodata              
+0xc000188088         0x6641c4             13         "user1password"                                             heap                 rodata              
+0xc00018c020         0xc000186030         9          "publickey"                                                 heap                 heap                
+0xc00018c030         0xc000186040         8          "password"                                                  heap                 heap                
+0xc0000e4240         0xc0002081c0         29         "chacha20-poly1305@openssh.com"                             heap                 heap                
+0xc0000e4250         0xc000010390         10         "aes128-ctr"                                                heap                 heap                
+0xc0000e4260         0xc0000103a0         10         "aes192-ctr"                                                heap                 heap                
+0xc0000e4270         0xc0000103b0         10         "aes256-ctr"                                                heap                 heap                
+0xc0000e4280         0xc000018390         22         "aes128-gcm@openssh.com"                                    heap                 heap                
+0xc0000e4290         0xc0000183a8         22         "aes256-gcm@openssh.com"                                    heap                 heap                
+0xc00007a460         0xc0000183c0         23         "umac-64-etm@openssh.com"                                   heap                 heap                
+0xc00007a470         0xc0000183d8         24         "umac-128-etm@openssh.com"                                  heap                 heap                
+0xc00007a480         0xc0002081e0         29         "hmac-sha2-256-etm@openssh.com"                             heap                 heap                
+0xc00007a490         0xc000208200         29         "hmac-sha2-512-etm@openssh.com"                             heap                 heap                
+0xc00007a4a0         0xc000208220         25         "hmac-sha1-etm@openssh.com"                                 heap                 heap                
+0xc00007a4b0         0xc0000183f0         19         "umac-64@openssh.com"                                       heap                 heap                
+0xc00007a4c0         0xc000018408         20         "umac-128@openssh.com"                                      heap                 heap                
+0xc00007a4d0         0xc0000103c0         13         "hmac-sha2-256"                                             heap                 heap                
+0xc00007a4e0         0xc0000103d0         13         "hmac-sha2-512"                                             heap                 heap                
+0xc00007a4f0         0xc0000103e0         9          "hmac-sha1"                                                 heap                 heap                
+0xc000012040         0x664ada             15         "192.168.181.138"                                           heap                 rodata              
+0xc0000120c0         0x66468b             12         "failfipscast"                                              heap                 rodata              
+0xc0000120d0         0x663029             7          "fips140"                                                   heap                 rodata              
+0xc0000120e0         0x66c937             37         "cipher: message authentication failed"                     heap                 rodata              
+0xc000012170         0x665903             17         "divisor too large"                                         heap                 rodata              
+0xc000012180         0x66ee15             45         "crypto/rsa: message too long for RSA key size"             heap                 rodata              
+0xc000012190         0x66944e             28         "crypto/rsa: decryption error"                              heap                 rodata              
+0xc0000121a0         0x669fbc             30         "crypto/rsa: verification error"                            heap                 rodata              
+0xc0000121d0         0x662787             5          "XGB: "                                                     heap                 rodata              
+0x83fc90             0x666815             20         "number has no digits"                                      heap                 rodata              
+0x83fd20             0x663c91             11         "invalid oid"                                               heap                 rodata              
+0xc0000122d0         0x5fcf41             2          "20"                                                        heap                 rodata              
+0xc000012300         0x5ff6be             2          "30"                                                        heap                 rodata              
+0xc000012310         0x5fd84a             2          "31"                                                        heap                 rodata              
+0x848f80             0x662778             5          "Local"                                                     heap                 rodata              
+0xc000076180         0xc000010780         3          "LMT"                                                       heap                 heap                
+0xc0000761a0         0xc000010783         3          "CDT"                                                       heap                 heap                
+0xc0000761c0         0xc000010786         3          "CST"                                                       heap                 heap                
+0xc0000761e0         0xc000010789         3          "CWT"                                                       heap                 heap                
+0xc000076200         0xc00001078c         3          "CPT"                                                       heap                 heap                
+0xc000076220         0xc000010790         3          "EST"                                                       heap                 heap                
+0x848fc0             0xc00001075c         4          "EST5"                                                      heap                 heap                
+0xc000012250         0x6640ec             12         "multipathtcp"                                              heap                 rodata              
+0xc0000a61a0         0x668fb6             28         "curve25519-sha256@libssh.org"                              heap                 rodata              
+0xc0000a61b0         0x66596c             18         "ecdh-sha2-nistp256"                                        heap                 rodata              
+0xc0000a61c0         0x66597e             18         "ecdh-sha2-nistp384"                                        heap                 rodata              
+0xc0000a61d0         0x665990             18         "ecdh-sha2-nistp521"                                        heap                 rodata              
+0xc0000a61e0         0x669583             29         "diffie-hellman-group14-sha256"                             heap                 rodata              
+0xc0000a61f0         0x6688ef             27         "diffie-hellman-group14-sha1"                               heap                 rodata              
+0xc0000a6220         0x664260             13         "hmac-sha2-256"                                             heap                 rodata              
+0xc0000a6230         0x66426d             13         "hmac-sha2-512"                                             heap                 rodata              
+0xc0000a6240         0x66306c             9          "hmac-sha1"                                                 heap                 rodata              
+0xc0000a6250         0x663d74             12         "hmac-sha1-96"                                              heap                 rodata              
+0x843560             0x66acfc             33         "rsa-sha2-256-cert-v01@openssh.com"                         heap                 rodata              
+0x843570             0x66ad1d             33         "rsa-sha2-512-cert-v01@openssh.com"                         heap                 rodata              
+0x843590             0x668f62             28         "ssh-dss-cert-v01@openssh.com"                              heap                 rodata              
+0x8435a0             0x66d4e3             40         "ecdsa-sha2-nistp256-cert-v01@openssh.com"                  heap                 rodata              
+0x8435b0             0x66d50b             40         "ecdsa-sha2-nistp384-cert-v01@openssh.com"                  heap                 rodata              
+0x8435c0             0x66d533             40         "ecdsa-sha2-nistp521-cert-v01@openssh.com"                  heap                 rodata              
+0x8435d0             0x66a61b             32         "ssh-ed25519-cert-v01@openssh.com"                          heap                 rodata              
+0x8435e0             0x665e5d             19         "ecdsa-sha2-nistp256"                                       heap                 rodata              
+0x8435f0             0x665e70             19         "ecdsa-sha2-nistp384"                                       heap                 rodata              
+0x843600             0x665e83             19         "ecdsa-sha2-nistp521"                                       heap                 rodata              
+0x843610             0x663d80             12         "rsa-sha2-256"                                              heap                 rodata              
+0x843620             0x663d8c             12         "rsa-sha2-512"                                              heap                 rodata              
+0x843630             0x662adc             7          "ssh-rsa"                                                   heap                 rodata              
+0x843640             0x662ae3             7          "ssh-dss"                                                   heap                 rodata              
+0x843650             0x663921             11         "ssh-ed25519"                                               heap                 rodata              
+0xc000118618         0xc000018288         18         "192.168.181.138:22"                                        heap                 heap                
+0xc000118510         0xc0000102b0         10         "SSH-2.0-Go"                                                heap                 heap                
+0xc000012350         0x663d98             12         "ssh-userauth"                                              heap                 rodata              
+0xc000012380         0x5fbd87             2          "80"                                                        heap                 rodata              
+0xc000012390         0x5fd8a2             2          "93"                                                        heap                 rodata              
+0xc0000123a0         0x5fd834             2          "99"                                                        heap                 rodata              
+0xc00000e758         0xc0002085c0         31         "/tmp/tracker-extract-files.1000"                           heap                 heap                
+0xc00000e570         0xc00001067c         4          "1085"                                                      heap                 heap                
+0xc00000e5e8         0xc000010698         5          "X1024"                                                     heap                 heap                
+0xc0000123f0         0xc000208720         32         "Saturday, 10-Jan-26 05:33:31 EST"                          heap                 heap                
+0xc000012400         0xc00016bcb0         41         "/tmp/Saturday, 10-Jan-26 05:33:31 EST.png"                 heap                 heap                
+0xc000012410         0x5fd7dc             2          "96"                                                        heap                 rodata              
+0xc000012420         0x5fd81e             2          "98"                                                        heap                 rodata              
+0xc000012430         0x5fd7b0             2          "97"                                                        heap                 rodata              
+0xc0002ae000         0x5fd7f2             2          "91"                                                        heap                 rodata              
+0xc0001f2000         0x662aea             7          "session"                                                   heap                 rodata              
+0xc0002ae030         0x6625e2             4          "sftp"                                                      heap                 rodata              
+0xc0002c0008         0xc000202018         24         "posix-rename@openssh.com"                                  heap                 heap                
+0xc0002c0088         0xc000202078         17         "fsync@openssh.com"                                         heap                 heap                
+0xc0002c0028         0xc000202030         19         "statvfs@openssh.com"                                       heap                 heap                
+0xc0002c00a8         0xc000202090         20         "lsetstat@openssh.com"                                      heap                 heap                
+0xc0002c0048         0xc000202048         20         "fstatvfs@openssh.com"                                      heap                 heap                
+0x83f8b0             0x66252b             3          "EOF"                                                       heap                 rodata              
+0x83f8f0             0x6b6f70             9          "go1.24.10"                                                 heap                 rodata              
+0xc0002b2060         0xc0002d6000         36         "Thursday, 08-Jan-26 02:10:18 EST.png"                      heap                 heap                
+0xc0002b2090         0xc0002d6060         36         "Thursday, 08-Jan-26 03:08:18 EST.png"                      heap                 heap                
+0xc0002b3038         0xc0002b0172         6          "vENoUQ"                                                    heap                 heap                
+0xc000184030         0x5fd876             2          "51"                                                        heap                 rodata              
+0xc0001184f8         0xc00001e100         40         "SSH-2.0-OpenSSH_8.2p1 Ubuntu-4ubuntu0.13"                  heap                 heap                
+0xc000184090         0x5fe166             2          "90"                                                        heap                 rodata              
+0xc00002e3e0         0xc000010430         4          "none"                                                      heap                 heap                
+0xc00002e3f0         0xc000010440         16         "zlib@openssh.com"                                          heap                 heap                
+0xc00002e6b0         0xc0002d7920         36         "Thursday, 08-Jan-26 03:22:18 EST.png"                      heap                 heap                
+0xc00002e730         0xc0002d78c0         36         "Thursday, 08-Jan-26 01:34:18 EST.png"                      heap                 heap                
+0xc00002e7b0         0xc0002d7890         36         "Thursday, 08-Jan-26 02:12:18 EST.png"                      heap                 heap                
+0xc00002e7f0         0xc0002d7860         36         "Thursday, 08-Jan-26 00:32:18 EST.png"                      heap                 heap                
+0xc00002e8d0         0xc0002d7800         36         "Thursday, 08-Jan-26 02:30:18 EST.png"                      heap                 heap                
+0xc00002eb70         0xc0002d76e0         36         "Thursday, 08-Jan-26 00:20:18 EST.png"                      heap                 heap                
+0xc00002eb90         0xc0002d76b0         36         "Thursday, 08-Jan-26 03:18:18 EST.png"                      heap                 heap                
+0xc00002ebd0         0xc0002d7650         36         "Thursday, 08-Jan-26 00:18:18 EST.png"                      heap                 heap                
+0xc00002ec10         0xc0002d7620         36         "Thursday, 08-Jan-26 03:34:18 EST.png"                      heap                 heap                
+0xc00002ec30         0xc0002d75f0         36         "Thursday, 08-Jan-26 01:12:18 EST.png"                      heap                 heap                
+0xc00002ec70         0xc0002d7590         37         "Wednesday, 07-Jan-26 23:46:18 EST.png"                     heap                 heap                
+0xc00002ecb0         0xc0002d7530         37         "Wednesday, 07-Jan-26 23:20:18 EST.png"                     heap                 heap                
+0xc00002ecd0         0xc0002d7500         36         "Thursday, 08-Jan-26 03:12:18 EST.png"                      heap                 heap                
+0xc00002ed10         0xc0002d74a0         36         "Thursday, 08-Jan-26 02:54:18 EST.png"                      heap                 heap                
+0xc00002ed50         0xc0002d7440         36         "Thursday, 08-Jan-26 01:04:18 EST.png"                      heap                 heap                
+0xc00002ed70         0xc0002d7410         36         "Thursday, 08-Jan-26 01:40:18 EST.png"                      heap                 heap                
+0xc00002edb0         0xc0002d73e0         36         "Thursday, 08-Jan-26 01:20:18 EST.png"                      heap                 heap                
+0xc00002edf0         0xc0002d7380         36         "Thursday, 08-Jan-26 01:06:18 EST.png"                      heap                 heap                
+0xc00002ee10         0xc0002d7350         36         "Thursday, 08-Jan-26 00:02:18 EST.png"                      heap                 heap                
+0xc00002ee50         0xc0002d72f0         36         "Thursday, 08-Jan-26 01:50:18 EST.png"                      heap                 heap                
+0xc00002ee90         0xc0002d7290         36         "Thursday, 08-Jan-26 02:36:18 EST.png"                      heap                 heap                
+0xc00002eeb0         0xc0002d7260         37         "Wednesday, 07-Jan-26 23:56:18 EST.png"                     heap                 heap                
+0xc00002eef0         0xc0002d7230         36         "Thursday, 08-Jan-26 01:46:18 EST.png"                      heap                 heap                
+0xc00002ef30         0xc0002d71d0         36         "Thursday, 08-Jan-26 00:58:18 EST.png"                      heap                 heap                
+0xc00002ef50         0xc0002d71a0         36         "Thursday, 08-Jan-26 00:08:18 EST.png"                      heap                 heap                
+0xc00002ef90         0xc0002d7140         36         "Thursday, 08-Jan-26 02:14:18 EST.png"                      heap                 heap                
+0xc00002efd0         0xc0002d70e0         37         "Wednesday, 07-Jan-26 23:38:18 EST.png"                     heap                 heap                
+0xc00002eff0         0xc000202108         17         "config-err-QZdsCZ"                                         heap                 heap                
+0xc00002f030         0xc0002f21e0         82         "systemd-private-d24d9b08c85240ed8b086e53229ab809-switcheroo-control.service-s4VDtj"heap                 heap                
+0xc00002f070         0xc0002e0410         76         "systemd-private-d24d9b08c85240ed8b086e53229ab809-ModemManager.service-Wc3Whg"heap                 heap                
+0xc00002f090         0xc0002d7050         36         "Thursday, 08-Jan-26 02:26:18 EST.png"                      heap                 heap                
+0xc00002f0d0         0xc0002d6ff0         36         "Thursday, 08-Jan-26 03:00:18 EST.png"                      heap                 heap                
+0xc00002f110         0xc0002e03c0         70         "systemd-private-d24d9b08c85240ed8b086e53229ab809-colord.service-wOoJ0f"heap                 heap                
+0xc00002f130         0xc0002d6f90         36         "Thursday, 08-Jan-26 03:06:18 EST.png"                      heap                 heap                
+0xc00002f170         0xc0002d6f30         36         "Thursday, 08-Jan-26 01:24:18 EST.png"                      heap                 heap                
+0xc00002f1b0         0xc0002d6ed0         36         "Thursday, 08-Jan-26 01:00:18 EST.png"                      heap                 heap                
+0xc00002f1d0         0xc0002d6ea0         36         "Thursday, 08-Jan-26 03:20:18 EST.png"                      heap                 heap                
+0xc00002f210         0xc0002d6e40         36         "Thursday, 08-Jan-26 00:46:18 EST.png"                      heap                 heap                
+0xc00002f250         0xc0002b0090         16         "ssh-duQM69niz1Ek"                                          heap                 heap                
+0xc00002f270         0xc0002e0320         70         "systemd-private-d24d9b08c85240ed8b086e53229ab809-upower.service-uKUgxh"heap                 heap                
+0xc00002f2b0         0xc0002d6db0         36         "Thursday, 08-Jan-26 01:08:18 EST.png"                      heap                 heap                
+0xc00002f2f0         0xc0002d6d50         36         "Thursday, 08-Jan-26 00:42:18 EST.png"                      heap                 heap                
+0xc00002f310         0xc0002d6d20         36         "Thursday, 08-Jan-26 02:04:18 EST.png"                      heap                 heap                
+0xc00002f350         0xc0002b0080         16         "snap-private-tmp"                                          heap                 heap                
+0xc00002f390         0xc0002d6c90         36         "Thursday, 08-Jan-26 02:02:18 EST.png"                      heap                 heap                
+0xc00002f3b0         0xc0002e0280         78         "systemd-private-d24d9b08c85240ed8b086e53229ab809-systemd-logind.service-GMLUSe"heap                 heap                
+0xc00002f3f0         0xc0002d6c30         36         "Thursday, 08-Jan-26 03:02:18 EST.png"                      heap                 heap                
+0xc00002f430         0xc0002d6bd0         36         "Thursday, 08-Jan-26 02:44:18 EST.png"                      heap                 heap                
+0xc00002f450         0xc0002d6ba0         36         "Thursday, 08-Jan-26 03:10:18 EST.png"                      heap                 heap                
+0xc00002f470         0xc0002b0070         11         ".X1024-lock"                                               heap                 heap                
+0xc00002f490         0xc0002d6b70         36         "Thursday, 08-Jan-26 00:48:18 EST.png"                      heap                 heap                
+0xc00002f4d0         0xc0002d6b10         36         "Thursday, 08-Jan-26 02:42:18 EST.png"                      heap                 heap                
+0xc00002f4f0         0xc0002d6ae0         37         "Wednesday, 07-Jan-26 23:16:17 EST.png"                     heap                 heap                
+0xc00002f510         0xc0002d6ab0         36         "Thursday, 08-Jan-26 02:22:18 EST.png"                      heap                 heap                
+0xc00002f530         0xc0002d6a80         36         "Thursday, 08-Jan-26 03:14:18 EST.png"                      heap                 heap                
+0xc00002f570         0xc0002d6a20         36         "Thursday, 08-Jan-26 00:34:18 EST.png"                      heap                 heap                
+0xc00002f590         0xc0002020d8         17         "go-build600940726"                                         heap                 heap                
+0xc00002f5b0         0xc0002d69f0         36         "Thursday, 08-Jan-26 01:22:18 EST.png"                      heap                 heap                
+0xc00002f5d0         0xc0002d69c0         36         "Thursday, 08-Jan-26 03:36:18 EST.png"                      heap                 heap                
+0xc00002f610         0xc0002d6960         36         "Thursday, 08-Jan-26 02:00:18 EST.png"                      heap                 heap                
+0xc00002f630         0xc0002b0060         9          "VMwareDnD"                                                 heap                 heap                
+0xc00002f650         0xc0002d6930         36         "Thursday, 08-Jan-26 00:38:18 EST.png"                      heap                 heap                
+0xc00002f670         0xc0002d6900         36         "Thursday, 08-Jan-26 00:44:18 EST.png"                      heap                 heap                
+0xc00002f6b0         0xc0002d68d0         37         "Wednesday, 07-Jan-26 23:24:18 EST.png"                     heap                 heap                
+0xc00002f6d0         0xc0002d68a0         36         "Thursday, 08-Jan-26 03:30:18 EST.png"                      heap                 heap                
+0xc00002f6f0         0xc0002d6870         37         "Wednesday, 07-Jan-26 23:36:18 EST.png"                     heap                 heap                
+0xc00002f710         0xc0002d6840         36         "Thursday, 08-Jan-26 00:28:18 EST.png"                      heap                 heap                
+0xc00002f750         0xc0002d67e0         36         "Thursday, 08-Jan-26 01:44:18 EST.png"                      heap                 heap                
+0xc00002f770         0xc0002d67b0         36         "Thursday, 08-Jan-26 00:30:18 EST.png"                      heap                 heap                
+0xc00002f790         0xc0002d6780         36         "Thursday, 08-Jan-26 03:32:18 EST.png"                      heap                 heap                
+0xc00002f7b0         0xc0002d6750         37         "Wednesday, 07-Jan-26 23:54:18 EST.png"                     heap                 heap                
+0xc00002f7f0         0xc0002d66f0         36         "Thursday, 08-Jan-26 01:36:18 EST.png"                      heap                 heap                
+0xc00002f810         0xc0002d66c0         36         "Thursday, 08-Jan-26 01:16:18 EST.png"                      heap                 heap                
+0xc00002f830         0xc0002b0050         9          ".X11-unix"                                                 heap                 heap                
+0xc00002f850         0xc0002d6690         36         "Thursday, 08-Jan-26 02:40:18 EST.png"                      heap                 heap                
+0xc00002f870         0xc0002d6660         36         "Thursday, 08-Jan-26 03:28:18 EST.png"                      heap                 heap                
+0xc00002f890         0xc0002d6630         36         "Thursday, 08-Jan-26 01:32:18 EST.png"                      heap                 heap                
+0xc00002f8b0         0xc0002d6600         36         "Thursday, 08-Jan-26 03:42:18 EST.png"                      heap                 heap                
+0xc00002f8d0         0xc0002e00a0         80         "systemd-private-d24d9b08c85240ed8b086e53229ab809-systemd-resolved.service-OeKlUf"heap                 heap                
+0xc00002f8f0         0xc0002d65d0         36         "Thursday, 08-Jan-26 01:56:18 EST.png"                      heap                 heap                
+0xc00002f930         0xc0002d6570         36         "Thursday, 08-Jan-26 00:50:18 EST.png"                      heap                 heap                
+0xc00002f950         0xc0002d6540         36         "Thursday, 08-Jan-26 02:48:18 EST.png"                      heap                 heap                
+0xc00002f970         0xc0002d6510         37         "Wednesday, 07-Jan-26 23:30:18 EST.png"                     heap                 heap                
+0xc00002f990         0xc0002d64e0         37         "Wednesday, 07-Jan-26 23:42:18 EST.png"                     heap                 heap                
+0xc00002f9d0         0xc0002d6480         36         "Thursday, 08-Jan-26 00:40:18 EST.png"                      heap                 heap                
+0xc00002f9f0         0xc0002d6450         36         "Thursday, 08-Jan-26 01:28:18 EST.png"                      heap                 heap                
+0xc00002fa10         0xc0002d6420         36         "Thursday, 08-Jan-26 02:06:18 EST.png"                      heap                 heap                
+0xc00002fa30         0xc0002d63f0         37         "Wednesday, 07-Jan-26 23:32:18 EST.png"                     heap                 heap                
+0xc00002fa70         0xc0002b0040         9          ".ICE-unix"                                                 heap                 heap                
+0xc00002fa90         0xc0002d6390         36         "Thursday, 08-Jan-26 03:40:18 EST.png"                      heap                 heap                
+0xc00002fab0         0xc0002d6360         36         "Thursday, 08-Jan-26 01:42:18 EST.png"                      heap                 heap                
+0xc00002fad0         0xc0002b0032         10         ".font-unix"                                                heap                 heap                
+0xc00002fb10         0xc0002d6300         36         "Thursday, 08-Jan-26 00:10:18 EST.png"                      heap                 heap                
+0xc00002fb30         0xc0002d62d0         36         "Thursday, 08-Jan-26 03:38:18 EST.png"                      heap                 heap                
+0xc00002fb50         0xc0002d62a0         36         "Thursday, 08-Jan-26 02:08:18 EST.png"                      heap                 heap                
+0xc00002fb70         0xc0002d6270         36         "Thursday, 08-Jan-26 01:48:18 EST.png"                      heap                 heap                
+0xc00002fbb0         0xc0002d6210         37         "Wednesday, 07-Jan-26 23:48:18 EST.png"                     heap                 heap                
+0xc00002fbd0         0xc0002d61e0         36         "Thursday, 08-Jan-26 00:06:18 EST.png"                      heap                 heap                
+0xc00002fbf0         0xc0002d61b0         37         "Wednesday, 07-Jan-26 23:50:18 EST.png"                     heap                 heap                
+0xc00002fc10         0xc0002d6180         36         "Thursday, 08-Jan-26 00:14:18 EST.png"                      heap                 heap                
+0xc00002fc50         0xc0002d6150         36         "Thursday, 08-Jan-26 02:38:18 EST.png"                      heap                 heap                
+0xc00002fc70         0xc0002d6120         36         "Thursday, 08-Jan-26 00:56:18 EST.png"                      heap                 heap                
+0xc00002fc90         0xc0002d60f0         37         "Wednesday, 07-Jan-26 23:18:19 EST.png"                     heap                 heap                
+0xc00002fcb0         0xc0002d60c0         36         "Thursday, 08-Jan-26 00:52:18 EST.png"                      heap                 heap                
+0xc00002fd10         0xc0002d6030         36         "Thursday, 08-Jan-26 01:10:18 EST.png"                      heap                 heap                
+0xc00002fe40         0xc000010600         14         "/tmp/.X11-unix"                                            heap                 heap                
+0xc00002fe70         0xc000010696         2          "X0"                                                        heap                 heap                
+0xc00018c000         0xc00018c020         2          "0`"                                                        heap                 heap                
+0xc0002b81b0         0xc000010684         4          "2501"                                                      heap                 heap                
+0xc0002b82a0         0xc0000105e0         14         "/tmp/VMwareDnD"                                            heap                 heap                
+0x846490             0x662a74             6          "cmd/go"                                                    heap                 rodata              
+0x8468d0             0x6625be             3          "net"                                                       heap                 rodata              
+0xc00007e510         0x662540             3          "png"                                                       heap                 rodata              
+0xc0001021e0         0x6638c3             10         "ClassCHAOS"                                                heap                 rodata              
+0xc0001022b0         0x665dec             18         "RCodeServerFailure"                                        heap                 rodata              
+0xc000102380         0x662a80             6          "Answer"                                                    heap                 rodata              
+0xc000116050         0xc0000102e0         12         "rsa-sha2-512"                                              heap                 heap                
+0xc000102450         0x663453             9          "dns,files"                                                 heap                 rodata              
+0xc00007eab0         0xc00008def3         4          "none"                                                      heap                 heap                
+0xc00007eac8         0xc00008def8         16         "zlib@openssh.com"                                          heap                 heap                
+0xc00007eae0         0xc00008df0c         4          "none"                                                      heap                 heap                
+0xc00007eaf8         0xc00008df11         16         "zlib@openssh.com"                                          heap                 heap                
+0xc00007eb10         0x662642             4          "Atoi"                                                      heap                 rodata              
+0xc00007ecf8         0xc000010548         7          "Success"                                                   heap                 heap                
+0xc00007ed58         0xc0000185e8         17         "Permission denied"                                         heap                 heap                
+0xc00007edb8         0xc000010660         11         "End of file"                                               heap                 heap                
+0xc00007ee18         0xc000010670         7          "Success"                                                   heap                 heap                
+0xc00007eed8         0xc0000106a4         7          "Success"                                                   heap                 heap                
+0xc00007ef68         0xc0000106d0         11         "End of file"                                               heap                 heap                
+0xc00007efc8         0xc000018738         17         "Permission denied"                                         heap                 heap                
+0xc00007f028         0xc000018750         17         "Permission denied"                                         heap                 heap                
+0xc00007f088         0xc000018768         17         "Permission denied"                                         heap                 heap                
+0xc00007f0e8         0xc000018780         17         "Permission denied"                                         heap                 heap                
+0xc00007f1a8         0xc000010710         7          "Success"                                                   heap                 heap                
+0xc00007f268         0xc000010740         11         "End of file"                                               heap                 heap                
+0xc00007f2c8         0xc000010750         7          "Success"                                                   heap                 heap                
+0xc00007f328         0xc000018840         17         "Permission denied"                                         heap                 heap                
+0xc00007f3e8         0xc0000107b0         7          "Success"                                                   heap                 heap                
+0xc00007f418         0xc0000107c0         7          "Success"                                                   heap                 heap                
+0xc00007f448         0xc0000107d0         7          "Success"                                                   heap                 heap                
+0x8463d0             0x66463c             13         "crypto/subtle"                                             heap                 rodata              
+0xc0000a0030         0xc00018201d         9          "publickey"                                                 heap                 heap                
+0xc0000a0048         0xc000182027         8          "password"                                                  heap                 heap                
+0xc000204128         0xc0002b00d0         11         "End of file"                                               heap                 heap                
+0xc000204218         0xc0002b0120         11         "End of file"                                               heap                 heap                
+0xc000204278         0xc0002b0130         7          "Success"                                                   heap                 heap                
+0xc0002042d8         0xc000202228         17         "Permission denied"                                         heap                 heap                
+0xc000204368         0xc0002b0160         11         "End of file"                                               heap                 heap                
+0xc0002043c8         0xc000202270         17         "Permission denied"                                         heap                 heap                
+0xc000204458         0xc0002b0180         7          "Success"                                                   heap                 heap                
+0xc0002044b8         0xc0002022e8         17         "Permission denied"                                         heap                 heap                
+0xc000204518         0xc000202300         17         "Permission denied"                                         heap                 heap                
+0xc000204578         0xc000202318         17         "Permission denied"                                         heap                 heap                
+0xc0002045d8         0xc000202330         17         "Permission denied"                                         heap                 heap                
+0xc000204638         0xc0002b01a0         11         "End of file"                                               heap                 heap                
+0xc000204698         0xc000202360         17         "Permission denied"                                         heap                 heap                
+0xc00007e538         0x674548             5          " 3Y"                                                       heap                 rodata              
+0xc00007a3c0         0xc0000182d0         17         "curve25519-sha256"                                         heap                 heap                
+0xc00007a3d0         0xc000208100         28         "curve25519-sha256@libssh.org"                              heap                 heap                
+0xc00007a3e0         0xc0000182e8         18         "ecdh-sha2-nistp256"                                        heap                 heap                
+0xc00007a3f0         0xc000018300         18         "ecdh-sha2-nistp384"                                        heap                 heap                
+0xc00007a410         0xc00001a2d0         36         "diffie-hellman-group-exchange-sha256"                      heap                 heap                
+0xc00007a420         0xc000208120         29         "diffie-hellman-group16-sha512"                             heap                 heap                
+0xc00007a430         0xc000208140         29         "diffie-hellman-group18-sha512"                             heap                 heap                
+0xc00007a440         0xc000208160         29         "diffie-hellman-group14-sha256"                             heap                 heap                
+0xc00007a450         0xc000208180         28         "kex-strict-s-v00@openssh.com"                              heap                 heap                
+0xc00007a500         0xc000018420         23         "umac-64-etm@openssh.com"                                   heap                 heap                
+0xc00007a510         0xc000018438         24         "umac-128-etm@openssh.com"                                  heap                 heap                
+0xc00007a530         0xc000208260         29         "hmac-sha2-512-etm@openssh.com"                             heap                 heap                
+0xc00007a540         0xc000208280         25         "hmac-sha1-etm@openssh.com"                                 heap                 heap                
+0xc00007a520         0xc000208240         29         "hmac-sha2-256-etm@openssh.com"                             heap                 heap                
+0xc00007a550         0xc000018450         19         "umac-64@openssh.com"                                       heap                 heap                
+0xc00007a570         0xc0000103f0         13         "hmac-sha2-256"                                             heap                 heap                
+0xc00007a580         0xc000010400         13         "hmac-sha2-512"                                             heap                 heap                
+0xc000116060         0xc0000102f0         12         "rsa-sha2-256"                                              heap                 heap                
+0xc000116070         0xc0000102d8         7          "ssh-rsa"                                                   heap                 heap                
+0xc000116080         0xc000018348         19         "ecdsa-sha2-nistp256"                                       heap                 heap                
+0xc000116090         0xc000010300         11         "ssh-ed25519"                                               heap                 heap                
+0xc0000e41e0         0xc0002081a0         29         "chacha20-poly1305@openssh.com"                             heap                 heap                
+0xc0000e41f0         0xc000010360         10         "aes128-ctr"                                                heap                 heap                
+0xc0000e4200         0xc000010370         10         "aes192-ctr"                                                heap                 heap                
+0xc0000e4210         0xc000010380         10         "aes256-ctr"                                                heap                 heap                
+0xc0000e4220         0xc000018360         22         "aes128-gcm@openssh.com"                                    heap                 heap                
+0xc0000e4230         0xc000018378         22         "aes256-gcm@openssh.com"                                    heap                 heap                
+0xc00011e2f0         0x6745e8             7          " @P"                                                       heap                 rodata              
+0xc00011e530         0x66b963             35         "sk-ssh-ed25519-cert-v01@openssh.com"                       heap                 rodata              
+0xc00011e540         0x6683db             26         "sk-ssh-ed25519@openssh.com"                                heap                 rodata              
+0xc00007a560         0xc000018468         20         "umac-128@openssh.com"                                      heap                 heap                
+0xc00007a590         0xc000010410         9          "hmac-sha1"                                                 heap                 heap                
+0xc000188000         0x662d60             8          "username"                                                  heap                 rodata              
+0xc0001998d0         0x6f7bac             31         "image/png.(*encoder).writeImage"                           heap                 rodata              
+0xc000128018         0xc00008dc7f         10         "aes128-ctr"                                                heap                 heap                
+0xc000128030         0xc00008dc8a         10         "aes192-ctr"                                                heap                 heap                
+0xc000128090         0xc00008dcd1         29         "chacha20-poly1305@openssh.com"                             heap                 heap                
+0xc0001280a8         0xc00008dcef         10         "aes128-ctr"                                                heap                 heap                
+0xc000128108         0xc00008dd27         22         "aes256-gcm@openssh.com"                                    heap                 heap                
+0xc000136028         0xc000018060         15         "DESKTOP_SESSION"                                           heap                 heap                
+0xc000136040         0xc000010030         10         "WINDOWPATH"                                                heap                 heap                
+0xc0001360f0         0xc000018000         16         "QT_ACCESSIBILITY"                                          heap                 heap                
+0xc000136108         0xc00001a000         15         "XDG_CONFIG_DIRS"                                           heap                 heap                
+0xc000136168         0xc000018120         14         "JOURNAL_STREAM"                                            heap                 heap                
+0xc0001361b8         0xc000016060         21         "GNOME_TERMINAL_SCREEN"                                     heap                 heap                
+0xc0001361d0         0xc00001a120         9          "LESSCLOSE"                                                 heap                 heap                
+0xc000136280         0xc000010070         11         "VTE_VERSION"                                               heap                 heap                
+0xc000136298         0xc000010010         5          "SHELL"                                                     heap                 heap                
+0xc0001362f8         0xc00001e000         14         "GPG_AGENT_INFO"                                            heap                 heap                
+0xc000136310         0xc000020000         9          "LS_COLORS"                                                 heap                 heap                
+0xc000136348         0xc000010080         10         "MANAGERPID"                                                heap                 heap                
+0xc000136360         0xc0000180c0         16         "GJS_DEBUG_OUTPUT"                                          heap                 heap                
+0xc000136410         0xc00001a0c0         10         "XAUTHORITY"                                                heap                 heap                
+0xc000136428         0xc00001a0f0         13         "INVOCATION_ID"                                             heap                 heap                
+0xc0001364d8         0xc000018048         10         "XMODIFIERS"                                                heap                 heap                
+0xc0001364f0         0xc000018078         13         "SSH_AGENT_PID"                                             heap                 heap                
+0xc000136550         0xc00001c060         16         "GJS_DEBUG_TOPICS"                                          heap                 heap                
+0xc000136568         0xc000010050         8          "USERNAME"                                                  heap                 heap                
+0xc0001365a0         0xc0000180d8         17         "XDG_SESSION_CLASS"                                         heap                 heap                
+0xc0001365b8         0xc00001c0a0         8          "LESSOPEN"                                                  heap                 heap                
+0xc000136888         0xc00001a8a0         41         "/tmp/Thursday, 08-Jan-26 01:30:18 EST.png"                 heap                 heap                
+0xc000136978         0xc000010560         15         "/tmp/.Test-unix"                                           heap                 heap                
+0xc000136a68         0xc000016720         86         "/tmp/systemd-private-d24d9b08c85240ed8b086e53229ab809-systemd-timesyncd.service-IAqFLg"heap                 heap                
+0xc000136b58         0xc00001ad80         41         "/tmp/Thursday, 08-Jan-26 03:44:18 EST.png"                 heap                 heap                
+0xc000136c48         0xc00001af60         41         "/tmp/Thursday, 08-Jan-26 03:16:18 EST.png"                 heap                 heap                
+0xc000136d38         0xc00001b0e0         41         "/tmp/Thursday, 08-Jan-26 02:50:18 EST.png"                 heap                 heap                
+0xc0000f7aa0         0x5fd7d3             12         "sshtype:"96""                                              heap                 rodata              
+0xc0001001f0         0x6628a4             5          "P-224"                                                     heap                 rodata              
+0xc000100600         0xc000010480         8          "nistp256"                                                  heap                 heap                
+0xc000100640         0xc000018498         19         "ecdsa-sha2-nistp256"                                       heap                 heap                
+0xc000168038         0xc00001a660         42         "/tmp/Wednesday, 07-Jan-26 23:40:18 EST.png"                heap                 heap                
+0xc000168128         0xc00001a7e0         41         "/tmp/Thursday, 08-Jan-26 00:24:18 EST.png"                 heap                 heap                
+0xc000168218         0xc00001a9c0         42         "/tmp/Wednesday, 07-Jan-26 23:52:18 EST.png"                heap                 heap                
+0xc000168308         0xc00001ab40         41         "/tmp/Thursday, 08-Jan-26 01:18:18 EST.png"                 heap                 heap                
+0xc0001683f8         0xc00001acc0         41         "/tmp/Thursday, 08-Jan-26 01:02:18 EST.png"                 heap                 heap                
+0xc0001684e8         0xc00001aea0         41         "/tmp/Thursday, 08-Jan-26 03:26:18 EST.png"                 heap                 heap                
+0xc0001685d8         0xc000010580         14         "/tmp/.XIM-unix"                                            heap                 heap                
+0xc0001686c8         0xc00001b200         42         "/tmp/Wednesday, 07-Jan-26 23:22:18 EST.png"                heap                 heap                
+0xc000168728         0xc00001b2c0         41         "/tmp/Thursday, 08-Jan-26 01:14:18 EST.png"                 heap                 heap                
+0xc0001687b8         0xc0000105a0         16         "/tmp/.X1025-lock"                                          heap                 heap                
+0xc000168818         0xc00001b440         41         "/tmp/Thursday, 08-Jan-26 03:04:18 EST.png"                 heap                 heap                
+0xc0001688a8         0xc00001b560         41         "/tmp/Thursday, 08-Jan-26 01:58:18 EST.png"                 heap                 heap                
+0xc000168908         0xc00001b620         41         "/tmp/Thursday, 08-Jan-26 01:52:18 EST.png"                 heap                 heap                
+0xc000168998         0xc00001b6e0         41         "/tmp/Thursday, 08-Jan-26 02:20:18 EST.png"                 heap                 heap                
+0xc0001689f8         0xc00001b740         41         "/tmp/Thursday, 08-Jan-26 02:24:18 EST.png"                 heap                 heap                
+0xc000168a88         0xc00001b800         41         "/tmp/Thursday, 08-Jan-26 02:16:18 EST.png"                 heap                 heap                
+0xc000168ae8         0xc00001b8c0         42         "/tmp/Wednesday, 07-Jan-26 23:28:18 EST.png"                heap                 heap                
+0xc000168b78         0xc00001b980         41         "/tmp/Thursday, 08-Jan-26 02:52:18 EST.png"                 heap                 heap                
+0xc000168bd8         0xc00001ba40         41         "/tmp/Thursday, 08-Jan-26 01:54:18 EST.png"                 heap                 heap                
+0xc000168c68         0xc00001bb60         42         "/tmp/Wednesday, 07-Jan-26 23:26:18 EST.png"                heap                 heap                
+0xc000168cc8         0xc00001bc20         41         "/tmp/Thursday, 08-Jan-26 00:16:18 EST.png"                 heap                 heap                
+0xc000168d58         0xc00001bc80         41         "/tmp/Thursday, 08-Jan-26 02:34:18 EST.png"                 heap                 heap                
+0xc000168db8         0xc00001bd40         41         "/tmp/Thursday, 08-Jan-26 00:36:18 EST.png"                 heap                 heap                
+0xc000168e48         0xc00001be60         41         "/tmp/Thursday, 08-Jan-26 00:12:18 EST.png"                 heap                 heap                
+0xc000168ea8         0xc00001bec0         41         "/tmp/Thursday, 08-Jan-26 02:32:18 EST.png"                 heap                 heap                
+0xc000168f38         0xc00001bf80         41         "/tmp/Thursday, 08-Jan-26 02:58:18 EST.png"                 heap                 heap                
+0xc000168f98         0xc00016a060         41         "/tmp/Thursday, 08-Jan-26 02:46:18 EST.png"                 heap                 heap                
+0xc00016cff8         0xc00016a120         41         "/tmp/Thursday, 08-Jan-26 03:10:18 EST.png"                 heap                 heap                
+0xc00016d088         0xc00016a1e0         41         "/tmp/Thursday, 08-Jan-26 00:22:18 EST.png"                 heap                 heap                
+0xc00016d0e8         0xc00016a2a0         42         "/tmp/Wednesday, 07-Jan-26 23:16:17 EST.png"                heap                 heap                
+0xc00016d178         0xc00016a3c0         41         "/tmp/Thursday, 08-Jan-26 02:56:18 EST.png"                 heap                 heap                
+0xc00016d1d8         0xc0000185d0         22         "/tmp/go-build600940726"                                    heap                 heap                
+0xc00016d268         0xc00016a540         41         "/tmp/Thursday, 08-Jan-26 02:28:18 EST.png"                 heap                 heap                
+0xc00016d2c8         0xc0002022d0         21         "/tmp/VMwareDnD/vENoUQ"                                     heap                 heap                
+0xc00016d358         0xc000112320         74         "/tmp/systemd-private-d24d9b08c85240ed8b086e53229ab809-fwupd.service-2EeQXf"heap                 heap                
+0xc00016d3b8         0xc00016a720         41         "/tmp/Thursday, 08-Jan-26 03:30:18 EST.png"                 heap                 heap                
+0xc00016d448         0xc00016a840         42         "/tmp/Wednesday, 07-Jan-26 23:58:18 EST.png"                heap                 heap                
+0xc00016d4a8         0xc00016a900         41         "/tmp/Thursday, 08-Jan-26 00:30:18 EST.png"                 heap                 heap                
+0xc00016d538         0xc00016aa20         41         "/tmp/Thursday, 08-Jan-26 00:26:18 EST.png"                 heap                 heap                
+0xc00016d598         0xc00016aae0         41         "/tmp/Thursday, 08-Jan-26 01:16:18 EST.png"                 heap                 heap                
+0xc00016d628         0xc0000186f0         20         "/tmp/.X11-unix/X1025"                                      heap                 heap                
+0xc00016d688         0xc00016ac60         41         "/tmp/Thursday, 08-Jan-26 03:42:18 EST.png"                 heap                 heap                
+0xc00016d718         0xc00016ad20         41         "/tmp/Thursday, 08-Jan-26 01:26:18 EST.png"                 heap                 heap                
+0xc00016d778         0xc00016ade0         41         "/tmp/Thursday, 08-Jan-26 02:48:18 EST.png"                 heap                 heap                
+0xc00016d808         0xc00016af00         41         "/tmp/Thursday, 08-Jan-26 02:18:18 EST.png"                 heap                 heap                
+0xc00016d868         0xc00016afc0         41         "/tmp/Thursday, 08-Jan-26 01:28:18 EST.png"                 heap                 heap                
+0xc00016d8f8         0xc00016b0e0         42         "/tmp/Wednesday, 07-Jan-26 23:44:18 EST.png"                heap                 heap                
+0xc00016d958         0xc000202210         19         "/tmp/.ICE-unix/1085"                                       heap                 heap                
+0xc00016d9e8         0xc00016b200         41         "/tmp/Thursday, 08-Jan-26 00:00:18 EST.png"                 heap                 heap                
+0xc00016da48         0xc00016b2c0         41         "/tmp/Thursday, 08-Jan-26 03:38:18 EST.png"                 heap                 heap                
+0xc00016dad8         0xc00016b3e0         41         "/tmp/Thursday, 08-Jan-26 00:54:18 EST.png"                 heap                 heap                
+0xc00016db38         0xc00016b4a0         41         "/tmp/Thursday, 08-Jan-26 00:06:18 EST.png"                 heap                 heap                
+0xc00016dbc8         0xc000208600         31         "/tmp/vmware-root_737-4257003961"                           heap                 heap                
+0xc00016dc28         0xc00016b620         41         "/tmp/Thursday, 08-Jan-26 00:56:18 EST.png"                 heap                 heap                
+0xc00016dcb8         0xc00016b740         41         "/tmp/Thursday, 08-Jan-26 01:38:18 EST.png"                 heap                 heap                
+0xc00016dd18         0xc00016b800         41         "/tmp/Thursday, 08-Jan-26 01:10:18 EST.png"                 heap                 heap                
+0xc0002b2fc8         0xc000016a20         85         "/tmp/systemd-private-d24d9b08c85240ed8b086e53229ab809-systemd-resolved.service-OeKlUf"heap                 heap                
+0xc00016d3e8         0xc00016a780         42         "/tmp/Wednesday, 07-Jan-26 23:36:18 EST.png"                heap                 heap                
+0xc000128000         0xc00008dc61         29         "chacha20-poly1305@openssh.com"                             heap                 heap                
+0xc000128078         0xc00008dcb7         22         "aes256-gcm@openssh.com"                                    heap                 heap                
+0xc0001280f0         0xc00008dd10         22         "aes128-gcm@openssh.com"                                    heap                 heap                
+0xc000136088         0xc000018150         6          "OLDPWD"                                                    heap                 heap                
+0xc0001360d8         0xc000016000         15         "SESSION_MANAGER"                                           heap                 heap                
+0xc000136150         0xc00001c0e0         15         "XDG_RUNTIME_DIR"                                           heap                 heap                
+0xc0001361a0         0xc00001c040         19         "XDG_SESSION_DESKTOP"                                       heap                 heap                
+0xc000136218         0xc0000160c0         13         "XDG_DATA_DIRS"                                             heap                 heap                
+0xc000136268         0xc00001c080         19         "XDG_CURRENT_DESKTOP"                                       heap                 heap                
+0xc0001362e0         0xc000018090         16         "XDG_SESSION_TYPE"                                          heap                 heap                
+0xc000136330         0xc0000180a8         15         "IM_CONFIG_PHASE"                                           heap                 heap                
+0xc0001363f8         0xc00001a060         13         "SSH_AUTH_SOCK"                                             heap                 heap                
+0xc0001364c0         0xc000018018         9          "COLORTERM"                                                 heap                 heap                
+0xc000136538         0xc000010020         7          "LOGNAME"                                                   heap                 heap                
+0xc000136588         0xc000010060         4          "LANG"                                                      heap                 heap                
+0xc000100b88         0xc000010800         11         "exit-status"                                               heap                 heap                
+0xc00016d028         0xc0000105c0         16         "/tmp/.X1024-lock"                                          heap                 heap                
+0xc00016d118         0xc00016a300         41         "/tmp/Thursday, 08-Jan-26 02:22:18 EST.png"                 heap                 heap                
+0xc00016d208         0xc00016a480         41         "/tmp/Thursday, 08-Jan-26 01:22:18 EST.png"                 heap                 heap                
+0xc00016d2f8         0xc00016a600         41         "/tmp/Thursday, 08-Jan-26 00:38:18 EST.png"                 heap                 heap                
+0xc00016d4d8         0xc00016a960         41         "/tmp/Thursday, 08-Jan-26 03:32:18 EST.png"                 heap                 heap                
+0xc00016d5c8         0xc000018690         20         "/tmp/.X11-unix/X1024"                                      heap                 heap                
+0xc00016d7a8         0xc00016ae40         42         "/tmp/Wednesday, 07-Jan-26 23:30:18 EST.png"                heap                 heap                
+0xc00016d898         0xc00016b020         41         "/tmp/Thursday, 08-Jan-26 02:06:18 EST.png"                 heap                 heap                
+0xc00016d988         0xc00016b1a0         41         "/tmp/Thursday, 08-Jan-26 01:42:18 EST.png"                 heap                 heap                
+0xc00016da78         0xc00016b320         41         "/tmp/Thursday, 08-Jan-26 02:08:18 EST.png"                 heap                 heap                
+0xc00016db68         0xc00016b500         42         "/tmp/Wednesday, 07-Jan-26 23:50:18 EST.png"                heap                 heap                
+0xc00016dc58         0xc00016b680         42         "/tmp/Wednesday, 07-Jan-26 23:18:19 EST.png"                heap                 heap                
+0xc00016dd48         0xc00016b860         41         "/tmp/Thursday, 08-Jan-26 02:10:18 EST.png"                 heap                 heap                
+0xc000128060         0xc00008dca0         22         "aes128-gcm@openssh.com"                                    heap                 heap                
+0xc0001280c0         0xc00008dcfa         10         "aes192-ctr"                                                heap                 heap                
+0xc000136070         0xc000022000         4          "PATH"                                                      heap                 heap                
+0xc000136120         0xc000010040         4          "HOME"                                                      heap                 heap                
+0xc000136200         0xc000010090         4          "USER"                                                      heap                 heap                
+0xc0001362b0         0xc00001a030         24         "GNOME_DESKTOP_SESSION_ID"                                  heap                 heap                
+0xc000136390         0xc000010008         5          "SHLVL"                                                     heap                 heap                
+0xc000136440         0xc000018108         12         "QT_IM_MODULE"                                              heap                 heap                
+0xc000136520         0xc00001a090         3          "PWD"                                                       heap                 heap                
+0xc0001365d0         0xc00001e040         24         "DBUS_SESSION_BUS_ADDRESS"                                  heap                 heap                
+0xc00000e4e0         0x6625cb             3          "tmp"                                                       heap                 rodata              
+0xc0000a6380         0xc00008dc1c         12         "rsa-sha2-512"                                              heap                 heap                
+0xc0000a63b0         0xc00008dc36         7          "ssh-rsa"                                                   heap                 heap                
+0xc0000a63e0         0xc00008dc52         11         "ssh-ed25519"                                               heap                 heap                
+0xc000100270         0x6628ae             5          "P-384"                                                     heap                 rodata              
+0xc0001002b0         0x6628b3             5          "P-521"                                                     heap                 rodata              
+0xc000076540         0x66271e             4          "dial"                                                      heap                 rodata              
+0xc000002000         0x6625af             3          "adx"                                                       heap                 rodata              
+0xc000002060         0x662732             4          "fsrm"                                                      heap                 rodata              
+0xc0000020e0         0x662a6e             6          "popcnt"                                                    heap                 rodata              
+0xc000002140         0x6628c7             5          "sse42"                                                     heap                 rodata              
+0xc000102038         0x662510             2          "Lt"                                                        heap                 rodata              
+0xc0001020d8         0x662a62             6          "Common"                                                    heap                 rodata              
+0xc000130008         0xc0000104f0         15         "server-sig-algs"                                           heap                 heap                
+0xc0001021c8         0x6638b9             10         "ClassCSNET"                                                heap                 rodata              
+0xc000102298         0x66542c             16         "RCodeFormatError"                                          heap                 rodata              
+0xc0001022c8         0x664ab0             14         "RCodeNameError"                                            heap                 rodata              
+0xc000102368         0x663020             8          "Question"                                                  heap                 rodata              
+0xc000102438         0x66344a             9          "files,dns"                                                 heap                 rodata              
+0xc0001024e8         0x662706             4          "icmp"                                                      heap                 rodata              
+0xc000102688         0x662597             3          "udp"                                                       heap                 rodata              
+0xc0001025b8         0x662a38             6          "domain"                                                    heap                 rodata              
+
+Total HEAP strings found: 618
+================================================================================
+
+================================================================================
+
+
+================================================================================
+STRING STRUCTURE EXTRACTION (DATA + RODATA)
+================================================================================
+[*] String structure size: 16 bytes
+[*] Scanning for structures in: DATA, RODATA
+[*] Scanning for data in: DATA, RODATA, TEXT, TYPES
+
+[*] Scanning RODATA: 0x5f2000 - 0x81e438
+[*] Section size: 2225.05 KB
+[*] Found 4533 candidates in rodata
+
+[*] Scanning DATA: 0x83f460 - 0x847e12
+[*] Section size: 34.42 KB
+[*] Found 698 candidates in data
+
+[+] Found 896 string structures total (checked 5231 candidates)
+================================================================================
+
+
+====================================================================================================
+STRING STRUCTURES (DATA + RODATA) ---> DATA BYTES IN (DATA/RODATA/TEXT/TYPES)
+====================================================================================================
+Struct Addr          Data Addr            Length     Value                                                        Struct Location      Data Location       
+----------------------------------------------------------------------------------------------------
+0x674428             0x4a7920             7          "I;fvuU"                                                    rodata               text                
+0x674718             0x47bf00             14         "I;fvjUH��H�� "                                             rodata               text                
+0x6b6fb0             0x66a124             31         "fmt: unknown base; can't happen"                            rodata               rodata              
+0x6b7060             0x66d443             40         "time: Stop called on uninitialized Timer"                   rodata               rodata              
+0x6b7070             0x66d9bb             41         "time: Reset called on uninitialized Timer"                  rodata               rodata              
+0x6b7080             0x66b91d             35         "non-positive interval for NewTicker"                        rodata               rodata              
+0x6b7090             0x663916             11         "nil context"                                                rodata               rodata              
+0x6b70a0             0x66691d             21         "ssh: packet too large"                                      rodata               rodata              
+0x6b70b0             0x666932             21         "ssh: packet too small"                                      rodata               rodata              
+0x6b70c0             0x66b9cc             35         "ssh: invalid packet length multiple"                        rodata               rodata              
+0x6b70d0             0x66840f             26         "ssh: invalid packet length"                                 rodata               rodata              
+0x6b70e0             0x664fcc             16         "ssh: MAC failure"                                           rodata               rodata              
+0x6b70f0             0x66a1de             31         "ssh: unsupported ecdsa key size"                            rodata               rodata              
+0x6b7100             0x66b9ef             35         "ssh: no key material for msgNewKeys"                        rodata               rodata              
+0x6b7120             0x66da5f             41         "bytes.Buffer.WriteTo: invalid Write count"                  rodata               rodata              
+0x6b7130             0x669026             28         "bytes: negative Repeat count"                               rodata               rodata              
+0x6b7140             0x66bfd5             36         "bytes: Repeat output length overflow"                       rodata               rodata              
+0x6b7150             0x664b8e             15         "bad IHDR length"                                            rodata               rodata              
+0x6b7160             0x6659b4             18         "compression method"                                         rodata               rodata              
+0x6b7170             0x66427a             13         "filter method"                                              rodata               rodata              
+0x6b7180             0x667aa2             24         "invalid interlace method"                                   rodata               rodata              
+0x6b7190             0x666e12             22         "non-positive dimension"                                     rodata               rodata              
+0x6b71a0             0x6659c6             18         "dimension overflow"                                         rodata               rodata              
+0x6b71b0             0x664b9d             15         "bad PLTE length"                                            rodata               rodata              
+0x6b71c0             0x667f10             25         "PLTE, color type mismatch"                                  rodata               rodata              
+0x6b71d0             0x664bac             15         "bad tRNS length"                                            rodata               rodata              
+0x6b71e0             0x667f29             25         "tRNS, color type mismatch"                                  rodata               rodata              
+0x6b71f0             0x66695c             21         "not enough pixel data"                                      rodata               rodata              
+0x6b7200             0x665e96             19         "too much pixel data"                                        rodata               rodata              
+0x6b7210             0x664bbb             15         "bad filter type"                                            rodata               rodata              
+0x6b7220             0x664bca             15         "bad IEND length"                                            rodata               rodata              
+0x6b7230             0x664fec             16         "invalid checksum"                                           rodata               rodata              
+0x6b7240             0x664722             14         "not a PNG file"                                             rodata               rodata              
+0x6b7250             0x663942             11         "unreachable"                                                rodata               rodata              
+0x6b7260             0x66e34d             43         "Trying connection without authority info..."                rodata               rodata              
+0x6b7270             0x66f673             48         "strconv: illegal AppendFloat/FormatFloat bitSize"           rodata               rodata              
+0x6b7280             0x66d5ab             40         "ryuFtoaFixed32 called with negative prec"                   rodata               rodata              
+0x6b7290             0x66ba7b             35         "ryuFtoaFixed32 called with prec > 9"                        rodata               rodata              
+0x6b72a0             0x66f6a3             48         "not enough significant bits after mult64bitPow10"           rodata               rodata              
+0x6b72b0             0x66c01d             36         "ryuFtoaFixed64 called with prec > 18"                       rodata               rodata              
+0x6b72c0             0x66f855             49         "not enough significant bits after mult128bitPow10"          rodata               rodata              
+0x6b72d0             0x66e378             43         "mult64bitPow10: power of 10 is out of range"                rodata               rodata              
+0x6b72e0             0x66e831             44         "mult128bitPow10: power of 10 is out of range"               rodata               rodata              
+0x6b72f0             0x66dab1             41         "strconv: illegal AppendInt/FormatInt base"                  rodata               rodata              
+0x6b7320             0x663e4c             12         "can't happen"                                               rodata               rodata              
+0x6b7330             0x66dada             41         "unexpected call to os.Exit(0) during test"                  rodata               rodata              
+0x6b7350             0x663117             9          "invalid n"                                                  rodata               rodata              
+0x6b7360             0x66557e             17         "unknown type kind"                                          rodata               rodata              
+0x6b7370             0x6706be             56         "non-empty pointer map passed for non-pointer-size values"   rodata               rodata              
+0x6b7380             0x664c8d             15         "invalid argSize"                                            rodata               rodata              
+0x6b7390             0x6639dc             11         "bad argSize"                                                rodata               rodata              
+0x6b73a0             0x66db03             41         "can't call pointer on a non-pointer Value"                  rodata               rodata              
+0x6b73b0             0x670426             55         "reflect: internal error: invalid use of makeMethodValue"    rodata               rodata              
+0x6b73c0             0x669c38             30         "MapIter.Key called before Next"                             rodata               rodata              
+0x6b73d0             0x66d5d3             40         "MapIter.Key called on exhausted iterator"                   rodata               rodata              
+0x6b73e0             0x66a6bb             32         "MapIter.Value called before Next"                           rodata               rodata              
+0x6b73f0             0x66df31             42         "MapIter.Value called on exhausted iterator"                 rodata               rodata              
+0x6b7400             0x67206c             77         "MapIter.Next called on an iterator that does not have an associated map Value" rodata               rodata              
+0x6b7410             0x66db2c             41         "MapIter.Next called on exhausted iterator"                  rodata               rodata              
+0x6b7420             0x66adc2             33         "reflect: slice index out of range"                          rodata               rodata              
+0x6b7430             0x66b586             34         "reflect: Field index out of bounds"                         rodata               rodata              
+0x6b7440             0x663132             9          "bad indir"                                                  rodata               rodata              
+0x6b7450             0x66c678             37         "reflect.Value.Bytes of non-byte slice"                      rodata               rodata              
+0x6b7460             0x66c69d             37         "reflect.Value.Bytes of non-byte array"                      rodata               rodata              
+0x6b7470             0x66f263             47         "reflect.Value.Bytes of unaddressable byte array"            rodata               rodata              
+0x6b7480             0x6684df             26         "unknown ABI parameter kind"                                 rodata               rodata              
+0x6b7490             0x66ec80             45         "reflect: internal error: invalid method index"              rodata               rodata              
+0x6b74a0             0x66c6c2             37         "method ABI and value ABI do not align"                      rodata               rodata              
+0x6b74b0             0x666e54             22         "unexpected method step"                                     rodata               rodata              
+0x6b74c0             0x6669ef             21         "unexpected value step"                                      rodata               rodata              
+0x6b74d0             0x66c065             36         "method ABI and value ABI don't align"                       rodata               rodata              
+0x6b74e0             0x670b9d             59         "reflect: reflect.Value.Elem on an invalid notinheap pointer" rodata               rodata              
+0x6b74f0             0x66ae04             33         "reflect: Field index out of range"                          rodata               rodata              
+0x6b7500             0x66ae25             33         "reflect: array index out of range"                          rodata               rodata              
+0x6b7510             0x66b5a8             34         "reflect: string index out of range"                         rodata               rodata              
+0x6b7520             0x67261b             85         "reflect.Value.Interface: cannot return value obtained from unexported field or method" rodata               rodata              
+0x6b7530             0x670e62             60         "reflect: call of reflect.Value.Len on ptr to non-array Value" rodata               rodata              
+0x6b7540             0x6710ff             62         "reflect: reflect.Value.Pointer on an invalid notinheap pointer" rodata               rodata              
+0x6b7550             0x67197f             68         "reflect: reflect.Value.UnsafePointer on an invalid notinheap pointer" rodata               rodata              
+0x6b7560             0x665a9e             18         "reflect: Zero(nil)"                                         rodata               rodata              
+0x6b7570             0x6655b1             17         "reflect: New(nil)"                                          rodata               rodata              
+0x6b7580             0x672670             86         "reflect: New of type that may not be allocated in heap (possibly undefined cgo C type)" rodata               rodata              
+0x6b7590             0x669c74             30         "called entry on non-entry node"                             rodata               rodata              
+0x6b75a0             0x6712b1             63         "internal/sync.HashTrieMap: ran out of hash bits while iterating" rodata               rodata              
+0x6b75b0             0x670e9e             60         "called CompareAndDelete when value is not of comparable type" rodata               rodata              
+0x6b75c0             0x6712f0             63         "internal/sync.HashTrieMap: ran out of hash bits while inserting" rodata               rodata              
+0x6b75f0             0x665f2e             19         "sync.Cond is copied"                                        rodata               rodata              
+0x6b7600             0x662e58             8          "nil Pool"                                                   rodata               rodata              
+0x6b7610             0x66a6fb             32         "sync: negative WaitGroup counter"                           rodata               rodata              
+0x6b7620             0x67095f             57         "sync: WaitGroup misuse: Add called concurrently with Wait"  rodata               rodata              
+0x6b7630             0x670bd8             59         "sync: WaitGroup is reused before previous Wait has returned" rodata               rodata              
+0x6b7640             0x671b17             69         "runtime.Pinner: found leaking pinned pointer; forgot to call Unpin()?" rodata               rodata              
+0x6b7650             0x66c70c             37         "runtime: allocation size out of range"                      rodata               rodata              
+0x6b7660             0x6689fd             27         "makechan: size out of range"                                rodata               rodata              
+0x6b7670             0x66e8e1             44         "send on synctest channel from outside bubble"               rodata               rodata              
+0x6b7680             0x666f30             22         "send on closed channel"                                     rodata               rodata              
+0x6b7690             0x666595             20         "close of nil channel"                                       rodata               rodata              
+0x6b76a0             0x66751f             23         "close of closed channel"                                    rodata               rodata              
+0x6b76b0             0x66f2c1             47         "receive on synctest channel from outside bubble"            rodata               rodata              
+0x6b76c0             0x66e057             42         "non-empty mark queue after concurrent mark"                 rodata               rodata              
+0x6b76d0             0x66371f             10         "Bad varint"                                                 rodata               rodata              
+0x6b76e0             0x66a3ce             31         "runtime.Pinner: argument is nil"                            rodata               rodata              
+0x6b76f0             0x66fb97             50         "runtime.Pinner: object was allocated into an arena"         rodata               rodata              
+0x6b7700             0x669875             29         "tried to unpin non-Go pointer"                              rodata               rodata              
+0x6b7710             0x66cd77             38         "arg size to reflect.call more than 1GB"                     rodata               rodata              
+0x6b7720             0x66f096             46         "select on synctest channel from outside bubble"             rodata               rodata              
+0x6b7730             0x664944             14         "semaRoot queue"                                             rodata               rodata              
+0x6b7740             0x67079e             56         "semaphore wake of synctest goroutine from outside bubble"   rodata               rodata              
+0x6b7750             0x668cbb             27         "makeslice: len out of range"                                rodata               rodata              
+0x6b7760             0x668cd6             27         "makeslice: cap out of range"                                rodata               rodata              
+0x6b7770             0x668cf1             27         "growslice: len out of range"                                rodata               rodata              
+0x6b7780             0x66e1a7             42         "stop of synctest timer from outside bubble"                 rodata               rodata              
+0x6b7790             0x66e628             43         "reset of synctest timer from outside bubble"                rodata               rodata              
+0x6b77a0             0x66e653             43         "synctest timer accessed from outside bubble"                rodata               rodata              
+0x6b77b0             0x66c37d             36         "timer moved between synctest bubbles"                       rodata               rodata              
+0x6b77c0             0x66a4a7             31         "unsafe.String: len out of range"                            rodata               rodata              
+0x6b77d0             0x66ed8e             45         "unsafe.String: ptr is nil and len is not zero"              rodata               rodata              
+0x6b77e0             0x669f44             30         "unsafe.Slice: len out of range"                             rodata               rodata              
+0x6b77f0             0x66ea99             44         "unsafe.Slice: ptr is nil and len is not zero"               rodata               rodata              
+0x6b7800             0x66c912             37         "cannot create context from nil parent"                      rodata               rodata              
+0x6b7810             0x66ede8             45         "context: internal error: missing cancel error"              rodata               rodata              
+0x6b7820             0x662ce9             7          "nil key"                                                    rodata               rodata              
+0x6b7830             0x666ca4             21         "key is not comparable"                                      rodata               rodata              
+0x6b7840             0x66e225             42         "sync/atomic: store of nil value into Value"                 rodata               rodata              
+0x6b7850             0x670c89             59         "sync/atomic: store of inconsistently typed value into Value" rodata               rodata              
+0x6b7860             0x6707d6             56         "strings: illegal use of non-zero Builder copied by value"   rodata               rodata              
+0x6b7870             0x66c3c5             36         "strings.Builder.Grow: negative count"                       rodata               rodata              
+0x6b7880             0x66fa3f             49         "strings.Reader.WriteTo: invalid WriteString count"          rodata               rodata              
+0x6b7890             0x66c3e9             36         "strings: Join output length overflow"                       rodata               rodata              
+0x6b7940             0x664a5c             14         "internal error"                                             rodata               rodata              
+0x6b7950             0x668dc9             27         "cgo stub: cgo not available"                                rodata               rodata              
+0x6b7980             0x6704cb             55         "cipher.NewCBCEncrypter: IV length must equal block size"    rodata               rodata              
+0x6b7990             0x67247c             83         "crypto/cipher: use of CBC with non-AES ciphers is not allowed in FIPS 140-only mode" rodata               rodata              
+0x6b79a0             0x66c40d             36         "crypto/cipher: input not full blocks"                       rodata               rodata              
+0x6b79b0             0x66d87b             40         "crypto/cipher: output smaller than input"                   rodata               rodata              
+0x6b79c0             0x66c95c             37         "crypto/cipher: invalid buffer overlap"                      rodata               rodata              
+0x6b79d0             0x67080e             56         "crypto/cipher: internal error: generic CBC used with AES"   rodata               rodata              
+0x6b79e0             0x670502             55         "cipher.NewCBCDecrypter: IV length must equal block size"    rodata               rodata              
+0x6b79f0             0x6645e1             13         "bad IV length"                                              rodata               rodata              
+0x6b7a00             0x6724cf             83         "crypto/cipher: use of CTR with non-AES ciphers is not allowed in FIPS 140-only mode" rodata               rodata              
+0x6b7a10             0x66f14e             46         "cipher.NewCTR: IV length must equal block size"             rodata               rodata              
+0x6b7a20             0x670846             56         "crypto/cipher: internal error: generic CTR used with AES"   rodata               rodata              
+0x6b7a30             0x670a43             57         "crypto/cipher: invalid buffer overlap of output and input"  rodata               rodata              
+0x6b7a40             0x67193c             67         "crypto/cipher: invalid buffer overlap of output and additional data" rodata               rodata              
+0x6b7a50             0x66fc5f             50         "crypto/cipher: incorrect nonce length given to GCM"         rodata               rodata              
+0x6b7a60             0x66d332             39         "crypto/cipher: incorrect GCM nonce size"                    rodata               rodata              
+0x6b7a70             0x66d8cb             40         "crypto/cipher: message too large for GCM"                   rodata               rodata              
+0x6b7a80             0x66c981             37         "crypto/cipher: incorrect GCM tag size"                      rodata               rodata              
+0x6b7a90             0x66aa9b             32         "crypto/des: input not full block"                           rodata               rodata              
+0x6b7aa0             0x66b287             33         "crypto/des: output not full block"                          rodata               rodata              
+0x6b7ab0             0x66b80c             34         "crypto/des: invalid buffer overlap"                         rodata               rodata              
+0x6b7ac0             0x670cc4             59         "crypto/fips140: GODEBUG setting changed after program start" rodata               rodata              
+0x6b7ad0             0x671e1c             72         "crypto/fips140: FIPS 140-3 mode enabled, but integrity check didn't pass" rodata               rodata              
+0x6b7ae0             0x66b82e             34         "crypto/rc4: invalid buffer overlap"                         rodata               rodata              
+0x6b7af0             0x66bc88             35         "chacha20: output smaller than input"                        rodata               rodata              
+0x6b7b00             0x66aabb             32         "chacha20: invalid buffer overlap"                           rodata               rodata              
+0x6b7b10             0x66881f             26         "chacha20: counter overflow"                                 rodata               rodata              
+0x6b7b20             0x6700ff             53         "chacha20: internal error: wrong dst and/or src length"      rodata               rodata              
+0x6b7b30             0x66c9a6             37         "crypto: Size of unknown hash function"                      rodata               rodata              
+0x6b7b40             0x66c455             36         "crypto/rand: argument to Int is <= 0"                       rodata               rodata              
+0x6b7b50             0x671235             62         "crypto/sha1: use of SHA-1 is not allowed in FIPS 140-only mode" rodata               rodata              
+0x6b7b60             0x66346e             9          "d.nx != 0"                                                  rodata               rodata              
+0x6b7b70             0x66d359             39         "math/big: buffer too small to fit value"                    rodata               rodata              
+0x6b7b80             0x66fc91             50         "cryptobyte: attempted write while child is pending"         rodata               rodata              
+0x6b7b90             0x671cfe             71         "crypto/ecdsa: use of custom curves is not allowed in FIPS 140-only mode" rodata               rodata              
+0x6b7ba0             0x670d3a             59         "ecdsa: internal error: ordInverse produced an invalid value" rodata               rodata              
+0x6b7bb0             0x670539             55         "ecdsa: internal error: shift can only be by 1 to 7 bits"    rodata               rodata              
+0x6b7bc0             0x66fa70             49         "ecdsa: internal error: truncated hash is too long"          rodata               rodata              
+0x6b7bd0             0x67002c             52         "ecdsa: internal error: unexpectedly masking off bits"       rodata               rodata              
+0x6b7be0             0x671a07             68         "crypto/hmac: hash generation function does not produce unique values" rodata               rodata              
+0x6b7d80             0x670134             53         "crypto/elliptic: attempted operation on invalid point"      rodata               rodata              
+0x6b7d90             0x66faa1             49         "crypto/elliptic: internal error: invalid encoding"          rodata               rodata              
+0x6b7da0             0x66fcc3             50         "crypto/elliptic: nistec rejected normalized scalar"         rodata               rodata              
+0x6b7db0             0x670b29             58         "crypto/elliptic: ScalarMult was called on an invalid point" rodata               rodata              
+0x6b7dc0             0x66fe26             51         "crypto/elliptic: Add was called on an invalid point"        rodata               rodata              
+0x6b7dd0             0x662764             5          "<nil>"                                                      rodata               rodata              
+0x6b7de0             0x663480             9          "underflow"                                                  rodata               rodata              
+0x6b7df0             0x66f17c             46         "math/big: mismatched montgomery number lengths"             rodata               rodata              
+0x6b7e00             0x669432             28         "big: misuse of expNNWindowed"                               rodata               rodata              
+0x6b7e10             0x664128             12         "invalid base"                                               rodata               rodata              
+0x6b7e20             0x666d62             22         "internal inconsistency"                                     rodata               rodata              
+0x6b7e30             0x6653cc             16         "division by zero"                                           rodata               rodata              
+0x6b7e40             0x663823             10         "impossible"                                                 rodata               rodata              
+0x6b7e50             0x670d75             59         "crypto/dsa: use of DSA is not allowed in FIPS 140-only mode" rodata               rodata              
+0x6b7e60             0x670db0             59         "crypto/md5: use of MD5 is not allowed in FIPS 140-only mode" rodata               rodata              
+0x6b7ef0             0x66eaf1             44         "encoding alphabet contains newline character"               rodata               rodata              
+0x6b7f00             0x66eb1d             44         "encoding alphabet includes duplicate symbols"               rodata               rodata              
+0x6b7f10             0x6725c8             83         "crypto/hmac: use of keys shorter than 112 bits is not allowed in FIPS 140-only mode" rodata               rodata              
+0x6b7f20             0x6728a3             97         "crypto/hmac: use of hash functions other than SHA-2 or SHA-3 is not allowed in FIPS 140-only mode" rodata               rodata              
+0x6b7f80             0x66abdb             32         "bufio: tried to fill full buffer"                           rodata               rodata              
+0x6b7f90             0x66462f             13         "not available"                                              rodata               rodata              
+0x6b7fa0             0x66ce35             38         "arch-specific Castagnoli not available"                     rodata               rodata              
+0x6b7fb0             0x66a016             30         "reflect: Len of non-array type"                             rodata               rodata              
+0x6b7fc0             0x66c4e5             36         "reflect: NumField of non-struct type"                       rodata               rodata              
+0x6b7fd0             0x671d45             71         "too many concurrent operations on a single file or socket (max 1048575)" rodata               rodata              
+0x6b7fe0             0x66835c             25         "inconsistent poll.fdMutex"                                  rodata               rodata              
+0x6b7ff0             0x66ac1b             32         "initial table capacity too large"                           rodata               rodata              
+0x6b8000             0x66b34d             33         "table must have positive capacity"                          rodata               rodata              
+0x6b8010             0x662fe0             8          "overflow"                                                   rodata               rodata              
+0x6b8020             0x66f1aa             46         "invariant failed: growthLeft is unexpectedly 0"             rodata               rodata              
+0x6b8030             0x66c9f0             37         "bisect.Hash: unexpected argument type"                      rodata               rodata              
+0x6b8040             0x66caa9             37         "out does not point to an integer type"                      rodata               rodata              
+0x6b8050             0x6688a1             26         "cryptobyte: internal error"                                 rodata               rodata              
+0x6b8060             0x6713ad             63         "cryptobyte: BuilderContinuation reallocated a fixed-size buffer" rodata               rodata              
+0x6b8070             0x66fb34             49         "internal error: fillWindow called with stale data"          rodata               rodata              
+0x6b8080             0x665914             17         "index > windowEnd"                                          rodata               rodata              
+0x6b8090             0x66a5fc             31         "writeBytes with unfinished bits"                            rodata               rodata              
+0x6b80a0             0x667e4a             24         "flate: maxBits too large"                                   rodata               rodata              
+0x6b80b0             0x66b413             33         "leafCounts[maxBits][maxBits] != n"                          rodata               rodata              
+0x6b80c0             0x6672e2             22         "unexpected length code"                                     rodata               rodata              
+0x6b80d0             0x66e6ff             43         "impl: package name must not contain slashes"                rodata               rodata              
+0x6b80e0             0x664acc             14         "unknown dsbyte"                                             rodata               rodata              
+0x6c6838             0x401000             96         "��������������������������������UH��H����H�5�\nD H�=�\nD H9�f�H��v H�H�_H��]�H��H�H�\H" rodata               text                
+0x83f640             0x66a143             31         "malformed time zone information"                            data                 rodata              
+0x83f690             0x664af8             15         "packet too long"                                            data                 rodata              
+0x83f6a0             0x664f7c             16         "packet too short"                                           data                 rodata              
+0x83f6f0             0x66b476             34         "ssh: must Accept or Reject channel"                         data                 rodata              
+0x83f700             0x66d4bb             40         "ssh: can call Accept or Reject only once"                   data                 rodata              
+0x83f710             0x6625e6             4          "none"                                                       data                 rodata              
+0x83f720             0x66fd27             51         "ssh: SendAuthBanner outside of authentication phase"        data                 rodata              
+0x83f730             0x664b61             15         "ssh: short read"                                            data                 rodata              
+0x83f770             0x6673f4             23         "bytes.Buffer: too large"                                    data                 rodata              
+0x83f780             0x6701d4             54         "bytes.Buffer: reader returned negative count from Read"     data                 rodata              
+0x83f790             0x671be6             70         "bytes.Buffer: UnreadByte: previous operation was not a successful read" data                 rodata              
+0x83f7a0             0x6659a2             18         "chunk out of order"                                         data                 rodata              
+0x83f7c0             0x666986             21         "unsupported operation"                                      data                 rodata              
+0x83f7f0             0x665a56             18         "value out of range"                                         data                 rodata              
+0x83f800             0x664776             14         "invalid syntax"                                             data                 rodata              
+0x83f880             0x6639bb             11         "short write"                                                data                 rodata              
+0x83f890             0x6664b9             20         "invalid write result"                                       data                 rodata              
+0x83f8a0             0x663e40             12         "short buffer"                                               data                 rodata              
+0x83f8c0             0x6647a0             14         "unexpected EOF"                                             data                 rodata              
+0x83f8d0             0x66e3a3             43         "multiple Read calls return no data or error"                data                 rodata              
+0x83f8e0             0x6bbbe0             71         "/home/hala/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.24.10.linux-amd64" data                 rodata              
+0x83f8f0             0x6b6f70             9          "go1.24.10"                                                  data                 rodata              
+0x83f990             0x6be960             658        "0w��tA�����path\tscreenshotter\nmod\tscreenshotter\t(devel)\t\ndep\tgithub.com/BurntSushi/xgb\tv0.0.0-20210121224620-deaf085860bc\th1:7D+Bh06CRPCJO3gr2F7h1sriovOZ8BMhca2Rg85c2nk=\ndep\tgithub.com/kr/fs\tv0.1.0\th1:Jskdu9ieNAYnjxsi0LbQp1ulIKZV1LAFgK1tWhpZgl8=\ndep\tgithub.com/pkg/sftp\tv1.13.10\th1:+5FbKNTe5Z9aspU88DPIKJ9z2KZoaGCu6Sr6kKR/5mU=\ndep\tgithub.com/vova616/screenshot\tv0.0.0-20220801010501-56c10359473c\th1:mqgl+NQgzZ30EX7oA3uNIlPn6dAgG6sThBiUodUzZpU=\ndep\tgolang.org/x/crypto\tv0.45.0\th1:jMBrvKuj23MTlT0bQEOBcAE0mjg8mK9RXFhRH6nyF3Q=\nbuild\t-buildmode=exe\nbuild\t-compiler=gc\nbuild\tCGO_ENABLED=0\nbuild\tGOARCH=amd64\nbuild\tGOOS=linux\nbuild\tGOAMD64=v1\n�2C1� r �BA��" data                 rodata              
+0x83f9a0             0x669cb0             30         "assignment to entry in nil map"                             data                 rodata              
+0x83f9b0             0x666a2e             21         "negative shift amount"                                      data                 rodata              
+0x83f9c0             0x666e80             22         "integer divide by zero"                                     data                 rodata              
+0x83f9d0             0x66509c             16         "integer overflow"                                           data                 rodata              
+0x83f9e0             0x6664e1             20         "floating point error"                                       data                 rodata              
+0x83f9f0             0x66f8b7             49         "invalid memory address or nil pointer dereference"          data                 rodata              
+0x83fa50             0x66534c             16         "context canceled"                                           data                 rodata              
+0x83fa70             0x6677e8             23         "syntax error in pattern"                                    data                 rodata              
+0x83faa0             0x6662ab             19         "skip this directory"                                        data                 rodata              
+0x83fab0             0x66b245             33         "skip everything and stop the walk"                          data                 rodata              
+0x83fb20             0x6637dd             10         "/etc/hosts"                                                 data                 rodata              
+0x83fb60             0x6645c7             13         "lame referral"                                              data                 rodata              
+0x83fb70             0x6693fa             28         "cannot unmarshal DNS message"                               data                 rodata              
+0x83fb80             0x66879d             26         "cannot marshal DNS message"                                 data                 rodata              
+0x83fb90             0x665d6e             18         "server misbehaving"                                         data                 rodata              
+0x83fba0             0x6667ed             20         "invalid DNS response"                                       data                 rodata              
+0x83fbb0             0x6682c6             25         "no answer from DNS server"                                  data                 rodata              
+0x83fbd0             0x6682df             25         "no suitable address found"                                  data                 rodata              
+0x83fbe0             0x664eb8             15         "missing address"                                            data                 rodata              
+0x83fbf0             0x664104             12         "no such host"                                               data                 rodata              
+0x83fc00             0x664110             12         "unknown port"                                               data                 rodata              
+0x83fc20             0x66c937             37         "cipher: message authentication failed"                      data                 rodata              
+0x83fc90             0x666815             20         "number has no digits"                                       data                 rodata              
+0x83fca0             0x66bcf1             35         "'_' must separate successive digits"                        data                 rodata              
+0x83fce0             0x66ee15             45         "crypto/rsa: message too long for RSA key size"              data                 rodata              
+0x83fcf0             0x66944e             28         "crypto/rsa: decryption error"                               data                 rodata              
+0x83fd00             0x669fbc             30         "crypto/rsa: verification error"                             data                 rodata              
+0x83fd20             0x663c91             11         "invalid oid"                                                data                 rodata              
+0x83fd80             0x66abbb             32         "bufio: invalid use of UnreadByte"                           data                 rodata              
+0x83fd90             0x66f4c6             47         "bufio: reader returned negative count from Read"            data                 rodata              
+0x83fda0             0x66f793             48         "bufio: writer returned negative count from Write"           data                 rodata              
+0x83fdf0             0x667274             22         "zlib: invalid checksum"                                     data                 rodata              
+0x83fe00             0x667dea             24         "zlib: invalid dictionary"                                   data                 rodata              
+0x83fe10             0x666879             20         "zlib: invalid header"                                       data                 rodata              
+0x83ff10             0x665dda             18         "use of closed file"                                         data                 rodata              
+0x83ff20             0x66bda0             35         "file type does not support deadline"                        data                 rodata              
+0x83ff30             0x664164             12         "not pollable"                                               data                 rodata              
+0x83ff90             0x6652ec             16         "invalid argument"                                           data                 rodata              
+0x83ffa0             0x6654a1             17         "permission denied"                                          data                 rodata              
+0x83ffb0             0x666343             19         "file already exists"                                        data                 rodata              
+0x83ffc0             0x666356             19         "file does not exist"                                        data                 rodata              
+0x83ffd0             0x666369             19         "file already closed"                                        data                 rodata              
+0x840100             0x66f7c3             48         "parsing/packing of this type isn't available yet"           data                 rodata              
+0x840110             0x66ee42             45         "parsing/packing of this section has completed"              data                 rodata              
+0x840120             0x66ce81             38         "insufficient data for base length type"                     data                 rodata              
+0x840130             0x66eb49             44         "insufficient data for calculated length type"               data                 rodata              
+0x840140             0x668887             26         "segment prefix is reserved"                                 data                 rodata              
+0x840150             0x6678a0             23         "too many pointers (>10)"                                    data                 rodata              
+0x840160             0x664f5d             15         "invalid pointer"                                            data                 rodata              
+0x840170             0x66541c             16         "invalid dns name"                                           data                 rodata              
+0x840180             0x66e2cd             42         "insufficient data for resource body length"                 data                 rodata              
+0x840190             0x6678b7             23         "segment length too long"                                    data                 rodata              
+0x8401a0             0x66467d             13         "name too long"                                              data                 rodata              
+0x8401b0             0x66637c             19         "zero length segment"                                        data                 rodata              
+0x8401c0             0x667e1a             24         "resource length too long"                                   data                 rodata              
+0x8401d0             0x66bdc3             35         "too many Questions to pack (>65535)"                        data                 rodata              
+0x8401e0             0x66b38f             33         "too many Answers to pack (>65535)"                          data                 rodata              
+0x8401f0             0x66ca15             37         "too many Authorities to pack (>65535)"                      data                 rodata              
+0x840200             0x66ca3a             37         "too many Additionals to pack (>65535)"                      data                 rodata              
+0x840210             0x6703f0             54         "name is not in canonical format (it must end with a .)"     data                 rodata              
+0x840240             0x6668a1             20         "flate: closed writer"                                       data                 rodata              
+0x841160             0x6632f4             9          "LINUX_2.6"                                                  data                 rodata              
+0x8411a0             0x662e90             8          "panicnil"                                                   data                 rodata              
+0x841de0             0x6640f8             12         "127.0.0.1:53"                                               data                 rodata              
+0x841df0             0x662f78             8          "[::1]:53"                                                   data                 rodata              
+0x841e60             0x6646a4             14         "asynctimerchan"                                             data                 rodata              
+0x841f60             0x665ab0             18         "adaptivestackstart"                                         data                 rodata              
+0x841fa0             0x664cd8             15         "asyncpreemptoff"                                            data                 rodata              
+0x842020             0x662e98             8          "cgocheck"                                                   data                 rodata              
+0x842060             0x663a3f             11         "clobberfree"                                                data                 rodata              
+0x8420a0             0x666a43             21         "dataindependenttiming"                                      data                 rodata              
+0x8420e0             0x663661             10         "disablethp"                                                 data                 rodata              
+0x842120             0x665ac2             18         "dontfreezetheworld"                                         data                 rodata              
+0x842160             0x662978             6          "efence"                                                     data                 rodata              
+0x8421a0             0x663a4a             11         "gccheckmark"                                                data                 rodata              
+0x8421e0             0x663eac             12         "gcpacertrace"                                               data                 rodata              
+0x842220             0x6650ac             16         "gcshrinkstackoff"                                           data                 rodata              
+0x842260             0x664802             14         "gcstoptheworld"                                             data                 rodata              
+0x8422a0             0x662b61             7          "gctrace"                                                    data                 rodata              
+0x8422e0             0x663eb8             12         "harddecommit"                                               data                 rodata              
+0x842320             0x66318c             9          "inittrace"                                                  data                 rodata              
+0x842360             0x66366b             10         "invalidptr"                                                 data                 rodata              
+0x8423a0             0x663ec4             12         "madvdontneed"                                               data                 rodata              
+0x842420             0x664810             14         "profstackdepth"                                             data                 rodata              
+0x842460             0x66747e             23         "runtimecontentionstacks"                                    data                 rodata              
+0x8424a0             0x66268e             4          "sbrk"                                                       data                 rodata              
+0x8424e0             0x663195             9          "scavtrace"                                                  data                 rodata              
+0x842520             0x663a55             11         "scheddetail"                                                data                 rodata              
+0x842560             0x663675             10         "schedtrace"                                                 data                 rodata              
+0x8425a0             0x665ad4             18         "traceadvanceperiod"                                         data                 rodata              
+0x8425e0             0x66481e             14         "traceallocfree"                                             data                 rodata              
+0x842620             0x667b02             24         "tracecheckstackownership"                                   data                 rodata              
+0x842660             0x665ae6             18         "tracebackancestors"                                         data                 rodata              
+0x8426a0             0x6650bc             16         "tracefpunwindoff"                                           data                 rodata              
+0x842720             0x662a32             6          "netdns"                                                     data                 rodata              
+0x842760             0x6640ec             12         "multipathtcp"                                               data                 rodata              
+0x8427a0             0x662f70             8          "netedns0"                                                   data                 rodata              
+0x8427e0             0x662d05             7          "fips140"                                                    data                 rodata              
+0x842820             0x66382d             10         "rsa1024min"                                                 data                 rodata              
+0x8428a0             0x663a60             11         "unspecified"                                                data                 rodata              
+0x8428b0             0x664d05             15         "runtime.Gosched"                                            data                 rodata              
+0x8428c0             0x6631b0             9          "preempted"                                                  data                 rodata              
+0x8428e0             0x663183             9          "mSpanDead"                                                  data                 rodata              
+0x8428f0             0x663643             10         "mSpanInUse"                                                 data                 rodata              
+0x842900             0x663a29             11         "mSpanManual"                                                data                 rodata              
+0x842938             0x662877             5          "linux"                                                      data                 rodata              
+0x842ba0             0x6663b5             20         "/usr/share/zoneinfo/"                                       data                 rodata              
+0x842bb0             0x6679fa             24         "/usr/share/lib/zoneinfo/"                                   data                 rodata              
+0x842bc0             0x665e24             19         "/usr/lib/locale/TZ/"                                        data                 rodata              
+0x842bd0             0x6641d1             13         "/etc/zoneinfo"                                              data                 rodata              
+0x842be0             0x663639             10         "Not worker"                                                 data                 rodata              
+0x842bf0             0x6647e6             14         "GC (dedicated)"                                             data                 rodata              
+0x842c00             0x664cba             15         "GC (fractional)"                                            data                 rodata              
+0x842c10             0x66317a             9          "GC (idle)"                                                  data                 rodata              
+0x842ea0             0x666dba             22         "aes128-gcm@openssh.com"                                     data                 rodata              
+0x842eb0             0x666dd0             22         "aes256-gcm@openssh.com"                                     data                 rodata              
+0x842ec0             0x6695bd             29         "chacha20-poly1305@openssh.com"                              data                 rodata              
+0x842ed0             0x6634ef             10         "aes128-ctr"                                                 data                 rodata              
+0x842ee0             0x6634f9             10         "aes192-ctr"                                                 data                 rodata              
+0x842ef0             0x663503             10         "aes256-ctr"                                                 data                 rodata              
+0x842f00             0x6695da             29         "hmac-sha2-256-etm@openssh.com"                              data                 rodata              
+0x842f10             0x6695f7             29         "hmac-sha2-512-etm@openssh.com"                              data                 rodata              
+0x842f20             0x664260             13         "hmac-sha2-256"                                              data                 rodata              
+0x842f30             0x66426d             13         "hmac-sha2-512"                                              data                 rodata              
+0x842f40             0x66306c             9          "hmac-sha1"                                                  data                 rodata              
+0x842f50             0x663d74             12         "hmac-sha1-96"                                               data                 rodata              
+0x842f60             0x665fa0             19         "__vdso_gettimeofday"                                        data                 rodata              
+0x842f80             0x666581             20         "__vdso_clock_gettime"                                       data                 rodata              
+0x842fa0             0x66510c             16         "__vdso_getrandom"                                           data                 rodata              
+0x843040             0x6628ee             6          "Sunday"                                                     data                 rodata              
+0x843050             0x6628f4             6          "Monday"                                                     data                 rodata              
+0x843060             0x662ab2             7          "Tuesday"                                                    data                 rodata              
+0x843070             0x663048             9          "Wednesday"                                                  data                 rodata              
+0x843080             0x662d70             8          "Thursday"                                                   data                 rodata              
+0x843090             0x6628fa             6          "Friday"                                                     data                 rodata              
+0x8430a0             0x662d78             8          "Saturday"                                                   data                 rodata              
+0x8430c0             0x666908             21         "mlkem768x25519-sha256"                                      data                 rodata              
+0x8430d0             0x6654b2             17         "curve25519-sha256"                                          data                 rodata              
+0x8430e0             0x66596c             18         "ecdh-sha2-nistp256"                                         data                 rodata              
+0x8430f0             0x66597e             18         "ecdh-sha2-nistp384"                                         data                 rodata              
+0x843100             0x665990             18         "ecdh-sha2-nistp521"                                         data                 rodata              
+0x843110             0x669583             29         "diffie-hellman-group14-sha256"                              data                 rodata              
+0x843120             0x6688ef             27         "diffie-hellman-group14-sha1"                                data                 rodata              
+0x843140             0x667450             23         "index out of range [%x]"                                    data                 rodata              
+0x843150             0x66a25a             31         "slice bounds out of range [:%x]"                            data                 rodata              
+0x843170             0x66a279             31         "slice bounds out of range [%x:]"                            data                 rodata              
+0x843180             0x66a71b             32         "slice bounds out of range [::%x]"                           data                 rodata              
+0x8431a0             0x66a73b             32         "slice bounds out of range [:%x:]"                           data                 rodata              
+0x8431b0             0x66a75b             32         "slice bounds out of range [%x::]"                           data                 rodata              
+0x8431c0             0x66cc6d             38         "index out of range [%x] with length %y"                     data                 rodata              
+0x8431d0             0x66eef8             46         "slice bounds out of range [:%x] with length %y"             data                 rodata              
+0x8431e0             0x66f6d3             48         "slice bounds out of range [:%x] with capacity %y"           data                 rodata              
+0x8431f0             0x66ae67             33         "slice bounds out of range [%x:%y]"                          data                 rodata              
+0x843200             0x66f292             47         "slice bounds out of range [::%x] with length %y"            data                 rodata              
+0x843210             0x66f886             49         "slice bounds out of range [::%x] with capacity %y"          data                 rodata              
+0x843220             0x66b5ca             34         "slice bounds out of range [:%x:%y]"                         data                 rodata              
+0x843230             0x66b5ec             34         "slice bounds out of range [%x:%y:]"                         data                 rodata              
+0x843240             0x6721f1             79         "cannot convert slice with length %y to array or pointer to array with length %x" data                 rodata              
+0x843260             0x663921             11         "ssh-ed25519"                                                data                 rodata              
+0x843270             0x6683db             26         "sk-ssh-ed25519@openssh.com"                                 data                 rodata              
+0x843280             0x66b4ba             34         "sk-ecdsa-sha2-nistp256@openssh.com"                         data                 rodata              
+0x843290             0x665e5d             19         "ecdsa-sha2-nistp256"                                        data                 rodata              
+0x8432a0             0x665e70             19         "ecdsa-sha2-nistp384"                                        data                 rodata              
+0x8432b0             0x665e83             19         "ecdsa-sha2-nistp521"                                        data                 rodata              
+0x8432c0             0x663d80             12         "rsa-sha2-256"                                               data                 rodata              
+0x8432d0             0x663d8c             12         "rsa-sha2-512"                                               data                 rodata              
+0x8432e0             0x662adc             7          "ssh-rsa"                                                    data                 rodata              
+0x8432f0             0x662ae3             7          "ssh-dss"                                                    data                 rodata              
+0x843300             0x662692             4          "idle"                                                       data                 rodata              
+0x843310             0x662ea0             8          "runnable"                                                   data                 rodata              
+0x843320             0x662b6f             7          "running"                                                    data                 rodata              
+0x843330             0x662b76             7          "syscall"                                                    data                 rodata              
+0x843340             0x662b7d             7          "waiting"                                                    data                 rodata              
+0x843360             0x662696             4          "dead"                                                       data                 rodata              
+0x843380             0x6632eb             9          "copystack"                                                  data                 rodata              
+0x8433a0             0x662ab9             7          "January"                                                    data                 rodata              
+0x8433b0             0x662d80             8          "February"                                                   data                 rodata              
+0x8433c0             0x66276e             5          "March"                                                      data                 rodata              
+0x8433d0             0x662773             5          "April"                                                      data                 rodata              
+0x8433f0             0x6625d2             4          "June"                                                       data                 rodata              
+0x843400             0x6625d6             4          "July"                                                       data                 rodata              
+0x843410             0x662900             6          "August"                                                     data                 rodata              
+0x843420             0x663051             9          "September"                                                  data                 rodata              
+0x843430             0x662ac0             7          "October"                                                    data                 rodata              
+0x843440             0x662d88             8          "November"                                                   data                 rodata              
+0x843450             0x662d90             8          "December"                                                   data                 rodata              
+0x843560             0x66acfc             33         "rsa-sha2-256-cert-v01@openssh.com"                          data                 rodata              
+0x843570             0x66ad1d             33         "rsa-sha2-512-cert-v01@openssh.com"                          data                 rodata              
+0x843580             0x668f46             28         "ssh-rsa-cert-v01@openssh.com"                               data                 rodata              
+0x843590             0x668f62             28         "ssh-dss-cert-v01@openssh.com"                               data                 rodata              
+0x8435a0             0x66d4e3             40         "ecdsa-sha2-nistp256-cert-v01@openssh.com"                   data                 rodata              
+0x8435b0             0x66d50b             40         "ecdsa-sha2-nistp384-cert-v01@openssh.com"                   data                 rodata              
+0x8435c0             0x66d533             40         "ecdsa-sha2-nistp521-cert-v01@openssh.com"                   data                 rodata              
+0x8435d0             0x66a61b             32         "ssh-ed25519-cert-v01@openssh.com"                           data                 rodata              
+0x843660             0x662ace             7          "unknown"                                                    data                 rodata              
+0x843670             0x665f54             19         "GC mark termination"                                        data                 rodata              
+0x843680             0x6664f5             20         "GC sweep termination"                                       data                 rodata              
+0x843690             0x664cc9             15         "write heap dump"                                            data                 rodata              
+0x8436a0             0x6655c2             17         "goroutine profile"                                          data                 rodata              
+0x8436b0             0x667fa6             25         "goroutine profile cleanup"                                  data                 rodata              
+0x8436c0             0x668513             26         "all goroutines stack trace"                                 data                 rodata              
+0x8436d0             0x6647f4             14         "read mem stats"                                             data                 rodata              
+0x8436e0             0x6655d3             17         "AllThreadsSyscall"                                          data                 rodata              
+0x8436f0             0x66364d             10         "GOMAXPROCS"                                                 data                 rodata              
+0x843700             0x663a34             11         "start trace"                                                data                 rodata              
+0x843710             0x663657             10         "stop trace"                                                 data                 rodata              
+0x843720             0x666e96             22         "CountPagesInUse (test)"                                     data                 rodata              
+0x843730             0x666eac             22         "ReadMetricsSlow (test)"                                     data                 rodata              
+0x843740             0x667467             23         "ReadMemStatsSlow (test)"                                    data                 rodata              
+0x843750             0x6689ac             27         "PageCachePagesLeaked (test)"                                data                 rodata              
+0x843760             0x666509             20         "ResetDebugLog (test)"                                       data                 rodata              
+0x843790             0x662b84             7          "forever"                                                    data                 rodata              
+0x8437a0             0x662b8b             7          "network"                                                    data                 rodata              
+0x8437b0             0x66297e             6          "select"                                                     data                 rodata              
+0x8437c0             0x66567d             17         "sync.(*Cond).Wait"                                          data                 rodata              
+0x8437d0             0x662656             4          "sync"                                                       data                 rodata              
+0x8437e0             0x6631a7             9          "chan send"                                                  data                 rodata              
+0x8437f0             0x663edc             12         "chan receive"                                               data                 rodata              
+0x843800             0x6690b2             28         "GC mark assist wait for work"                               data                 rodata              
+0x843810             0x668547             26         "GC background sweeper wait"                                 data                 rodata              
+0x843820             0x666a58             21         "system goroutine wait"                                      data                 rodata              
+0x843840             0x665f8d             19         "wait for debug call"                                        data                 rodata              
+0x843850             0x665b40             18         "wait until GC ends"                                         data                 rodata              
+0x843860             0x66281d             5          "sleep"                                                      data                 rodata              
+0x843870             0x666eee             22         "GC weak to strong wait"                                     data                 rodata              
+0x843880             0x662e70             8          "synctest"                                                   data                 rodata              
+0x843a20             0x662b22             7          "invalid"                                                    data                 rodata              
+0x843a30             0x66265e             4          "bool"                                                       data                 rodata              
+0x843a50             0x662662             4          "int8"                                                       data                 rodata              
+0x843a60             0x6627b4             5          "int16"                                                      data                 rodata              
+0x843a70             0x6627b9             5          "int32"                                                      data                 rodata              
+0x843a80             0x6627be             5          "int64"                                                      data                 rodata              
+0x843a90             0x662666             4          "uint"                                                       data                 rodata              
+0x843aa0             0x6627c3             5          "uint8"                                                      data                 rodata              
+0x843ab0             0x662942             6          "uint16"                                                     data                 rodata              
+0x843ac0             0x662948             6          "uint32"                                                     data                 rodata              
+0x843ad0             0x66294e             6          "uint64"                                                     data                 rodata              
+0x843ae0             0x662b29             7          "uintptr"                                                    data                 rodata              
+0x843af0             0x662aa4             7          "float32"                                                    data                 rodata              
+0x843b00             0x662aab             7          "float64"                                                    data                 rodata              
+0x843b10             0x663105             9          "complex64"                                                  data                 rodata              
+0x843b20             0x663607             10         "complex128"                                                 data                 rodata              
+0x843b30             0x6627c8             5          "array"                                                      data                 rodata              
+0x843b40             0x66266a             4          "chan"                                                       data                 rodata              
+0x843b50             0x66266e             4          "func"                                                       data                 rodata              
+0x843b60             0x66310e             9          "interface"                                                  data                 rodata              
+0x843b90             0x6627cd             5          "slice"                                                      data                 rodata              
+0x843ba0             0x6628e8             6          "string"                                                     data                 rodata              
+0x843bb0             0x662954             6          "struct"                                                     data                 rodata              
+0x843bc0             0x6647ae             14         "unsafe.Pointer"                                             data                 rodata              
+0x843f70             0x6655e4             17         "GC assist marking"                                          data                 rodata              
+0x843f80             0x662b68             7          "IO wait"                                                    data                 rodata              
+0x843f90             0x667495             23         "chan receive (nil chan)"                                    data                 rodata              
+0x843fa0             0x66651d             20         "chan send (nil chan)"                                       data                 rodata              
+0x843fb0             0x663ed0             12         "dumping heap"                                               data                 rodata              
+0x843fc0             0x665af8             18         "garbage collection"                                         data                 rodata              
+0x843fd0             0x6674ac             23         "garbage collection scan"                                    data                 rodata              
+0x843fe0             0x66319e             9          "panicwait"                                                  data                 rodata              
+0x844000             0x6655f5             17         "select (no cases)"                                          data                 rodata              
+0x844010             0x66482c             14         "GC assist wait"                                             data                 rodata              
+0x844020             0x66438b             13         "GC sweep wait"                                              data                 rodata              
+0x844030             0x6650cc             16         "GC scavenge wait"                                           data                 rodata              
+0x844060             0x66483a             14         "finalizer wait"                                             data                 rodata              
+0x844070             0x664ce7             15         "force gc (idle)"                                            data                 rodata              
+
+Total static string structures found: 896
+================================================================================
+
+
