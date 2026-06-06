@@ -372,6 +372,39 @@ class Go_Strings(interfaces.plugins.PluginInterface):
     def _find_pclntab_by_magic(self, segments: List[Dict]) -> Optional[Dict]:
         """Original magic-byte based pclntab detection."""
         rodata_segment = None
+        for seg in segments:
+            if seg["p_type"] == self.PT_LOAD and seg["p_flags_str"] == "R--":
+                rodata_segment = seg
+                break
+        if not rodata_segment:
+            return None
+        start = rodata_segment["runtime_vaddr"]
+        end = rodata_segment["runtime_end"]
+        print(f"\n[*] Scanning for pclntab (magic bytes) in RODATA: {hex(start)}-{hex(end)}")
+        layer = self.context.layers[self.layer_name]
+        magic_bytes_list = list(self.GO_MAGICS.keys())
+        chunk_size = 0x10000
+        current = start
+        while current < end:
+            try:
+                read_size = min(chunk_size, end - current)
+                data = layer.read(current, read_size, pad=True)
+                for magic_bytes in magic_bytes_list:
+                    pos = 0
+                    while True:
+                        pos = data.find(magic_bytes, pos)
+                        if pos == -1:
+                            break
+                        candidate_addr = current + pos
+                        result = self._validate_pcheader(candidate_addr)
+                        if result:
+                            print(f"[+] Found pclntab at {hex(candidate_addr)}")
+                            return result
+                        pos += 4
+                current += chunk_size - 4
+            except:
+                current += chunk_size
+        return None
 
     
     
