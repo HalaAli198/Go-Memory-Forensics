@@ -5036,6 +5036,7 @@ class Go_Functions(interfaces.plugins.PluginInterface):
         print(f"[+] Get the cached ELF FIle")
         binary_path = self._get_binary_path_from_task(task)
         cached_func_names = {}
+        cached_filenames = {} 
         if binary_path:
            cached_inode = self._find_inode_by_path(binary_path)
            if cached_inode:
