@@ -20,10 +20,10 @@ The plugins reconstruct the **runtime state of Go (golang) programs** directly f
 Recovers Go strings from both the heap and the static sections (`.rodata`, `.data`, `.bss`). Unlike the standard `strings` utility, it reconstructs Go string headers together with their backing data and reports their memory locations, distinguishing compile-time constants from dynamically allocated strings. 
 
 ### `go_functions`
-Recovers function metadata from `pclntab` and `moduledata`,  resolves each function's name source filename (from process memory + the cached binary), classifies functions by origin (runtime, standard library, third-party, application-level), infers argument types from interfaces, type methods, and `ArgInfo` / `ArgsPointerMaps`, and performs **ABI-aware backward analysis** from call sites to recover argument values. 
+Recovers function metadata from `pclntab` and `moduledata`, resolves each function's name and source filename (from process memory plus the page-cached binary), classifies functions by origin (runtime, standard library, third-party, application), infers argument types from interface tables, type methods, and `ArgInfo` / `ArgsPointerMaps`, and performs **ABI-aware backward analysis** from call sites to recover argument values.
 
 ### `go_goroutines`
-Discovers every goroutine in the process via `runtime.allgs` and unwinds each one's saved stack using the `PCSP` tables to reconstruct its complete call chain, down to the function executing at capture time. For each stack frame it recovers typed argument values( strings, structs, pointers, maps, and slices) through a five-tier resolution cascade (the binary's own type methods, runtime/stdlib and third-party signature databases, and `ArgInfo` / `ArgsPointerMaps` structural heuristics), and reports each goroutine's execution state and wait reason (channel receive, mutex, sleep, I/O wait).
+Discovers every goroutine via `runtime.allgs` and unwinds each one's saved stack using the `PCSP` tables to reconstruct its complete call chain, down to the function executing at capture time. For each stack frame it recovers typed argument values through a five-tier resolution cascade (the binary's own type methods, runtime/stdlib and third-party signature databases, and `ArgInfo` / `ArgsPointerMaps` structural heuristics), and reports each goroutine's execution state and wait reason (channel receive, mutex, sleep, I/O wait).
 
 ### Supporting plugin
 
@@ -52,7 +52,7 @@ Discovers every goroutine in the process via `runtime.allgs` and unwinds each on
 │   ├── go_file_classifier.py      # helper: source-path → category classifier
 │   └── third_party_analyzer.py    # helper: download/parse 3rd-party Go pkgs for signatures
 ├── Windows_Plugins/               # Windows (PE) variants of the same plugins
-├── file_func_params_extractor/    # function-signature database + its generator
+├── file_func_params_extractor/    # function-signature database (runtime, stdlib, and itnernal)+ its generator
 │   ├── go_func_signature.py       # builds go_func_lines_v<VERSION>.json from Go source
 │   ├── go_func_lines_v115.json    # one DB per Go toolchain version
 │   ├── go_func_lines_v116.json
@@ -107,7 +107,7 @@ cp Linux_Plugins/*.py   /path/to/volatility3/volatility3/plugins/linux/
 cp Windows_Plugins/*.py /path/to/volatility3/volatility3/plugins/windows/
 ```
 
-`go_file_classifier.py` and `third_party_analyzer.py` must sit alongside the plugins (they are imported as `volatility3.plugins.linux.*`).
+`go_file_classifier.py` and `third_party_analyzer.py` must sit alongside the plugins (they are imported as `volatility3.plugins.linux.*` and `volatility3.plugins.windows.*`).
 
 ### 4. Generate kernel symbol tables (Linux)
 
@@ -148,10 +148,8 @@ python3 vol.py -f <memory_image> windows.go_strings.Go_Strings --pid <PID>
 
 `go_goroutines` resolves pointers to their string values using the heap-address JSON produced by `go_entire_heap`. For best results:
 
-1. Run **`go_entire_heap`** first,  it emits `heap_strings_pid_<PID>.json`.
-2. Run **`go_goroutines`**, which consumes that JSON for pointer→string resolution.
-
-Pre-built heap JSONs for the bundled sample PIDs are in `required_heap_json_files/`.
+1. Run **`go_entire_heap`**  and** `go_func_signature`** first,  to emit `heap_strings_pid_<PID>.json` and `go_func_lines_v<VERSION>.json`, respectively.
+2. Run **`go_goroutines`**, which consumes the JSON files for pointer→string resolution and getting the known function signatures.
 
 ---
 
