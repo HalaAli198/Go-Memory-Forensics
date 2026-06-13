@@ -1,96 +1,223 @@
 # Memory Forensics Techniques for Automated Detection and Analysis of Go Malware
 
-This repository accompanies the paper **"Memory Forensics Techniques for Automated Detection and Analysis of Go Malware"** and provides a suite of [Volatility 3](https://github.com/volatilityfoundation/volatility3) plugins for runtime analysis of Go binaries in memory.
+This repository accompanies the paper [*"Memory Forensics Techniques for Automated Detection and Analysis of Go Malware"*](https://arxiv.org/abs/2605.14020) and provides a novel suite of [Volatility 3](https://github.com/volatilityfoundation/volatility3) plugins for runtime analysis of Go binaries.
 
-> **Release status.** This repository is currently a placeholder. The full implementation, documentation, and reproduction materials will be released by the time of the conference presentation. Please check back, or watch this repository for updates.
+The plugins reconstruct the **runtime state of Go (golang) programs** directly from a process memory image.  Every plugin walks the Go runtime's own metadata ( `pclntab`, `moduledata`, the type system, and the `mheap_` allocator) so each recovered artifact (string, function, argument, goroutine, heap object) is attributed to *where it lives* and *what type it is*.
+
+## Features
+
+- Recovers Go runtime metadata (`pclntab`, `moduledata`, type system, heap allocator) directly from process memory; no symbol tables or debugging information required.
+- Works on stripped binaries, since the runtime metadata the plugins rely on is embedded by the compiler and not removed by `strip`.
+- Handles Garble-obfuscated binaries via structural `pcHeader` validation, Go version inference, and empirical `mspan` layout detection.
+- Reports each recovered artifact (string, function, argument, goroutine, heap object) with its memory location and concrete Go type.
+- Supports Go 1.2 through current releases, covering both the stack-based (≤ 1.16) and register-based (1.17+) ABIs.
+- Supports Linux and Windows memory images on x86-64.
+
+---
 
 ## Plugins
 
-The framework is implemented as three Volatility 3 plugins:
+The framework's core is implemented as three Volatility 3 plugins.
 
 ### `go_strings`
-Recovers Go strings from both heap and static sections (`.rodata`, `.data`, `.bss`). Unlike the standard `strings` utility, it reconstructs Go string headers together with their backing data and reports their memory locations, distinguishing compile-time constants from dynamically allocated strings.
+Recovers Go strings from both the heap and the static sections (`.rodata`, `.data`, `.bss`). Unlike the standard `strings` utility, it reconstructs Go string headers together with their backing data and reports their memory locations, distinguishing compile-time constants from dynamically allocated strings. Resilient to Garble obfuscation: when the magic bytes or version literal are missing, it falls back to structural `pcHeader` detection and empirical `mspan` profiling.
 
 ### `go_functions`
-Recovers function metadata from `pclntab` and `moduledata`, classifies functions by origin (runtime, standard library, third-party, application-level), infers argument types from `ArgInfo` / `ArgsPointerMaps`, and performs ABI-aware backward analysis from call sites to recover argument values. Also recovers types, interfaces, and type methods.
+Recovers function metadata from `pclntab` and `moduledata`, classifies functions by origin (runtime, standard library, third-party, application-level), infers argument types from `ArgInfo` / `ArgsPointerMaps`, and performs **ABI-aware backward analysis** from call sites to recover argument values. Also recovers types, interfaces, and type methods.
 
 ### `go_goroutines`
-Enumerates goroutines by locating `runtime.allgs`, unwinds each goroutine's call stack using `pcsp` streams, identifies actively executing functions, and recovers their runtime argument values, including state that exists only at execution time.
+Discovers every goroutine in the process via `runtime.allgs` and unwinds each one's saved stack using the `PCSP` tables to reconstruct its complete call chain, down to the function executing at capture time. For each stack frame it recovers typed argument values( strings, structs, pointers, maps, and slices) through a five-tier resolution cascade (the binary's own type methods, runtime/stdlib and third-party signature databases, and `ArgInfo` / `ArgsPointerMaps` structural heuristics), and reports each goroutine's execution state and wait reason (channel receive, mutex, sleep, I/O wait).
+
+### Supporting plugin
+
+- **`go_entire_heap`**: a type-driven recursive walk over *all* reachable heap objects (booleans, integers, floats, strings, slices, arrays, structs, maps(`hmap` pre-1.24 and Swiss Tables 1.24+), and interfaces), reporting heap address, data address, type, value, and memory region. It also emits the `heap_strings_pid_<PID>.json` used by `go_goroutines` for pointer→string resolution.
+
+---
 
 ## Supported Environments
 
-* **Architectures:** x86-64
-* **Operating systems:** Linux and Windows memory images
-* **Go versions:** Go 1.2 through current releases (version-aware parsing of `pcHeader` and `moduledata`)
-* **Volatility:** Volatility 3
+- **Architectures:** x86-64
+- **Operating systems:** Linux and Windows memory images
+- **Go versions:** Go 1.2 through current releases (version-aware parsing of `pcHeader` and `moduledata`; stack-based ABI ≤ 1.16 and register-based ABI 1.17+)
+- **Volatility:** Volatility 3 (framework version 2.0.0+)
+
+---
+
+## Repository layout
+
+```
+.
+├── Linux_Plugins/                 # Volatility 3 plugins for Linux memory images
+│   ├── go_strings.py
+│   ├── go_functions.py
+│   ├── go_goroutines.py
+│   ├── go_entire_heap.py
+│   ├── go_file_classifier.py      # helper: source-path → category classifier
+│   └── third_party_analyzer.py    # helper: download/parse 3rd-party Go pkgs for signatures
+├── Windows_Plugins/               # Windows (PE) variants of the same plugins
+├── file_func_params_extractor/    # function-signature database + its generator
+│   ├── go_func_signature.py       # builds go_func_lines_v<VERSION>.json from Go source
+│   ├── go_func_lines_v115.json    # one DB per Go toolchain version
+│   ├── go_func_lines_v116.json
+│   ├── go_func_lines_v118.json
+│   ├── go_func_lines_v1210.json
+│   ├── go_func_lines_v12410.json
+│   └── go_func_lines_v1255.json
+├── required_heap_json_files/      # pre-built heap-address JSON for the sample dumps
+│   ├── heap_strings_pid_1100.json   # Obscura
+│   ├── heap_strings_pid_2004.json   # BRICKSTORM
+│   └── heap_strings_pid_2795.json   # Pantegana
+├── Results/                       # reference output for the paper's figures/tables
+├── LICENSE
+└── README.md
+```
+
+---
+
+## Requirements
+
+- Python 3.8 or higher
+- [Volatility 3](https://github.com/volatilityfoundation/volatility3) Framework
+- [Capstone](https://pypi.org/project/capstone/) disassembly engine (used by `go_functions` for ABI-aware backward analysis)
+- `pandas`
+- For Linux memory analysis: appropriate kernel debugging symbols (see below)
+
+> **Note:** The Go plugins do **not** require Go-specific debugging symbols. All Go runtime metadata is recovered directly from process memory by parsing embedded structures (`pclntab`, `moduledata`), making the plugins effective even on stripped and obfuscated binaries.
+
+---
+
+## Installation
+
+### 1. Install Volatility 3
+
+The plugins are built on top of the Volatility 3 framework. Clone the Volatility 3 repository and follow the installation instructions at <https://github.com/volatilityfoundation/volatility3>.
+
+### 2. Install Capstone and pandas
+
+```bash
+pip install capstone pandas
+```
+
+### 3. Install the plugins
+
+Copy the plugins (and their two helper modules) into your Volatility 3 plugin tree:
+
+```bash
+# Linux plugins
+cp Linux_Plugins/*.py   /path/to/volatility3/volatility3/plugins/linux/
+
+# Windows plugins
+cp Windows_Plugins/*.py /path/to/volatility3/volatility3/plugins/windows/
+```
+
+`go_file_classifier.py` and `third_party_analyzer.py` must sit alongside the plugins (they are imported as `volatility3.plugins.linux.*`).
+
+### 4. Generate kernel symbol tables (Linux)
+
+Use the [dwarf2json](https://github.com/volatilityfoundation/dwarf2json) tool to generate the Linux kernel symbol tables Volatility 3 requires. Clone the repository, place it in the Volatility 3 directory, and follow its build instructions.
+
+```bash
+./dwarf2json linux --elf /path/to/vmlinux > vmlinux-VERSION.json
+# example:
+./dwarf2json linux --elf vmlinux-5.15.0-126-generic > vmlinux-5.15.0-126-generic.json
+```
+
+Place the resulting `.json` file in `/path/to/volatility3/symbols/`.
+
+---
+
+## Usage
+
+Each plugin runs on a single process by PID, following standard Volatility 3 conventions:
+
+```bash
+python3 vol.py -f <memory_image> linux.go_strings.Go_Strings       --pid <PID>
+python3 vol.py -f <memory_image> linux.go_functions.Go_Functions   --pid <PID>
+python3 vol.py -f <memory_image> linux.go_goroutines.Go_Goroutines --pid <PID>
+
+# Full typed heap walk (also writes heap_strings_pid_<PID>.json)
+python3 vol.py -f <memory_image> linux.go_entire_heap.Go_Entire_Heap --pid <PID>
+```
+
+Garble-obfuscated binaries need no special flags or separate plugin. Every plugin detects randomized magic bytes and falls back automatically.
+
+For Windows memory images, replace `linux` with `windows`:
+
+```bash
+python3 vol.py -f <memory_image> windows.go_strings.Go_Strings --pid <PID>
+```
+
+### Recommended order
+
+`go_goroutines` resolves pointers to their string values using the heap-address JSON produced by `go_entire_heap`. For best results:
+
+1. Run **`go_entire_heap`** first,  it emits `heap_strings_pid_<PID>.json`.
+2. Run **`go_goroutines`**, which consumes that JSON for pointer→string resolution.
+
+Pre-built heap JSONs for the bundled sample PIDs are in `required_heap_json_files/`.
+
+---
+
+## Configuration
+
+A few inputs are selected per target binary. **`go_functions` and `go_goroutines` currently reference these paths as in-code constants. Set them to match your environment and the analyzed binary's Go version before running:**
+
+- **Function-signature database.** Pick the `go_func_lines_v<VERSION>.json` that matches the target's Go toolchain (e.g. `v1255` → Go 1.25.5, `v116` → Go 1.16, `v115` → Go 1.15, `v12410` → Go 1.24.10). This DB supplies parameter names and types for runtime/stdlib/third-party functions. Regenerate for other versions with `go_func_signature.py`.
+- **Heap-address JSON.** Point `go_goroutines` at the `heap_strings_pid_<PID>.json` produced for the same PID.
+
+---
+
+## Supporting components
+
+- **`go_file_classifier.py`**: classifies a Go source-file path into `RUNTIME_CORE`, `RUNTIME_INTERNAL`, `STDLIB_INTERNAL`, `STDLIB_PUBLIC`, `THIRD_PARTY`, `APPLICATION`, `AUTOGENERATED`, `CGO`, or `UNKNOWN`. Handles relative, absolute, GOPATH, vendor, and versioned (`@v1.2.3`) module paths. This is what lets `go_functions` focus disassembly on application code.
+- **`third_party_analyzer.py`**: downloads, caches, and parses third-party Go packages to extract function signatures and parameter layouts, feeding the function/goroutine argument-recovery tiers.
+- **`file_func_params_extractor/go_func_signature.py`**: generates the `go_func_lines_v<VERSION>.json` signature databases from Go source for a given toolchain version.
+
+---
 
 ## Evaluation Samples
 
 The paper evaluates the framework against:
 
-* **BRICKSTORM:** Go-based backdoor attributed to UNC5221 (Linux, Go 1.16.3)
-* **Obscura:** Go-based ransomware targeting enterprise environments (Windows, Go 1.15)
-* **Pantegana:** Go-based RAT abused by RedNovember (Linux, Go 1.25.5)
-* **Screenshotter:** open-source Go application for reproducibility (Go 1.24.10)
+- **BRICKSTORM** (PID 2004): Go-based backdoor attributed to UNC5221. Linux, Go 1.16.3.
+- **Obscura** (PID 1100): Go-based ransomware targeting enterprise environments. Windows, Go 1.15.
+- **Pantegana** (PID 2795): Go-based RAT abused by RedNovember. Linux, Go 1.25.5.
+- **Screenshotter**: open-source Go application included for reproducibility. Go 1.24.10.
 
-## Requirements
+Reference output for each figure and table is provided in `Results/`:
 
-* Python 3.8 or higher
-* Volatility 3 Framework
-* Capstone disassembly engine
-* For Linux memory analysis: appropriate debugging symbols
+| Sample | Plugin | Reference output |
+|---|---|---|
+| BRICKSTORM | `go_functions` | `Table2+Table3+Table4+Figure5+Figure6_go_functions_BRICKSTORM.txt` |
+| Obscura | `go_strings` | `Table1_go_strings_Obsecura.txt` |
+| Pantegana | `go_strings` | `Figure7_go_strings_Pantegana.txt` |
+| Screenshotter | `go_strings` | `Figure4_go_strings_Screenshotter.txt` |
 
-## Installation
+Pre-built heap-address JSON for the three memory dumps (PIDs 1100, 2004, 2795) is in `required_heap_json_files/`.
 
-_Full installation and usage instructions will be provided with the complete release. The steps below outline the planned setup._
-
-**1. Install Volatility 3**
-
-The plugins are built on top of the Volatility 3 framework. Clone the Volatility 3 repository and follow the installation instructions at: <https://github.com/volatilityfoundation/volatility3>
-
-**2. Install Capstone**
-
-The plugins use Capstone for disassembly during ABI-aware backward analysis:
-
-    pip install capstone
-
-**3. Install the dwarf2json Tool**
-
-Use the `dwarf2json` tool to generate Linux kernel symbol tables required by Volatility 3. Clone the `dwarf2json` repository, place it in the Volatility 3 directory, and follow the installation instructions at: <https://github.com/volatilityfoundation/dwarf2json>
-
-**4. Generate Symbol Tables**
-
-For Linux Kernel:
-
-* Command: `./dwarf2json linux --elf /path/to/vmlinux > vmlinux-VERSION.json`
-* Example: `./dwarf2json linux --elf vmlinux-5.15.0-126-generic > vmlinux-5.15.0-126-generic.json`
-* Place the `.json` file in the `/path/to/Volatility3/symbols/` directory.
-
-**Note:** The Go plugins do not require Go-specific debugging symbols. All Go runtime metadata is recovered directly from process memory by parsing embedded structures (`pclntab`, `moduledata`), making the plugins effective even on stripped and obfuscated binaries.
-
-## Planned Usage
-
-Once released, usage will follow standard Volatility 3 plugin conventions:
-
-    python3 vol.py -f <memory_image> linux.go_strings.GoStrings --pid <PID>
-    python3 vol.py -f <memory_image> linux.go_functions.GoFunctions --pid <PID>
-    python3 vol.py -f <memory_image> linux.go_goroutines.GoGoroutines --pid <PID>
-
-For Windows memory images, replace `linux` with `windows`:
-
-    python3 vol.py -f <memory_image> windows.go_strings.GoStrings --pid <PID>
+---
 
 ## Citation
 
 If you use this work, please cite:
 
-    @inproceedings{ali2026gomemory,
-      title     = {Memory Forensics Techniques for Automated Detection and Analysis of Go Malware},
-      author    = {Ali, Hala and Case, Andrew and Ahmed, Irfan},
-      booktitle = {},
-      year      = {2026}
-    }
+```bibtex
+@article{ali2026memory,
+  title={Memory Forensics Techniques for Automated Detection and Analysis of Go Malware},
+  author={Ali, Hala and Case, Andrew and Ahmed, Irfan},
+  journal={arXiv preprint arXiv:2605.14020},
+  year={2026}
+}
+```
 
-_Full citation details will be updated upon publication._
+Full citation details (venue and pages) will be updated upon publication.
 
+---
 
+## Acknowledgments
+
+Built on the [Volatility 3](https://github.com/volatilityfoundation/volatility3) framework.
+
+## License
+
+See [LICENSE](LICENSE).
