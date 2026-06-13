@@ -45,13 +45,11 @@ Supported Go Versions:
     - Go 1.18–1.24 (register-based ABI, pcHeader with uint32 offsets)
     - Go 1.25+     (register-based ABI, same layout as 1.18+)
 
-Architecture:
-    x86-64 Linux (Intel64). 32-bit support is partial.
 
 Dependencies:
     - Capstone disassembly engine (capstone-engine)
     - External: go_file_classifier, third_party_analyzer modules
-    - "file_func_params_extractor/go_func_lines_v1255.json":  the path depdens of the analyzed Go version
+    - Pre-built function DB: go_func_lines_v<VERSION>.json
 
 Usage:
     python3 vol.py -f <image> linux.go_functions.Go_Functions --pid <PID>
@@ -318,7 +316,12 @@ class Go_Functions(interfaces.plugins.PluginInterface):
         return result
 
     def _parse_program_headers(self, elf_table_name: str, header_info: Dict) -> List[Dict]:
-        """Parse all program headers (segments)."""
+        """
+        Parse ELF program headers into a list of segment dicts.
+        Each segment dict contains: index, p_type, p_flags_str (R/W/X),
+        runtime_vaddr, runtime_end, and p_memsz. For PIE binaries (ET_DYN),
+        runtime_vaddr is rebased to base_addr + p_vaddr.
+        """
         segments = []
 
         if not header_info.get("valid"):
@@ -379,7 +382,14 @@ class Go_Functions(interfaces.plugins.PluginInterface):
 
     
     def _find_pclntab(self, segments: List[Dict]) -> Optional[Dict]:
-        """Find Go pclntab - tries magic bytes first, then structural detection for Garble'd binaries."""
+        """
+        Find the Go pclntab (PC-line table) in read-only sections.
+
+        Two-pass strategy: first scans for known magic bytes (works for
+        standard Go binaries), then falls back to structural validation
+        (works for Garble-obfuscated binaries with randomized magic).
+        Returns pcHeader dict or None.
+        """
         result = self._find_pclntab_by_magic(segments)
         if result:
             return result
@@ -759,7 +769,14 @@ class Go_Functions(interfaces.plugins.PluginInterface):
    
      
     def _find_moduledata(self, segments: List[Dict], pclntab_addr: int, ptrSize: int, go_version: str) -> Optional[Dict]:
-        """Find moduledata by scanning RW segment for pointer to pclntab."""
+        """
+        Locate the runtime.moduledata struct by scanning RW sections.
+
+        Searches for a pointer to pclntab_addr in writable memory, then
+        validates the surrounding fields as a moduledata struct. Dispatches
+        to version-specific validators: _validate_moduledata for Go 1.16+,
+        _validate_moduledata_go115 for Go 1.2-1.15.
+        """
         major, minor, _ = self.go_version_tuple
         is_go_116_plus = (major == 1 and minor >= 16) or major > 1
        
@@ -823,8 +840,14 @@ class Go_Functions(interfaces.plugins.PluginInterface):
     
     
     def _validate_moduledata(self, address: int, pclntab_addr: int, ptrSize: int, go_version: str, segments: List[Dict]) -> Optional[Dict]:
-      """Validate a potential moduledata structure."""
       """
+      Validate and parse a moduledata candidate for Go 1.16+.
+
+      Reads 600 bytes at address and parses version-specific fields:
+      Go 1.16-1.17: no etypes/rodata/gofunc fields, derives rodata from segments.
+      Go 1.18-1.19: adds etypes, rodata, gofunc, itablink.
+      Go 1.20+: adds covctrs/ecovctrs before the end field.
+      Returns parsed moduledata dict or None if validation fails.
       https://go.dev/src/runtime/symtab.go
       """
       
@@ -955,7 +978,7 @@ class Go_Functions(interfaces.plugins.PluginInterface):
             actual_funcnametab_len = cutab_start - funcnametab_start
             slices['funcnametab']['len'] = actual_funcnametab_len
 
-            print(f"\n ========== Go 1.16-1.17 MODULEDATA ==========")
+            print(f"\n ==========  MODULEDATA ==========")
             print(f"  Go Version: {go_version}")
             print(f"  moduledata: {hex(address)}")
             print(f"  text: {hex(text)} - {hex(etext)}")
@@ -1179,7 +1202,12 @@ class Go_Functions(interfaces.plugins.PluginInterface):
     
     def _validate_moduledata_go115(self, address: int, pclntab_addr: int, ptrSize: int, segments) -> dict:
       """
-      Validate moduledata for Go 1.2-1.15.
+      Validate and parse a moduledata candidate for Go 1.2-1.15.
+
+      Go 1.15 moduledata starts with pclntable (not pcHeader pointer),
+      has fixed offsets for all fields, and uses filetab as uint32 offsets
+      into pclntab for filenames. funcnametab and pctab are aliased to
+      pclntable since Go 1.15 stores everything in one contiguous blob.
       """
       try:
         layer = self.context.layers[self.layer_name]
@@ -2156,12 +2184,13 @@ class Go_Functions(interfaces.plugins.PluginInterface):
     
     def _pcvalue(self, pctab_data: bytes, target_pc: int, entry_pc: int, func_name: str = "") -> Optional[int]:
       """
-      Decode pcvalue from a pctab - matches Go runtime/symtab.go
-    
-      
-      1. val_delta=0 means "advance by 1 quantum, don't consume pc_delta"
-      2. pc_delta is scaled by pcQuantum (typically 1, but check your binary)
-      3. Check target_pc < pc after advancing
+      Decode a PC-value table to find the value at target_pc.
+
+      Go's pcvalue encoding: zigzag-varint value deltas interleaved with
+      unsigned varint PC deltas (scaled by pcQuantum). Special case:
+      val_delta == 0 means advance PC by one quantum without consuming
+      a pc_delta. Iteration stops when accumulated PC exceeds target_pc.
+      Returns the value (e.g., SP delta, file index, line number) or None.
       """
       if not pctab_data or len(pctab_data) == 0:
         return None
@@ -2244,11 +2273,13 @@ class Go_Functions(interfaces.plugins.PluginInterface):
     
     def _extract_pcdata(self, layer, moduledata: Dict, func_struct_addr: int, npcdata: int, func_struct_base_size: int, nfuncdata: int) -> Dict[int, bytes]:
       """
-      Extract PCDATA tables for a function.
-    
-      Returns dict: {pcdata_index: pctab_bytes}
-    
-      CRITICAL: PCDATA is NOT null-terminated. Length is determined by next offset.
+      Extract PCDATA tables for one function.
+
+      PCDATA entries are uint32 offsets into pctab, stored as an array
+      right after the _func base struct. Length of each PCDATA blob is
+      determined by finding the next higher offset among all PCDATA and
+      FUNCDATA offsets (PCDATA is NOT null-terminated). Returns dict
+      mapping pcdata_index to raw bytes.
       """
       pcdata_tables = {}
       pctab_base = moduledata["pctab"]["ptr"]
@@ -4022,14 +4053,16 @@ class Go_Functions(interfaces.plugins.PluginInterface):
     
     def _build_funcname_cache_from_elf(self, elf_bytes: bytes, elf_base: int, cached_sections: List[Dict]) -> Tuple[Dict[int, str], Dict[int, str]]:
       
-      """Build {runtime_pc: func_name} and {runtime_pc: source_filename} from cached PE.
+        
+      """
+      Build function name and filename caches from the on-disk ELF in page cache.
 
-      Parses pclntab from the on-disk PE (page cache) to recover function names
-      and source filenames when the in-memory binary is stripped.
-      Version-aware: Go 1.18+ (uint32 offsets), 1.16-1.17 (uintptr), 1.2-1.15 (legacy).
+      Parses pclntab from raw ELF bytes to recover names stripped from memory.
+      Version-aware: Go 1.18+ (uint32 entryoff/funcoff in ftab, separate
+      funcnametab), Go 1.16-1.17 (uintptr entries, pcHeader with uintptr
+      offsets), Go 1.2-1.15 (names stored directly in pclntab).
 
-      Returns:
-        (func_names, filenames): both {runtime_pc: str}
+      Returns (func_names, filenames) both as {runtime_pc: str}.
       """
       
       func_names = {}
@@ -4242,8 +4275,8 @@ class Go_Functions(interfaces.plugins.PluginInterface):
                 if func_pc == 0:
                     continue
 
-                # _func struct is at pclntable + funcoff
-                func_struct_file = ftab_file + funcoff
+                # _func struct is at pos + funcoff
+                func_struct_file = pos + funcoff
 
                 if func_struct_file + ptrSize + 4 > len(elf_bytes):
                     continue
@@ -4450,7 +4483,12 @@ class Go_Functions(interfaces.plugins.PluginInterface):
       return None
     
     def _extract_elf_from_pagecache(self, inode) -> bytes:
-      """Extract ELF bytes from page cache using InodePages logic."""
+      """
+      Extract ELF bytes from Linux page cache using InodePages.
+
+      Uses the Volatility pagecache plugin to reconstruct the on-disk ELF
+      file from cached pages. Returns raw ELF bytes or empty bytes on failure.
+      """
       try:
         vmlinux = self.context.modules[self.config["kernel"]]
         vmlinux_layer = self.context.layers[vmlinux.layer_name]
@@ -5058,7 +5096,7 @@ class Go_Functions(interfaces.plugins.PluginInterface):
         print(f"[+] Get the cached ELF FIle")
         binary_path = self._get_binary_path_from_task(task)
         cached_func_names = {}
-        cached_filenames = {} 
+        cached_filenames = {}
         if binary_path:
            cached_inode = self._find_inode_by_path(binary_path)
            if cached_inode:
@@ -5125,10 +5163,12 @@ class Go_Functions(interfaces.plugins.PluginInterface):
         print(f"[*] Go version detected: {self.go_version_str}")
         print(f"Functions: {pclntab['nfunc']}")
         print("=" * 170)
+        
+        # Extract all types and interface tables (itabs).
         types_dict = self._extract_types_by_scanning(pclntab["ptrSize"])
         itabs_dict = self._extract_itabs(pclntab["ptrSize"])
       
-       # Get the signatures of the type methods.
+        # Get the signatures of the type methods.
         type_methods={}
         for type_addr,type_info in sorted(types_dict.items()):
             if type_info is None or type_info.get('_parsing'):
