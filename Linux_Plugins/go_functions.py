@@ -1339,7 +1339,29 @@ class Go_Functions(interfaces.plugins.PluginInterface):
         return None
     
     def _extract_itabs(self, ptrSize: int) -> Dict[int, Dict]:
-      """Extract all itabs via moduledata.itablink."""
+      """
+      Extract all interface tables (itabs) via moduledata.itablink.
+    
+      An itab maps a concrete type to an interface it implements. Each itab
+      contains: the interface type pointer, the concrete type pointer, a hash
+      for fast type assertion, and an array of function pointers (the virtual
+      method table) that dispatches interface method calls to the concrete
+      type's implementations.
+    
+      We extract itabs to:
+      1. Resolve interface values on goroutine stacks, when a stack slot
+         holds [itab_ptr, data_ptr], the itab tells us which concrete type
+         the data_ptr points to and which interface it satisfies.
+      2. Provide method dispatch context,  the fun[] array in each itab
+         maps interface method indices to actual code addresses, enabling
+         us to trace which concrete method an interface call would invoke.
+      3. Cross-reference with type methods,  itab function pointers overlap
+         with type_methods PCs, connecting stack frame argument recovery
+         to the correct parameter signatures.
+    
+      Returns:
+        Dict mapping itab address → parsed itab info dict.
+      """
       itablink_ptr = self.moduledata['itablink']['ptr']
       itablink_len = self.moduledata['itablink']['len']
     
