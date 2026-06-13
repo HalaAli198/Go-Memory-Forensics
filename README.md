@@ -6,31 +6,28 @@ The plugins reconstruct the **runtime state of Go (golang) programs** directly f
 
 ## Features
 
-- Recovers Go runtime metadata (`pclntab`, `moduledata`, type system, heap allocator) directly from process memory; no symbol tables or debugging information required.
-- Works on stripped binaries, since the runtime metadata the plugins rely on is embedded by the compiler and not removed by `strip`.
-- Handles Garble-obfuscated binaries via structural `pcHeader` validation, Go version inference, and empirical `mspan` layout detection.
-- Reports each recovered artifact (string, function, argument, goroutine, heap object) with its memory location and concrete Go type.
-- Supports Go 1.2 through current releases, covering both the stack-based (≤ 1.16) and register-based (1.17+) ABIs.
+- Recovers Go strings, functions, goroutines, types, and heap objects directly from process memory.
+- Works on stripped and Garble-obfuscated binaries; no symbols or debugging information required.
+- Recovers concrete argument values at function call sites and in goroutine stack frames.
+- Classifies functions by origin (runtime, standard library, third-party, application).
+- Supports Go 1.2 through current releases on Linux and Windows (x86-64).
 - Supports Linux and Windows memory images on x86-64.
-
 ---
 
 ## Plugins
 
-The framework's core is implemented as three Volatility 3 plugins.
-
 ### `go_strings`
-Recovers Go strings from both the heap and the static sections (`.rodata`, `.data`, `.bss`). Unlike the standard `strings` utility, it reconstructs Go string headers together with their backing data and reports their memory locations, distinguishing compile-time constants from dynamically allocated strings. Resilient to Garble obfuscation: when the magic bytes or version literal are missing, it falls back to structural `pcHeader` detection and empirical `mspan` profiling.
+Recovers Go strings from both the heap and the static sections (`.rodata`, `.data`, `.bss`). Unlike the standard `strings` utility, it reconstructs Go string headers together with their backing data and reports their memory locations, distinguishing compile-time constants from dynamically allocated strings. 
 
 ### `go_functions`
-Recovers function metadata from `pclntab` and `moduledata`, classifies functions by origin (runtime, standard library, third-party, application-level), infers argument types from `ArgInfo` / `ArgsPointerMaps`, and performs **ABI-aware backward analysis** from call sites to recover argument values. Also recovers types, interfaces, and type methods.
+Recovers function metadata from `pclntab` and `moduledata`,  resolves each function's name source filename (from process memory + the cached binary), classifies functions by origin (runtime, standard library, third-party, application-level), infers argument types from interfaces, type methods, and `ArgInfo` / `ArgsPointerMaps`, and performs **ABI-aware backward analysis** from call sites to recover argument values. 
 
 ### `go_goroutines`
 Discovers every goroutine in the process via `runtime.allgs` and unwinds each one's saved stack using the `PCSP` tables to reconstruct its complete call chain, down to the function executing at capture time. For each stack frame it recovers typed argument values( strings, structs, pointers, maps, and slices) through a five-tier resolution cascade (the binary's own type methods, runtime/stdlib and third-party signature databases, and `ArgInfo` / `ArgsPointerMaps` structural heuristics), and reports each goroutine's execution state and wait reason (channel receive, mutex, sleep, I/O wait).
 
 ### Supporting plugin
 
-- **`go_entire_heap`**: a type-driven recursive walk over *all* reachable heap objects (booleans, integers, floats, strings, slices, arrays, structs, maps(`hmap` pre-1.24 and Swiss Tables 1.24+), and interfaces), reporting heap address, data address, type, value, and memory region. It also emits the `heap_strings_pid_<PID>.json` used by `go_goroutines` for pointer→string resolution.
+- **`go_entire_heap`**: a type-driven recursive walk over *all* reachable heap objects, including booleans, integers, floats, strings, slices, arrays, structs, maps(`hmap` pre-1.24 and Swiss Tables 1.24+), and interfaces. It reports heap address, data address, type, value, and memory region. It also emits the `heap_strings_pid_<PID>.json` used by `go_goroutines` for pointer→string resolution.
 
 ---
 
