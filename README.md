@@ -20,7 +20,7 @@ The plugins reconstruct the **runtime state of Go (golang) programs** directly f
 Recovers Go strings from both the heap and the static sections (`.rodata`, `.data`, `.bss`). Unlike the standard `strings` utility, it reconstructs Go string headers together with their backing data and reports their memory locations, distinguishing compile-time constants from dynamically allocated strings. 
 
 ### `go_functions`
-Recovers function metadata from `pclntab` and `moduledata`, resolves each function's name and source filename (from process memory plus the page-cached binary), classifies functions by origin (runtime, standard library, third-party, application), infers argument types from interface tables, type methods, and `ArgInfo` / `ArgsPointerMaps`, and performs **ABI-aware backward analysis** from call sites to recover argument values.
+Recovers function metadata from `pclntab` and `moduledata`, resolves each function's name and source filename (from process memory plus the page-cached binary), classifies functions by origin (runtime, internal, standard library, third-party, application), infers argument types from interface tables, type methods, and `ArgInfo` / `ArgsPointerMaps`, and performs **ABI-aware backward analysis** from call sites to recover argument values.
 
 ### `go_goroutines`
 Discovers every goroutine via `runtime.allgs` and unwinds each one's saved stack using the `PCSP` tables to reconstruct its complete call chain, down to the function executing at capture time. For each stack frame it recovers typed argument values through a five-tier resolution cascade (the binary's own type methods, runtime/stdlib and third-party signature databases, and `ArgInfo` / `ArgsPointerMaps` structural heuristics), and reports each goroutine's execution state and wait reason (channel receive, mutex, sleep, I/O wait).
@@ -145,11 +145,13 @@ python3 vol.py -f <memory_image> windows.go_strings.Go_Strings --pid <PID>
 ```
 
 ### Recommended order
-
-`go_goroutines` resolves pointers to their string values using the heap-address JSON produced by `go_entire_heap`. For best results:
-
-1. Run **`go_entire_heap`**  and** `go_func_signature`** first,  to emit `heap_strings_pid_<PID>.json` and `go_func_lines_v<VERSION>.json`, respectively.
-2. Run **`go_goroutines`**, which consumes the JSON files for pointer→string resolution and getting the known function signatures.
+ 
+`go_strings` runs on its own. `go_functions` and `go_goroutines` rely on a function-signature database, and `go_goroutines` additionally relies on a heap-address JSON. Prepare these inputs first:
+ 
+1. **`go_func_signature`** → `go_func_lines_v<VERSION>.json`: the function-signature database, consumed by **both `go_functions` and `go_goroutines`** for known runtime/stdlib/third-party signatures. Pre-built databases for several Go versions ship in `file_func_params_extractor/`; only regenerate if your target's version isn't included.
+2. **`go_entire_heap`** → `heap_strings_pid_<PID>.json`: the heap-address JSON, consumed by **`go_goroutines`** for pointer→string resolution. Pre-built files for the bundled sample PIDs are in `required_heap_json_files/`.
+Then run the analysis plugins: `go_functions` (needs #1) and `go_goroutines` (needs #1 and #2).
+ 
 
 ---
 
@@ -157,7 +159,7 @@ python3 vol.py -f <memory_image> windows.go_strings.Go_Strings --pid <PID>
 
 A few inputs are selected per target binary. **`go_functions` and `go_goroutines` currently reference these paths as in-code constants. Set them to match your environment and the analyzed binary's Go version before running:**
 
-- **Function-signature database.** Pick the `go_func_lines_v<VERSION>.json` that matches the target's Go toolchain (e.g. `v1255` → Go 1.25.5, `v116` → Go 1.16, `v115` → Go 1.15, `v12410` → Go 1.24.10). This DB supplies parameter names and types for runtime/stdlib/third-party functions. Regenerate for other versions with `go_func_signature.py`.
+- **Function-signature database.** Pick the `go_func_lines_v<VERSION>.json` that matches the target's Go toolchain (e.g. `v1255` → Go 1.25.5, `v116` → Go 1.16, `v115` → Go 1.15, `v12410` → Go 1.24.10). This DB supplies parameter names and types for runtime, internal, and standard library functions; third-party signatures are generated on demand by `third_party_analyzer.py`. Regenerate for other Go versions with `go_func_signature.py`.
 - **Heap-address JSON.** Point `go_goroutines` at the `heap_strings_pid_<PID>.json` produced for the same PID.
 
 ---
@@ -208,11 +210,3 @@ If you use this work, please cite:
 Full citation details (venue and pages) will be updated upon publication.
 
 ---
-
-## Acknowledgments
-
-Built on the [Volatility 3](https://github.com/volatilityfoundation/volatility3) framework.
-
-## License
-
-See [LICENSE](LICENSE).
