@@ -3556,7 +3556,18 @@ class Go_Goroutines(interfaces.plugins.PluginInterface):
       return None
     
     
-   
+    def _resolve_pc_to_name(self, pc, func_lookup):
+      func = self._find_function_by_pc_silent(pc, func_lookup)
+      return func.get('name', '<unknown>') if func else '<unknown>'
+
+    def _find_function_by_pc_silent(self, pc, func_lookup):
+       for func_pc, func_info in func_lookup.items():
+          start = func_info["pc"]
+          end = start + func_info.get("size", 0)
+          if start <= pc < end:
+             return func_info
+       return None
+      
     def _extract_types_via_typelinks(self, ptrSize: int) -> Dict[int, Dict]:
         typelinks_ptr = self.moduledata['typelinks']['ptr']
         typelinks_len = self.moduledata['typelinks']['len']
@@ -6532,8 +6543,10 @@ class Go_Goroutines(interfaces.plugins.PluginInterface):
          
           print(f"sched_pc {hex(g_info['sched_pc'])}")
           print(f"sched_bp {g_info['sched_bp']}")
-          print(f"startpc {hex(g_info['startpc'])}")
-          print(f"gopc {hex(g_info['gopc'])}")
+          start_name = self._resolve_pc_to_name(g_info['startpc'], func_lookup)
+          gopc_name  = self._resolve_pc_to_name(g_info['gopc'], func_lookup)
+          print(f"startpc {hex(g_info['startpc'])} ({start_name})")
+          print(f"gopc {hex(g_info['gopc'])} ({gopc_name})")
           print(f"waitreason_enum {g_info['waitreason_enum']}")
           print(f"waitreason {g_info['waitreason']}")
           print(f"waitsince {g_info['waitsince']}")
