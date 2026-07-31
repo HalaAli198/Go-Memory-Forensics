@@ -74,7 +74,7 @@ from volatility3.plugins.linux import pslist
 from volatility3.plugins.linux.pagecache import Files, InodePages  # Extract cached file content from Linux kernel page cache
 from io import BytesIO
 from volatility3.plugins.linux.third_party_analyzer import get_analyzer
-from volatility3.plugins.linux.go_file_classifier  import classify_go_filepath
+from volatility3.plugins.linux.go_file_classifier  import classify_go_filepath, classify_go_func_name
 from capstone import Cs, CS_ARCH_X86, CS_MODE_64
 from capstone.x86 import X86_OP_IMM, X86_OP_REG, X86_OP_MEM
 
@@ -5317,7 +5317,8 @@ class Go_Functions(interfaces.plugins.PluginInterface):
 
             classification = classify_go_filepath(filename)  
             category=classification['category'] 
-            
+            if category == "unknown" and func_name:
+                category = classify_go_func_name(func_name)['category']
             if line_num:
                func_info_new = { 'pc': func_pc,   'name': func_name,   'size': func_size, 'args':func_args,  'file': filename, 'line_num':line_num,  'category': category,
               'arginfo_data':arginfo_data, 'argsmap_data': argsmap_data}
